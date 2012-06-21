@@ -83,9 +83,13 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 					$today = new DateTime();
 					switch($value) {
 						case self::RANGE_CURRENT:
-							$start = $today;
+							$start = new DateTime();
+							$end = new DateTime();
 							$start->setTime(0,0,0);
-							$this->filters[] = $query->greaterThanOrEqual('startTime', $start);
+							$end->setTime(23, 59, 59);
+							$A = $query->greaterThanOrEqual('endTime', $start);
+							$B = $query->lessThanOrEqual('startTime', $end);
+							$this->filters[] = $query->logicalAnd($A, $B);
 							break;
 						case self::RANGE_NEXT_MONTH:
 							$start = new DateTime();
@@ -99,7 +103,7 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 							$this->filters[] = $query->logicalAnd($A, $B);
 							break;
 						case self::RANGE_THIS_MONTH:
-							$start = $today;
+							$start = new DateTime();
 							$end = new DateTime();
 							$start->setTime(0, 0, 0);
 							$end->setTime(23, 59, 59);
