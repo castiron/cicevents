@@ -6,13 +6,40 @@
     <ROOT>
         <type>array</type>
         <el>
-
+			<switchableControllerActions>
+				<TCEforms>
+					<label>View</label>
+					<config>
+						<type>select</type>
+						<items>
+							<numIndex index="1">
+								<numIndex index="0">
+									Upcoming Events
+								</numIndex>
+								<numIndex index="1">Event->upcoming</numIndex>
+							</numIndex>
+							<numIndex index="2">
+								<numIndex index="0">
+									List of Events
+								</numIndex>
+								<numIndex index="1">Event->list;Event->search</numIndex>
+							</numIndex>
+							<numIndex index="3">
+								<numIndex index="0">
+									Event Detail
+								</numIndex>
+								<numIndex index="1">Event->detail</numIndex>
+							</numIndex>
+						</items>
+					</config>
+				</TCEforms>
+			</switchableControllerActions>
 			<settings.heading>
 				<TCEforms>
 					<label>Heading</label>
 					<config>
 						<type>input</type>
-						<size>10</size>
+						<size>20</size>
 					</config>
 				</TCEforms>
 			</settings.heading>
