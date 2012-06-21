@@ -1,0 +1,28 @@
+<h2>Upcoming Events</h2>
+<ul class="icon-list icon-list-events unstyled">
+	<f:for each="{events}" as="event">
+		<li>
+			<!-- TODO: Properly abstract the page uid for the single view out of this view -->
+			<span><f:link.action pageUid="80" action="detail" arguments="{event : event}">{event.title}</f:link.action></span>
+			<span>{event.venue}</span>
+			<span class="small">
+			<f:if condition="{event.spansMultipleDays}">
+				<f:then>
+						<f:format.date format="M d, Y - h:i a">{event.startTime}</f:format.date>
+						to
+						<f:format.date format="M d, Y - h:i a">{event.endTime}</f:format.date>
+				</f:then>
+				<f:else>
+						<f:format.date format="M d, Y">{event.startTime}</f:format.date>
+						from
+						<f:format.date format="h:i a">{event.startTime}</f:format.date>
+						to
+						<f:format.date format="h:i a">{event.endTime}</f:format.date>
+				</f:else>
+			</f:if>
+
+			</span>
+		</li>
+	</f:for>
+
+</ul>

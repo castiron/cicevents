@@ -1,0 +1,128 @@
+<f:layout name="Default" />
+
+<f:section name="main">
+
+	{namespace cic=Tx_Cicbase_ViewHelpers}
+	{namespace ce=Tx_Cicevents_ViewHelpers}
+	{namespace sjc=Tx_Sjcert_ViewHelpers}
+
+	<div class="callout">
+
+		<sjc:flashMessages renderMode="ul" class="unstyled flash-messages"/>
+
+		<f:form class="CiceventsForm" enctype="multipart/form-data" action="create" method="post" name="event">
+
+			<div class="row row-flush">
+				<div class="span5">
+					<div class="input control-group">
+						<f:render partial="FormElements/TextInput"
+								arguments="{inputClass: 'span5', required: 1, propertyName: 'title', propertyLabel: 'Event Name', errorClass: ''}"/>
+					</div>
+				</div>
+				<div class="span5">
+					<div class="input control-group">
+						<label>Type:</label>
+						<f:form.select property="type" options="{types}" optionValueField="uid" optionLabelField="title" class="span5"/>
+						<p class="message">Required Field</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="row row-flush" id="start-date-form">
+				<div class="span5">
+					<div class="input control-group">
+						<f:render partial="FormElements/TextInput"
+								  arguments="{inputClass: 'span5 bootstrap-datepicker datestring', required: 1, propertyName: 'startTime', propertyLabel: 'Start', defaultValue: '{startTime}'}"/>
+					</div>
+				</div>
+				<div class="span5">
+					<div class="input control-group">
+						<label>&nbsp;</label>
+						<f:form.select class="select-time hour" options="{hours}" optionValueField="id" value="{startTimeSelectedHour}"/>
+						<f:form.select class="select-time minute" options="{minutes}"  optionValueField="id" value="{startTimeSelectedMinute}"/>
+						<f:form.select class="select-time daypart" options="{am: 'am', pm: 'pm'}" optionValueField="id" value="{startTimeSelectedDaypart}"/>
+					</div>
+				</div>
+			</div>
+
+			<div class="row row-flush" id="end-date-form">
+				<div class="span5">
+					<div class="input control-group">
+						<f:render partial="FormElements/TextInput"
+								  arguments="{inputClass: 'span5 bootstrap-datepicker datestring', required: 1, propertyName: 'endTime', propertyLabel: 'End', defaultValue: '{endTime}'}"/>
+					</div>
+				</div>
+				<div class="span5">
+					<div class="input control-group">
+						<label>&nbsp;</label>
+						<f:form.select class="select-time hour" options="{hours}" optionValueField="id" value="{endTimeSelectedHour}" />
+						<f:form.select class="select-time minute" options="{minutes}"  optionValueField="id" value="{endTimeSelectedMinute}"/>
+						<f:form.select class="select-time daypart" options="{am: 'am', pm: 'pm'}" optionValueField="id" value="{endTimeSelectedDaypart}"/>
+					</div>
+				</div>
+			</div>
+
+			<div class="row row-flush">
+				<div class="span5">
+					<div class="input control-group">
+						<f:render partial="FormElements/TextInput"
+								  arguments="{inputClass: 'span5', required: 1, propertyName: 'venue', propertyLabel: 'Venue', errorClass: ''}"/>
+					</div>
+				</div>
+				<div class="span5">
+					<div class="input control-group">
+						<f:render partial="FormElements/TextInput"
+								  arguments="{inputClass: 'span5', required: 1, propertyName: 'address', propertyLabel: 'Address', errorClass: ''}"/>
+					</div>
+				</div>
+			</div>
+
+			<div class="row row-flush">
+				<div class="span5">
+					<div class="input control-group">
+						<label>Teaser:</label>
+						<f:form.textarea property="teaser" rows="3" cols="" class="span5" />
+					</div>
+				</div>
+				<div class="span5">
+					<div class="input control-group">
+						<label>Description:</label>
+						<f:form.textarea property="description" rows="3" cols="" class="span5" />
+					</div>
+				</div>
+			</div>
+
+			<div class="row row-flush">
+				<div class="span5">
+					<div class="input control-group">
+						<label>Categories:</label>
+						<!--<f:form.select property="categories" options="{categories}" optionValueField="uid" optionLabelField="title" multiple="multiple" class="span5"/>-->
+						<f:for each="{categories}" as="category" iteration="iteration">
+							<div>
+								<f:form.checkbox name="categories{iteration.index}" value="{category.uid}" />
+								<span>{category.title}</span>
+							</div>
+						</f:for>
+
+					</div>
+				</div>
+				<div class="span5">
+					<div class="input control-group">
+						<label>Images:</label>
+						<ce:repeat count="{numImages}" iteration="index">
+							<div class="uploader"><f:form.upload name="image{index}" /></div>
+						</ce:repeat>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="span10">
+					<f:form.submit id="submitbutton" value="Create Event" class="btn"></f:form.submit>
+				</div>
+			</div>
+
+		</f:form>
+	</div>
+
+</f:section>

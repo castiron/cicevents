@@ -1,0 +1,59 @@
+<f:layout name="Default" />
+
+<f:section name="main">
+	<div class="with-trim" style="margin-bottom: 25px;">
+		<h2>{event.title}</h2>
+
+		<f:for each="{event.images}" as="image">
+			<f:image src="{image.fullPath}" alt="" width="200" />
+		</f:for>
+		<div class="event-details">
+			<div class="event-teaser"><f:format.html>{event.teaser}</f:format.html></div>
+			<f:if condition="{event.spansMultipleDays}">
+				<f:then>
+					<p class="small  date-string">
+						<f:format.date format="M. d, Y - H:i">{event.startTime}</f:format.date> to
+						<f:format.date format="M. d, Y - H:i">{event.endTime}</f:format.date>
+					</p>
+				</f:then>
+				<f:else>
+					<p class="small date-string">
+						<f:format.date format="M. d, Y - H:i">{event.startTime}</f:format.date> to
+						<f:format.date format="H:i">{event.endTime}</f:format.date>
+					</p>
+				</f:else>
+			</f:if>
+			<f:if condition="{event.venue}">
+				<p class="small event-venue">{event.venue}</p>
+			</f:if>
+			<f:if condition="{event.address}">
+				<p class="small event-address">{event.address}</p>
+			</f:if>
+		</div>
+
+		<div class="event-description"><f:format.html>{event.description}</f:format.html></div>
+
+		<p>
+			<f:if condition="{event.type.title}">
+				<strong>Event Type:</strong>
+				<f:link.action action="search" arguments="{actionMethodName:actionMethodName, type: event.type}" class="">
+					{event.type.title}
+				</f:link.action>
+				<br/>
+			</f:if>
+
+			<f:if condition="{event.categories}">
+				<strong>Event Category:</strong>
+				<f:for each="{event.categories}" as="category">
+					<f:link.action action="search" arguments="{actionMethodName:actionMethodName, category: category}" class="">
+						{category.title}
+					</f:link.action>
+				</f:for>
+			</f:if>
+		</p>
+
+	</div>
+	<p>
+		<f:link.page class="btn">&larr; Return to List of Events</f:link.page>
+	</p>
+</f:section>

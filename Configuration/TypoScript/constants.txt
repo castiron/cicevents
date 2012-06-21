@@ -1,0 +1,14 @@
+plugin.tx_cicevents {
+	view {
+		# cat=plugin.tx_cicevents/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:cicevents/Resources/Private/Templates/
+		# cat=plugin.tx_cicevents/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:cicevents/Resources/Private/Partials/
+		# cat=plugin.tx_cicevents/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:cicevents/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_cicevents//a; type=int+; label=Default storage PID
+		storagePid = 
+	}
+}

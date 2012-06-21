@@ -1,0 +1,50 @@
+<T3DataStructure>
+    <meta type="array">
+        <langChildren type="integer">0</langChildren>
+        <langDisable type="integer">1</langDisable>
+    </meta>
+    <ROOT>
+        <type>array</type>
+        <el>
+
+			<settings.heading>
+				<TCEforms>
+					<label>Heading</label>
+					<config>
+						<type>input</type>
+						<size>10</size>
+					</config>
+				</TCEforms>
+			</settings.heading>
+
+			<settings.showJustOneImage>
+				<TCEforms>
+					<label>Show just the first image</label>
+					<displayCond>FIELD:settings.showImages:REQ:true</displayCond>
+					<config>
+						<type>check</type>
+					</config>
+				</TCEforms>
+			</settings.showJustOneImage>
+
+			<settings.max>
+				<TCEforms>
+					<label>Maximum number of events displayed at once (optional)</label>
+					<config>
+						<type>input</type>
+						<size>1</size>
+					</config>
+				</TCEforms>
+			</settings.max>
+
+			<settings.pagination>
+				<TCEforms>
+					<label>Turn on pagination</label>
+					<config>
+						<type>check</type>
+					</config>
+				</TCEforms>
+			</settings.pagination>
+		</el>
+    </ROOT>
+</T3DataStructure>

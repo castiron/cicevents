@@ -1,0 +1,86 @@
+<f:layout name="Default" />
+
+<f:section name="main">
+	{namespace cic=Tx_Cicbase_ViewHelpers}
+	<cic:includeJavascriptString name="calendarData">
+		window.calendarData = <cic:jsonBootstrap data="{eventData}" />;
+	</cic:includeJavascriptString>
+
+	<script type="text/html" id="template-eventListing">
+		<div><a class="title" href="<%= url %>"><%= title %></a></div>
+	</script>
+
+	<script type="text/html" id="template-dayBox">
+		<div class="day"><%= day %></div>
+		<div class="events"><%= events %></div>
+	</script>
+
+	<script type="text/html" id="template-controls">
+		<a class="prevMonth btn-flat">&larr; <%= prevMonthString %></a>
+		<span class="btn-flat disabled"><span class="curMonth"><%= monthString %></span><span class="year"> <%= year %></span></span>
+		<a class="nextMonth btn-flat"><%= nextMonthString %> &rarr;</a>
+		<a class="today btn-flat">Today</a>
+	</script>
+
+	<div class="callout large">
+		<div id="calendar" >
+			<div id="controls"></div>
+			<table border="1">
+				<tr>
+					<th><h2 class="block-heading">Sun</h2></th>
+					<th><h2 class="block-heading">Mon</h2></th>
+					<th><h2 class="block-heading">Tues</h2></th>
+					<th><h2 class="block-heading">Wed</h2></th>
+					<th><h2 class="block-heading">Thurs</h2></th>
+					<th><h2 class="block-heading">Fri</h2></th>
+					<th><h2 class="block-heading">Sat</h2></th>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</f:section>

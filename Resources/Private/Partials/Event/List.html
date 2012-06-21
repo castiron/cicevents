@@ -1,0 +1,74 @@
+<f:for each="{allEvents}" as="event">
+
+	<div class="event-listing with-trim">
+		<h2 class="title">
+			<f:link.action action="detail" arguments="{event : event}">{event.title}</f:link.action>
+		</h2>
+
+		<f:if condition="{settings.showJustOneImage}">
+			<f:then>
+				<f:if condition="{event.firstImage}">
+					<f:link.action action="detail" arguments="{event:event}">
+						<f:image src="{event.firstImage.fullPath}" alt="" width="200"/>
+					</f:link.action>
+				</f:if>
+			</f:then>
+			<f:else>
+				<f:for each="{event.images}" as="image">
+					<f:image src="{image.fullPath}" alt="" width="200"/>
+				</f:for>
+			</f:else>
+		</f:if>
+
+		<f:if condition="{event.spansMultipleDays}">
+			<f:then>
+				<p class="small date-string flush">
+					<f:format.date format="F d, Y - h:i a">{event.startTime}</f:format.date>
+					to
+					<f:format.date format="F d, Y - h:i a">{event.endTime}</f:format.date>
+				</p>
+			</f:then>
+			<f:else>
+				<p class="small date-string flush">
+					<f:format.date format="F d, Y - h:i a">{event.startTime}</f:format.date>
+					to
+					<f:format.date format="h:i a">{event.endTime}</f:format.date>
+				</p>
+			</f:else>
+		</f:if>
+
+		<f:if condition="{event.venue}">
+			<p class="small venue flush">{event.venue}</p>
+		</f:if>
+
+		<f:if condition="{event.address}">
+			<address class="small address">{event.address}</address>
+		</f:if>
+
+		<p>
+			<strong>
+				<f:format.crop maxCharacters="75" append="...">{event.teaser}</f:format.crop>
+			</strong>
+		</p>
+
+		<div class="description">
+			<f:format.html>{event.description}</f:format.html>
+		</div>
+
+		<f:if condition="{event.type.title}">
+			<strong>Event Type:</strong>
+			<f:link.action action="search" arguments="{actionMethodName:actionMethodName, type: event.type}" class="">
+				{event.type.title}
+			</f:link.action>
+			<br/>
+		</f:if>
+
+		<strong>Event Category:</strong>
+		<f:for each="{event.categories}" as="category">
+			<f:link.action action="search" arguments="{actionMethodName:actionMethodName, category: category}" class="">
+				{category.title}
+			</f:link.action>
+		</f:for>
+
+	</div>
+</f:for>

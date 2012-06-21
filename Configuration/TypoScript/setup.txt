@@ -1,0 +1,38 @@
+plugin.tx_cicevents {
+	view {
+		templateRootPath = {$plugin.tx_cicevents.view.templateRootPath}
+		partialRootPath = {$plugin.tx_cicevents.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_cicevents.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_cicevents.persistence.storagePid}
+
+	}
+	features {
+		rewrittenPropertyMapper = 1
+	}
+}
+
+page.includeCSS {
+	1066 = EXT:cicevents/Resources/Public/Styles/cicevents.css
+}
+
+plugin.tx_cicevents._CSS_DEFAULT_STYLE (
+	input.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	.tx-cicevents table {
+		border-collapse:separate;
+		border-spacing:10px;
+	}
+
+	.tx-cicevents table th {
+		font-weight:bold;
+	}
+
+	.tx-cicevents table td {
+		vertical-align:top;
+	}
+)

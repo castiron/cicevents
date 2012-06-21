@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for the CIC Events extension in the FRONTEND</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_cicevents_domain_model_event">Event</label>
+			<label index="tx_cicevents_domain_model_event.title">title</label>
+			<label index="tx_cicevents_domain_model_event.start_time">startDate</label>
+			<label index="tx_cicevents_domain_model_event.end_time">endDate</label>
+			<label index="tx_cicevents_domain_model_event.venue">venue</label>
+			<label index="tx_cicevents_domain_model_event.address">address</label>
+			<label index="tx_cicevents_domain_model_event.teaser">teaser</label>
+			<label index="tx_cicevents_domain_model_event.description">description</label>
+			<label index="tx_cicevents_domain_model_event.images">images</label>
+			<label index="tx_cicevents_domain_model_event.category">category</label>
+			<label index="tx_cicevents_domain_model_event.type">type</label>
+			<label index="tx_cicevents_domain_model_event.errorDateFormat">The date format is not valid.</label>
+
+			<label index="tx_cicevents_domain_model_category">Category</label>
+			<label index="tx_cicevents_domain_model_category.title">title</label>
+			<label index="tx_cicevents_domain_model_category.nullOption">All Categories</label>
+
+			<label index="tx_cicevents_domain_model_type">Type</label>
+			<label index="tx_cicevents_domain_model_type.title">title</label>
+			<label index="tx_cicevents_domain_model_type.nullOption">All Types</label>
+		</languageKey>
+	</data>
+</T3locallang>

@@ -1,0 +1,65 @@
+<T3DataStructure>
+	<meta type="array">
+		<langChildren type="integer">0</langChildren>
+		<langDisable type="integer">1</langDisable>
+	</meta>
+	<ROOT>
+		<type>array</type>
+		<el>
+			<switchableControllerActions>
+				<TCEforms>
+					<label>Administrative Activity</label>
+					<config>
+						<type>select</type>
+						<items type="array">
+							<numIndex index="1" type="array">
+								<numIndex index="0">Create new event</numIndex>
+								<numIndex index="1">Event->new;Event->create</numIndex>
+							</numIndex>
+							<!--<numIndex index="2" type="array">-->
+								<!--<numIndex index="0">Edit existing event</numIndex>-->
+								<!--<numIndex index="1">Event->edit;Event->update;Event->delete</numIndex>-->
+							<!--</numIndex>-->
+						</items>
+						<minitems>0</minitems>
+						<maxitems>1</maxitems>
+						<size>1</size>
+					</config>
+				</TCEforms>
+			</switchableControllerActions>
+
+			<settings.maxImages>
+				<TCEforms>
+					<label>Number of images that can be uploaded</label>
+					<config>
+						<type>input</type>
+						<size>10</size>
+					</config>
+				</TCEforms>
+			</settings.maxImages>
+
+
+			<settings.confirmationHeading>
+				<TCEforms>
+					<label>Confirmation Heading</label>
+					<config>
+						<type>input</type>
+						<size>60</size>
+					</config>
+				</TCEforms>
+			</settings.confirmationHeading>
+
+			<settings.confirmationMessage>
+				<TCEforms>
+					<label>Confirmation Message</label>
+					<config type="array">
+						<type>text</type>
+						<cols>48</cols>
+						<rows>5</rows>
+					</config>
+				</TCEforms>
+			</settings.confirmationMessage>
+
+		</el>
+	</ROOT>
+</T3DataStructure>

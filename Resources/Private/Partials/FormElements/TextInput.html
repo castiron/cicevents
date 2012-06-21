@@ -1,0 +1,23 @@
+<!-- TODO: Move view helper to cicbase -->
+{namespace cic=Tx_Cicbase_ViewHelpers}
+<label for="cicevents-formInput-{propertyName}">{propertyLabel}: </label>
+<f:if condition="{propertyName}">
+	<f:then>
+		<f:form.textfield class="{inputClass}" id="cicevents-formInput-{propertyName}" property="{propertyName}" value="{defaultValue}" errorClass="{errorClass}"/>
+		<f:if condition="{required}">
+			<p class="message">Required Field</p>
+		</f:if>
+		<div id="cicevents-formInput-{propertyName}-errors" class="errorWrap">
+			<f:render partial="FormElements/FieldError.html" arguments="{property: '{propertyName}'}"/>
+		</div>
+	</f:then>
+	<f:else>
+		<f:form.textfield class="{inputClass}" id="cicevents-formInput-{name}" name="{name}" value="{defaultValue}" errorClass="{errorClass}" />
+		<f:if condition="{required}">
+			<p class="message">Required Field</p>
+		</f:if>
+		<div id="cicevents-formInput-{propertyName}-errors" class="errorWrap">
+			<f:render partial="FormElements/FieldError.html" arguments="{property: '{name}'}"/>
+		</div>
+	</f:else>
+</f:if>

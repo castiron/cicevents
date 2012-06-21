@@ -1,0 +1,80 @@
+<f:layout name="Default" />
+
+<f:section name="main">
+
+	{namespace cic=Tx_Cicbase_ViewHelpers}
+	<div id="filters" class="callout">
+		<f:form class="FiltersForm" enctype="multipart/form-data" controller="Event" method="post">
+			<h3>Filter Events by:</h3>
+			<f:flashMessages renderMode="div"/>
+			<f:if condition="{events}">
+				<f:else>
+					<ul class="unstyled flash-messages">
+						<li class="alert alert-info">
+							No events were found matching your search criteria. Please adjust the search filters and
+							try again.
+						</li>
+					</ul>
+				</f:else>
+			</f:if>
+
+			<div class="row row-flush">
+				<div class="span5">
+					<div class="input">
+						<label for="location">Location</label>
+						<f:form.textfield id="location" name="location" value="{location}" class="span5"/>
+					</div>
+				</div>
+				<div class="span5">
+					<div class="input">
+						<label for="range">Range</label>
+						<f:form.select name="range" options="{0: 'All Events' 1: 'This Month', 2: 'Next Month', 3: 'Next Three Months', 4: 'Past Events'}"
+									   value="{range}" optionValueField="id" optionLabelField=""/>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span5">
+					<div class="input">
+						<label for="category">Category</label>
+						<cic:form.select class="span5" name="category" value="{category}" options="{categories}"
+										 optionLabelField="title" nullOption="All Categories"/>
+					</div>
+				</div>
+				<div class="span5">
+					<div class="input">
+						<label for="type">Type</label>
+						<cic:form.select class="span5" name="type" value="{type}" options="{types}"
+										 optionLabelField="title" nullOption="All Types"/>
+					</div>
+				</div>
+			</div>
+			<div class="row row-flush">
+				<div class="span5">
+					<div class="input">
+						<f:form.submit value="Go" class="btn"/>
+					</div>
+				</div>
+			</div>
+
+		</f:form>
+	</div>
+
+	<f:if condition="{events}">
+		<f:then>
+			<f:if condition="{settings.pagination} == 1">
+				<f:then>
+					<cic:widget.paginate objects="{events}" as="paginatedEvents"
+										 configuration="{itemsPerPage: eventsPerPage}">
+						<f:render partial="Event/List"
+								  arguments="{settings: settings, allEvents: paginatedEvents}"></f:render>
+					</cic:widget.paginate>
+				</f:then>
+				<f:else>
+					<f:render partial="Event/List" arguments="{settings: settings, allEvents: events}"></f:render>
+				</f:else>
+			</f:if>
+		</f:then>
+	</f:if>
+
+</f:section>
