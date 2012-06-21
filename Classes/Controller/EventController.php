@@ -201,7 +201,6 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 		$this->view->assign('event', $event);
 	}
 
-
 	public function upcomingAction() {
 		$this->setSettings();
 		$this->eventRepository->addFilters(array('range' => Tx_Cicevents_Domain_Repository_EventRepository::RANGE_CURRENT));
