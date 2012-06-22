@@ -34,12 +34,6 @@
 class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEntity {
 
 	/**
-	 * The DAM Repository
-	 * @var Tx_Cicservices_Domain_Repository_DigitalAssetRepository
-	 */
-	protected $damRepository;
-
-	/**
 	 * title
 	 *
 	 * @var string
@@ -125,7 +119,6 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 
 	public function initializeObject() {
 		$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
-		$this->damRepository = $objectManager->get('Tx_Cicbase_Domain_Repository_DigitalAssetRepository');
 	}
 
 	/**
@@ -352,8 +345,9 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 * @return array Collection of DAM objects.
 	 */
 	public function getImages() {
-		$imagesCache = $this->damRepository->get('tx_cicevents_domain_model_event',$this->uid,'images');
-		return $imagesCache;
+		//TODO: Make this work without the DAM
+#		$imagesCache = $this->damRepository->get('tx_cicevents_domain_model_event',$this->uid,'images');
+#		return $imagesCache;
 	}
 
 	/**
