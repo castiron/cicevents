@@ -84,12 +84,8 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 					switch($value) {
 						case self::RANGE_CURRENT:
 							$start = new DateTime();
-							$end = new DateTime();
 							$start->setTime(0,0,0);
-							$end->setTime(23, 59, 59);
-							$A = $query->greaterThanOrEqual('endTime', $start);
-							$B = $query->lessThanOrEqual('startTime', $end);
-							$this->filters[] = $query->logicalAnd($A, $B);
+							$this->filters[] = $query->greaterThanOrEqual('endTime', $start);
 							break;
 						case self::RANGE_NEXT_MONTH:
 							$start = new DateTime();
