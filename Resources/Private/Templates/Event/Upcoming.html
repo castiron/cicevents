@@ -2,6 +2,7 @@
 <ul class="icon-list icon-list-events unstyled">
 	<f:for each="{events}" as="event">
 		<li>
+			<span class="event-icon"></span>
 			<!-- TODO: Properly abstract the page uid for the single view out of this view -->
 			<span><f:link.action pageUid="80" action="detail" arguments="{event : event}">{event.title}</f:link.action></span>
 			<span>{event.venue}</span>
