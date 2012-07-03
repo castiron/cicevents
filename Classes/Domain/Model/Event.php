@@ -88,7 +88,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	/**
 	 * images
 	 *
-	 * @var string
+	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Cicbase_Domain_Model_File>
 	 */
 	protected $images;
 
@@ -342,12 +342,31 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	/**
 	 * Getter for images
 	 *
-	 * @return array Collection of DAM objects.
+	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Cicbase_Domain_Model_File>
 	 */
 	public function getImages() {
-		//TODO: Make this work without the DAM
-#		$imagesCache = $this->damRepository->get('tx_cicevents_domain_model_event',$this->uid,'images');
-#		return $imagesCache;
+		return $this->images;
+	}
+
+	/**
+	 * @param Tx_Extbase_Persistence_ObjectStorage $images
+	 */
+	public function setImages(Tx_Extbase_Persistence_ObjectStorage $images) {
+		$this->images = $images;
+	}
+
+	/**
+	 * @param Tx_Cicbase_Domain_Model_File $image
+	 */
+	public function addImage(Tx_Cicbase_Domain_Model_File $image){
+		$this->images->attach($image);
+	}
+
+	/**
+	 * @param Tx_Cicbase_Domain_Model_File $image
+	 */
+	public function removeImage(Tx_Cicbase_Domain_Model_File $image){
+		$this->images->detach($image);
 	}
 
 	/**
