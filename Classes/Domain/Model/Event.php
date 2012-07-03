@@ -65,6 +65,16 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	protected $venue;
 
 	/**
+	 * @var string
+	 */
+	protected $url;
+
+	/**
+	 * @var boolean
+	 */
+	protected $linkToUrl;
+
+	/**
 	 * address
 	 *
 	 * @var string
@@ -88,7 +98,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	/**
 	 * images
 	 *
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Cicbase_Domain_Model_File>
+	 * @var string
 	 */
 	protected $images;
 
@@ -340,49 +350,65 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	}
 
 	/**
-	 * Getter for images
-	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Cicbase_Domain_Model_File>
+	 * @param string $url
 	 */
-	public function getImages() {
-		return $this->images;
+	public function setUrl($url) {
+		$this->url = $url;
 	}
 
 	/**
-	 * @param Tx_Extbase_Persistence_ObjectStorage $images
+	 * @return string
 	 */
-	public function setImages(Tx_Extbase_Persistence_ObjectStorage $images) {
+	public function getUrl() {
+		return $this->url;
+	}
+
+	/**
+	 * @param boolean $linkToUrl
+	 */
+	public function setLinkToUrl($linkToUrl) {
+		$this->linkToUrl = $linkToUrl;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getLinkToUrl() {
+		return $this->linkToUrl;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getHasImage() {
+		if($this->getImages()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function getFirstImage() {
+		$images = explode(',',$this->getImages());
+		if(count($images)) {
+			return 'uploads/tx_cicevents/'.$images[0];
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * @param string $images
+	 */
+	public function setImages($images) {
 		$this->images = $images;
 	}
 
 	/**
-	 * @param Tx_Cicbase_Domain_Model_File $image
+	 * @return string
 	 */
-	public function addImage(Tx_Cicbase_Domain_Model_File $image){
-		$this->images->attach($image);
+	public function getImages() {
+		return $this->images;
 	}
-
-	/**
-	 * @param Tx_Cicbase_Domain_Model_File $image
-	 */
-	public function removeImage(Tx_Cicbase_Domain_Model_File $image){
-		$this->images->detach($image);
-	}
-
-	/**
-	 * Getter for first image
-	 *
-	 * @return array first DAM object
-	 */
-	public function getFirstImage() {
-		$images = $this->getImages();
-		if(!empty($images)) {
-			$out = $images[0];
-		} else {
-			$out = null;
-		}
-		return $out;
-	}
-
 }
 ?>

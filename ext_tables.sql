@@ -16,6 +16,8 @@ CREATE TABLE tx_cicevents_domain_model_event (
 	images text NOT NULL,
 	category int(11) unsigned DEFAULT '0' NOT NULL,
 	type int(11) unsigned DEFAULT '0',
+	url text NOT NULL,
+	link_to_url tinyint(4) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

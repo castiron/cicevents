@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_cicevents_domain_model_event'] = array(
 	'ctrl' => $TCA['tx_cicevents_domain_model_event']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type,title, start_time, end_time, venue, address, teaser, description, images, categories',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type,title, start_time, end_time, url, link_to_url, venue, address, teaser, description, images, categories',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1,type, title, start_time, end_time, venue, address, teaser, description, --div--;Images, images,--div--;Categories, categories, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1,type, title, start_time, end_time, url, link_to_url, venue, address, teaser, description, --div--;Images, images,--div--;Categories, categories, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -148,22 +148,13 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 		'images' => Array (
 			"exclude" => 0,
 			'label' => 'Images',
-			"config" => Array (
+			"config" => Array(
 				'type' => 'group',
-				'form_type' => 'user',
-				'userFunc' => 'EXT:dam/lib/class.tx_dam_tcefunc.php:&tx_dam_tceFunc->getSingleField_typeMedia',
-				'internal_type' => 'db',
-				'allowed' => 'tx_dam',
-				'prepend_tname' => 1,
-				'MM' => 'tx_dam_mm_ref',
-				'MM_foreign_select' => 1,
-				'MM_opposite_field' => 'file_usage',
-				'MM_match_fields' => array(
-					'ident' => 'images'
-				),
-				'allowed_types' => 'gif,jpg,jpeg,tif,tiff,bmp,pcx,tga,png,pdf,ai',
+				'uploadfolder' => 'uploads/tx_cicevents',
+				'show_thumbs' => true,
+				'internal_type' => 'file',
+				'allowed' => 'gif,jpg,jpeg,tif,tiff,bmp,pcx,tga,png,pdf,ai',
 				'max_size' => 10000,
-				'show_thumbs' => 1,
 				'size' => 6,
 				'maxitems' => 20,
 				'minitems' => 0,
@@ -255,41 +246,33 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 				),
 			),
 		),
-		'images' => array(
-			'exclude' => 0,
-			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event.images',
+		'link_to_url' => array(
+			'exclude' => 1,
+			'label' => 'Link Directly to Event URL?',
 			'config' => array(
-				'type' => 'select',
-				'foreign_table' => 'tx_cicbase_domain_model_file',
-				'MM' => 'tx_cicevents_domain_model_event_images_mm',
-				'size' => 5,
-				'autoSizeMax' => 30,
-				'maxitems' => 9999,
-				'multiple' => 0,
-				'wizards' => array(
-					'_PADDING' => 1,
-					'_VERTICAL' => 1,
-					'edit' => array(
-						'type' => 'popup',
-						'title' => 'Edit',
-						'script' => 'wizard_edit.php',
-						'icon' => 'edit2.gif',
-						'popup_onlyOpenIfSelected' => 1,
-						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
-					),
-					'add' => Array(
-						'type' => 'script',
-						'title' => 'Create new',
-						'icon' => 'add.gif',
-						'params' => array(
-							'table' => 'fe_users',
-							'pid' => '###CURRENT_PID###',
-							'setValue' => 'prepend'
-						),
-						'script' => 'wizard_add.php',
-					),
-				),
+				'type' => 'check',
 			),
+		),
+		'url' => array(
+			'exclude' => 0,
+			'label' => 'URL',
+			'config' => array(
+				'type' => 'input',
+				'size' => '15',
+				'max' => '255',
+				'checkbox' => '',
+				'eval' => 'trim',
+				'wizards' => array(
+					'_PADDING' => 2,
+					'link' => array(
+						'type' => 'popup',
+						'title' => 'Link',
+						'icon' => 'link_popup.gif',
+						'script' => 'browse_links.php?mode=wizard',
+						'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
+					)
+				)
+			)
 		),
 	),
 );
