@@ -197,7 +197,10 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	 * @return void
 	 */
 	public function detailAction(Tx_Cicevents_Domain_Model_Event $event) {
-
+		$cObj = t3lib_div::makeInstance('tslib_cObj');
+		$register = array();
+		$register['eventTitle'] = $event->getTitle();
+		$cObj->LOAD_REGISTER($register, '');
 		$this->view->assign('event', $event);
 	}
 
