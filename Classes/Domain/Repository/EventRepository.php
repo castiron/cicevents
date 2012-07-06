@@ -20,14 +20,17 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 	/**
 	 * Returns all objects of this repository (overridden)
 	 *
-	 * @param integer $maxCount An optional limit on the number of events returned. Defaults to all events.
+	 * @param integer $limit An optional limit on the number of events returned. Defaults to all events.
+	 * @param integer $offset An optional starting point for all records. Defaults to the beginning.
 	 * @return array An array of objects, empty if no objects found
 	 */
-	public function findAll($maxCount = 0) {
+	public function findAll($limit = 0, $offset = 0) {
 		$query = $this->getQuery();
 		$query->setOrderings(array('startTime' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING));
-		if($maxCount > 0)
-			$query->setLimit($maxCount);
+		if($limit > 1) {
+			$query->setLimit($limit);
+			$query->setOffset($offset);
+		}
 		if(count($this->filters) > 0) {
 			$query->setOrderings($this->filterOrderings);
 			$query->matching($query->logicalAnd($this->filters));

@@ -33,16 +33,6 @@
  */
 class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_ActionController {
 
-	const DATE_FORMAT = 'm/d/Y h:i a';
-	const DATE_FORMAT_FILTERS = 'm/d/Y';
-
-	/**
-	 * Determines how many Event records to pull. If 0, then pull all records.
-	 *
-	 * @var int
-	 */
-	private $maxCount = 0;
-
 	/**
 	 * @var Tx_Cicevents_Domain_Repository_EventRepository
 	 */
@@ -120,6 +110,9 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 
 	}
 
+	/**
+	 * initializeAction
+	 */
 	public function initializeAction() {
 		// handle null arguments... a temporary work-around until I can address it more permanently -ZD
 		foreach($this->arguments as $argument) {
@@ -143,6 +136,17 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	}
 
 
+	/******************************************
+	Events Calendar Actions
+
+	 * calendar
+
+	 ******************************************/
+
+	/**
+	 * action calendar
+	 *
+	 */
 	public function calendarAction() {
 		$dateFormat = 'D, d M Y H:i:s';// Wed, 09 Aug 1995 00:00:00 // <-- to match JavaScript Date format
 		$events = $this->eventRepository->findAll();
@@ -163,15 +167,29 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	}
 
 
+	/******************************************
+	Events Listing Actions
+
+	 * list
+	 * upcoming
+	 * detail
+	 * past
+
+	 ******************************************/
+
 	/**
 	 * action list
+	 *
+	 * Displays all current events by default.
 	 *
 	 * @param string $location
 	 * @param null|Tx_Cicevents_Domain_Model_Category $category
 	 * @param null|Tx_Cicevents_Domain_Model_Type $type
 	 * @param string $range
+	 * @param int $currentPage
 	 */
-	public function listAction($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, $range = null) {
+	public function listAction($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, $range = null, $currentPage = 1) {
+
 		// Get form data
 		$params = array(
 			'location' => $location,
@@ -181,13 +199,25 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 		);
 
 
+		$limit = $this->findLimit();
+		$offset = $this->findOffset($limit, $currentPage);
+
 		$this->eventRepository->addFilters($params);
-		$this->setSettings();
-		$events = $this->eventRepository->findAll($this->maxCount);
+		$events = $this->eventRepository->findAll($limit, $offset);
+		$this->view->assign('events', $events);
+		$allFilteredEvents = $this->eventRepository->findAll();
+		$numberOfPages = ceil($allFilteredEvents->count() / $limit);
+
+		$this->setupFiltersForm();
+		$this->setupPagination($currentPage, $numberOfPages);
+
+
+
+		// Maintain form state
 		$this->view->assign('category',$category);
 		$this->view->assign('range',$range);
 		$this->view->assign('type', $type);
-		$this->view->assign('events', $events);
+		$this->view->assign('location', $location);
 	}
 
 	/**
@@ -204,12 +234,24 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 		$this->view->assign('event', $event);
 	}
 
+	/**
+	 * action upcoming
+	 */
 	public function upcomingAction() {
 		$this->setSettings();
 		$this->eventRepository->addFilters(array('range' => Tx_Cicevents_Domain_Repository_EventRepository::RANGE_THREE_MONTHS));
-		$events = $this->eventRepository->findAll($this->maxCount)->toArray();
+		$events = $this->eventRepository->findAll()->toArray();
 		$this->view->assign('events', $events);
 	}
+
+
+	/******************************************
+	 Events Administration Actions
+
+	 * new
+	 * create
+
+	 ******************************************/
 
 	/**
 	 * action new
@@ -299,51 +341,115 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	}
 
 
-	/**
-	 * Prepare the backend settings to be used in the templates
-	 */
-	private function setSettings() {
+	/******************************************
+	 Other Functions
+	*******************************************/
 
-		// Needed for the filters form
+	/**
+	 * @return int
+	 */
+	protected function findLimit(){
+		$limit = 0; // 0 means all, in this case
+		if($this->settings['pagination'] && $this->settings['itemsPerPage']){
+			$limit = $this->settings['itemsPerPage'];
+		} else if($this->settings['max']){
+			$limit = $this->settings['max'];
+		}
+		return intval($limit);
+	}
+
+	/**
+	 * @param int $itemsPerPage
+	 * @param int $currentPage
+	 * @return int
+	 */
+	protected function findOffset($itemsPerPage, $currentPage){
+		if(!$this->settings['pagination'] || $currentPage <= 1){
+			return 0;
+		}
+
+		return $itemsPerPage * ($currentPage - 1);
+	}
+
+
+	/**
+	 * Setup the filters form.
+	 */
+	protected function setupFiltersForm() {
+		if(!$this->settings['filtersOn']){
+			return;
+		}
+		// Parse flexform settings
+		$filterSettings = explode(',', $this->settings['filtersArray']);
+		foreach($filterSettings as $filter){
+			$filters[$filter] = true;
+		}
+
+		$this->view->assign('filters', $filters);
 		$this->view->assign('categories', $this->categoryRepository->findAll());
 		$this->view->assign('types', $this->typeRepository->findAll());
+		$this->view->assign('ranges', $this->determineRanges());
 
-		$args = $this->request->getArguments();
-		$this->view->assign('location', $args['location']);
+	}
 
-		if($args['date']) {
-			if(is_object($args['date'])) {
-				$date = $args['date']->format($this::DATE_FORMAT_FILTERS);
-			} else {
-				$date = $args['date'];
-			}
-			$this->view->assign('dateValue', $date);
-		} else {
-			$date = date($this::DATE_FORMAT_FILTERS);
+
+	protected function setupPagination($currentPage, $numberOfPages){
+		$pagination['currentPage'] = $currentPage;
+		$pagination['numberOfPages'] = $numberOfPages;
+
+		if($currentPage < $numberOfPages){
+			$pagination['nextPage'] = $currentPage + 1;
 		}
-		$this->view->assign('date',$date);
-		$this->view->assign('type', $args['type']);
-		$this->view->assign('category', $args['category']);
 
-
-		// If the user didn't specify a maxCount or the user turned on pagination,
-		// then retrieve all events (maxCount = 0, will do that).
-		if(!$this->settings['max'] || $this->settings['pagination']){
-
-			// Get all events
-			$this->maxCount = 0;
-
-			// Set the event limit for pages
-			if($this->settings['pagination']) {
-			 	if($this->settings['max']) {
-					$this->view->assign('eventsPerPage', $this->settings['max']);
-				} else {
-					$this->view->assign('eventsPerPage', 10);
-				}
-			}
-		} else {
-			$this->maxCount = (int) $this->settings['max'];
+		if($currentPage < $numberOfPages - 1){
+			$pagination['nextNextPage'] = $currentPage + 2;
 		}
+
+		if($currentPage > 1) {
+			$pagination['previousPage'] = $currentPage - 1;
+		}
+
+		if($currentPage > 2) {
+			$pagination['previousPreviousPage'] = $currentPage - 2;
+		}
+
+		$this->view->assign('pagination', $pagination);
+	}
+
+	/**
+	 * The user can specify which ranges are available on the filters form using
+	 * the flexform settings. We need to see which ranges were selected and create
+	 * an array that can be used in the view.
+	 *
+	 * @return array
+	 */
+	protected function determineRanges(){
+		// Parse flexform settings
+		$rangeSettings = explode(',', $this->settings['rangesArray']);
+
+		$ranges = array();
+		foreach($rangeSettings as $setting){
+			switch($setting){
+				case 'current':
+					$ranges[Tx_Cicevents_Domain_Repository_EventRepository::RANGE_CURRENT] = 'Upcoming Events';
+					break;
+				case 'thisMonth':
+					$ranges[Tx_Cicevents_Domain_Repository_EventRepository::RANGE_THIS_MONTH] = 'This Month';
+					break;
+				case 'nextMonth':
+					$ranges[Tx_Cicevents_Domain_Repository_EventRepository::RANGE_NEXT_MONTH] = 'Next Month';
+					break;
+				case 'nextThreeMonths':
+					$ranges[Tx_Cicevents_Domain_Repository_EventRepository::RANGE_THREE_MONTHS] = 'Next Three Months';
+					break;
+				case 'past':
+					$ranges[Tx_Cicevents_Domain_Repository_EventRepository::RANGE_PAST] = 'Past';
+					break;
+				default:
+					continue;
+			}
+		}
+		return $ranges;
 	}
 
 	/**

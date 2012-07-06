@@ -1,0 +1,110 @@
+<f:section name="paginationLink">
+	<f:link.action arguments="{currentPage: currentPage,
+							  range: range,
+							  type: type,
+							  location: location,
+							  category: category}">{f:if(condition: text, then: text, else: currentPage)}</f:link.action>
+</f:section>
+
+<f:if condition="{pagination.numberOfPages} > 1">
+	<div class="pagination">
+		<div class="pagination">
+			<ul>
+
+				<f:if condition="{pagination.previousPage}">
+					<f:then>
+						<li>
+							<f:render section="paginationLink"
+									  arguments="{currentPage: pagination.previousPage,
+								  			  text: '&laquo;',
+								  			  range: range,
+								  			  type: type,
+								  			  location: location,
+								  			  category: category}"/>
+						</li>
+					</f:then>
+					<f:else>
+						<li class="disabled">
+							<span>&laquo;</span>
+						</li>
+					</f:else>
+				</f:if>
+
+				<f:if condition="{pagination.nextPage}">
+					<f:else>
+						<f:if condition="{pagination.previousPreviousPage}">
+							<li>
+								<f:render section="paginationLink"
+										  arguments="{currentPage: pagination.previousPreviousPage,
+								  			  range: range,
+								  			  type: type,
+								  			  location: location,
+								  			  category: category}"/>
+							</li>
+						</f:if>
+					</f:else>
+				</f:if>
+
+				<f:if condition="{pagination.previousPage}">
+					<li>
+						<f:render section="paginationLink"
+								  arguments="{currentPage: pagination.previousPage,
+										  range: range,
+										  type: type,
+										  location: location,
+										  category: category}"/>
+					</li>
+				</f:if>
+
+				<li class="active">
+					<span>{pagination.currentPage}</span>
+				</li>
+
+				<f:if condition="{pagination.nextPage}">
+					<li>
+						<f:render section="paginationLink"
+								  arguments="{currentPage: pagination.nextPage,
+										  range: range,
+										  type: type,
+										  location: location,
+										  category: category}" />
+					</li>
+				</f:if>
+
+				<f:if condition="{pagination.previousPage}">
+					<f:else>
+						<f:if condition="{pagination.nextNextPage}">
+							<li>
+								<f:render section="paginationLink"
+										  arguments="{currentPage: pagination.nextNextPage,
+								  			  	  range: range,
+								  			 	  type: type,
+								  			  	  location: location,
+								  			 	  category: category}" />
+							</li>
+						</f:if>
+					</f:else>
+				</f:if>
+
+				<f:if condition="{pagination.nextPage}">
+					<f:then>
+						<li>
+							<f:render section="paginationLink"
+									  arguments="{currentPage: pagination.nextPage, text: '&raquo;',
+								  			  range: range,
+								  			  type: type,
+								  			  location: location,
+								  			  category: category}" />
+						</li>
+					</f:then>
+					<f:else>
+						<li class="disabled">
+							<span>&raquo;</span>
+						</li>
+					</f:else>
+				</f:if>
+
+			</ul>
+		</div>
+	</div>
+</f:if>
