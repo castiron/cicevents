@@ -303,10 +303,8 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	 * Prepare the backend settings to be used in the templates
 	 */
 	private function setSettings() {
-		$this->view->assign('heading', $this->settings['heading']);
 
 		// Needed for the filters form
-		$this->view->assign('actionMethodName', $this->actionMethodName);
 		$this->view->assign('categories', $this->categoryRepository->findAll());
 		$this->view->assign('types', $this->typeRepository->findAll());
 
