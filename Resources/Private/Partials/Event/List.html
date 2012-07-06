@@ -2,7 +2,7 @@
 
 	<div class="event-listing with-trim">
 		<h2 class="title">
-			<f:link.action action="detail" arguments="{event : event}">{event.title}</f:link.action>
+			<f:link.action action="detail" pluginName="eventslisting" arguments="{event : event}">{event.title}</f:link.action>
 		</h2>
 
 		<f:if condition="{settings.showJustOneImage}">

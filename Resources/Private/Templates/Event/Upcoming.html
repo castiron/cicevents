@@ -3,7 +3,7 @@
 	<f:for each="{events}" as="event">
 		<li>
 			<span class="event-icon"></span>
-			<span><f:link.action pageUid="{settings.singlePid}" action="detail" pluginName="EventsListing" arguments="{event : event}">{event.title}</f:link.action></span>
+			<span><f:link.action action="detail" pluginName="eventslisting" arguments="{event : event}">{event.title}</f:link.action></span>
 			<span>{event.venue}</span>
 			<span class="small">
 			<f:if condition="{event.spansMultipleDays}">

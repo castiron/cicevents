@@ -7,9 +7,7 @@
 	<div class="with-trim" style="margin-bottom: 25px;">
 		<h2>{event.title}</h2>
 
-		<f:for each="{event.images}" as="image">
-			<f:image src="{image.fullPath}" alt="" width="200" />
-		</f:for>
+
 		<div class="event-details">
 			<div class="event-teaser"><f:format.html>{event.teaser}</f:format.html></div>
 			<f:if condition="{event.spansMultipleDays}">

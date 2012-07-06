@@ -16,13 +16,13 @@
 								<numIndex index="0">
 									Upcoming Events
 								</numIndex>
-								<numIndex index="1">Event->upcoming</numIndex>
+								<numIndex index="1">Event->upcoming;Event->detail</numIndex>
 							</numIndex>
 							<numIndex index="2">
 								<numIndex index="0">
 									List of Events
 								</numIndex>
-								<numIndex index="1">Event->list;Event->search</numIndex>
+								<numIndex index="1">Event->list;Event->search;Event->detail</numIndex>
 							</numIndex>
 							<numIndex index="3">
 								<numIndex index="0">

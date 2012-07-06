@@ -11,9 +11,6 @@ plugin.tx_cicevents {
 	features {
 		rewrittenPropertyMapper = 1
 	}
-	settings {
-		singlePid = 81
-	}
 }
 
 page.includeCSS {
