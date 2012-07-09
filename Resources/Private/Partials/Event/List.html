@@ -5,21 +5,6 @@
 			<f:link.action action="detail" pluginName="eventslisting" arguments="{event : event}">{event.title}</f:link.action>
 		</h2>
 
-		<f:if condition="{settings.showJustOneImage}">
-			<f:then>
-				<f:if condition="{event.firstImage}">
-					<f:link.action action="detail" arguments="{event:event}">
-						<f:image src="{event.firstImage.fullPath}" alt="" width="200"/>
-					</f:link.action>
-				</f:if>
-			</f:then>
-			<f:else>
-				<f:for each="{event.images}" as="image">
-					<f:image src="{image.fullPath}" alt="" width="200"/>
-				</f:for>
-			</f:else>
-		</f:if>
-
 		<f:if condition="{event.spansMultipleDays}">
 			<f:then>
 				<p class="small date-string flush">
