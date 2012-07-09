@@ -27,7 +27,7 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 	public function findAll($limit = 0, $offset = 0) {
 		$query = $this->getQuery();
 		$query->setOrderings(array('startTime' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING));
-		if($limit > 1) {
+		if($limit > 0) {
 			$query->setLimit($limit);
 			$query->setOffset($offset);
 		}
