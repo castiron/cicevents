@@ -171,9 +171,12 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	Events Listing Actions
 
 	 * list
-	 * upcoming
-	 * detail
+	 * listMinimal
 	 * past
+	 * pastMinimal
+	 * month
+	 * monthMinimal
+	 * detail
 
 	 ******************************************/
 
@@ -187,37 +190,121 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	 * @param null|Tx_Cicevents_Domain_Model_Type $type
 	 * @param string $range
 	 * @param int $currentPage
+	 * @param bool $minimal
 	 */
-	public function listAction($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, $range = null, $currentPage = 1) {
+	public function listAction($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, $range = null, $currentPage = 1, $minimal = false) {
+		if($minimal){
+			$this->view->assign('minimal', true);
+		}
+		$this->listEvents($location, $category, $type, $range, $currentPage);
+	}
 
-		// Get form data
-		$params = array(
+	/**
+	 * action listMinimal
+	 *
+	 * Displays all current events by default.
+	 *
+	 * @param string $location
+	 * @param null|Tx_Cicevents_Domain_Model_Category $category
+	 * @param null|Tx_Cicevents_Domain_Model_Type $type
+	 * @param string $range
+	 * @param int $currentPage
+	 */
+	public function listMinimalAction($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, $range = null, $currentPage = 1) {
+		$args = array(
 			'location' => $location,
 			'category' => $category,
 			'type' => $type,
-			'range' => intval($range)
-		);
+			'range' => $range,
+			'currentPage' => $currentPage,
+			'minimal' => true);
+		$this->forward('list', null, null, $args);
+	}
 
+	/**
+	 * action past
+	 *
+	 * Displays all current events by default.
+	 *
+	 * @param string $location
+	 * @param null|Tx_Cicevents_Domain_Model_Category $category
+	 * @param null|Tx_Cicevents_Domain_Model_Type $type
+	 * @param string $range
+	 * @param int $currentPage
+	 */
+	public function pastAction($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, $range = null, $currentPage = 1) {
+		$args = array(
+			'location' => $location,
+			'category' => $category,
+			'type' => $type,
+			'range' => ($range === null ? Tx_Cicevents_Domain_Repository_EventRepository::RANGE_PAST.'' : $range),
+			'currentPage' => $currentPage);
+		$this->forward('list', null, null, $args);
+	}
 
-		$limit = $this->findLimit();
-		$offset = $this->findOffset($limit, $currentPage);
+	/**
+	 * action pastMinimal
+	 *
+	 * Displays all current events by default.
+	 *
+	 * @param string $location
+	 * @param null|Tx_Cicevents_Domain_Model_Category $category
+	 * @param null|Tx_Cicevents_Domain_Model_Type $type
+	 * @param string $range
+	 * @param int $currentPage
+	 */
+	public function pastMinimalAction($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, $range = null, $currentPage = 1) {
+		$args = array(
+			'location' => $location,
+			'category' => $category,
+			'type' => $type,
+			'range' => ($range === null ? Tx_Cicevents_Domain_Repository_EventRepository::RANGE_PAST.'' : $range),
+			'currentPage' => $currentPage,
+			'minimal' => true);
+		$this->forward('listMinimal', null, null, $args);
+	}
 
-		$this->eventRepository->addFilters($params);
-		$events = $this->eventRepository->findAll($limit, $offset);
-		$this->view->assign('events', $events);
-		$allFilteredEvents = $this->eventRepository->findAll();
-		$numberOfPages = ceil($allFilteredEvents->count() / $limit);
+	/**
+	 * action month
+	 *
+	 * Displays all current events by default.
+	 *
+	 * @param string $location
+	 * @param null|Tx_Cicevents_Domain_Model_Category $category
+	 * @param null|Tx_Cicevents_Domain_Model_Type $type
+	 * @param string $range
+	 * @param int $currentPage
+	 */
+	public function monthAction($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, $range = null, $currentPage = 1) {
+		$args = array(
+			'location' => $location,
+			'category' => $category,
+			'type' => $type,
+			'range' => ($range === null ? Tx_Cicevents_Domain_Repository_EventRepository::RANGE_THIS_MONTH.'' : $range),
+			'currentPage' => $currentPage);
+		$this->forward('list', null, null, $args);
+	}
 
-		$this->setupFiltersForm();
-		$this->setupPagination($currentPage, $numberOfPages);
-
-
-
-		// Maintain form state
-		$this->view->assign('category',$category);
-		$this->view->assign('range',$range);
-		$this->view->assign('type', $type);
-		$this->view->assign('location', $location);
+	/**
+	 * action monthMinimal
+	 *
+	 * Displays all current events by default.
+	 *
+	 * @param string $location
+	 * @param null|Tx_Cicevents_Domain_Model_Category $category
+	 * @param null|Tx_Cicevents_Domain_Model_Type $type
+	 * @param string $range
+	 * @param int $currentPage
+	 */
+	public function monthMinimalAction($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, $range = null, $currentPage = 1) {
+		$args = array(
+			'location' => $location,
+			'category' => $category,
+			'type' => $type,
+			'range' => ($range === null ? Tx_Cicevents_Domain_Repository_EventRepository::RANGE_THIS_MONTH.'' : $range),
+			'currentPage' => $currentPage,
+			'minimal' => true);
+		$this->forward('listMinimal', null, null, $args);
 	}
 
 	/**
@@ -233,17 +320,6 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 		$cObj->LOAD_REGISTER($register, '');
 		$this->view->assign('event', $event);
 	}
-
-	/**
-	 * action upcoming
-	 */
-	public function upcomingAction() {
-		$this->setSettings();
-		$this->eventRepository->addFilters(array('range' => Tx_Cicevents_Domain_Repository_EventRepository::RANGE_THREE_MONTHS));
-		$events = $this->eventRepository->findAll()->toArray();
-		$this->view->assign('events', $events);
-	}
-
 
 	/******************************************
 	 Events Administration Actions
@@ -344,6 +420,45 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	/******************************************
 	 Other Functions
 	*******************************************/
+
+	/**
+	 * @param null $location
+	 * @param null|Tx_Cicevents_Domain_Model_Category $category
+	 * @param null|Tx_Cicevents_Domain_Model_Type $type
+	 * @param null $range
+	 * @param int $currentPage
+	 */
+	protected function listEvents($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, $range = null, $currentPage = 1) {
+		// Get form data
+		$params = array(
+			'location' => $location,
+			'category' => $category,
+			'type' => $type,
+			'range' => intval($range)
+		);
+
+
+		$limit = $this->findLimit();
+		$offset = $this->findOffset($limit, $currentPage);
+
+		$this->eventRepository->addFilters($params);
+		$events = $this->eventRepository->findAll($limit, $offset);
+		$this->view->assign('events', $events);
+		$allFilteredEvents = $this->eventRepository->findAll();
+		$numberOfPages = ceil($allFilteredEvents->count() / $limit);
+
+		$this->setupFiltersForm();
+		$this->setupPagination($currentPage, $numberOfPages);
+
+
+
+		// Maintain form state
+		$this->view->assign('category',$category);
+		$this->view->assign('range',$range);
+		$this->view->assign('type', $type);
+		$this->view->assign('location', $location);
+	}
+
 
 	/**
 	 * @return int

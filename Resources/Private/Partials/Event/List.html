@@ -2,7 +2,14 @@
 
 	<div class="event-listing with-trim">
 		<h2 class="title">
-			<f:link.action action="detail" pluginName="eventslisting" arguments="{event : event}">{event.title}</f:link.action>
+			<f:if condition="{settings.singlePid}">
+				<f:then>
+					<f:link.action action="detail" pageUid="{settings.singlePid}" pluginName="eventslisting" arguments="{event : event}">{event.title}</f:link.action>
+				</f:then>
+				<f:else>
+					<f:link.action action="detail" pluginName="eventslisting" arguments="{event : event}">{event.title}</f:link.action>
+				</f:else>
+			</f:if>
 		</h2>
 
 		<f:if condition="{event.spansMultipleDays}">
@@ -42,7 +49,7 @@
 
 		<f:if condition="{event.type.title}">
 			<strong>Event Type:</strong>
-			<f:link.action action="search" arguments="{actionMethodName:actionMethodName, type: event.type}" class="">
+			<f:link.action arguments="{actionMethodName:actionMethodName, type: event.type}" class="">
 				{event.type.title}
 			</f:link.action>
 			<br/>
@@ -50,7 +57,7 @@
 
 		<strong>Event Category:</strong>
 		<f:for each="{event.categories}" as="category">
-			<f:link.action action="search" arguments="{actionMethodName:actionMethodName, category: category}" class="">
+			<f:link.action arguments="{actionMethodName:actionMethodName, category: category}" class="">
 				{category.title}
 			</f:link.action>
 		</f:for>

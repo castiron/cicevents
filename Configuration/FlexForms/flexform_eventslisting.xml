@@ -11,23 +11,36 @@
 
 					<switchableControllerActions>
 						<TCEforms>
-							<label>What to Display</label>
+							<label>What to display</label>
+							<onChange>reload</onChange>
 							<config>
 								<type>select</type>
 								<items>
 									<numIndex index="1">
-										<numIndex index="0">List All Events</numIndex>
+										<numIndex index="0">List upcoming events with complete detail</numIndex>
 										<numIndex index="1">Event->list;Event->detail</numIndex>
 									</numIndex>
 									<numIndex index="2">
-										<numIndex index="0">List Upcoming Events</numIndex>
-										<numIndex index="1">Event->upcoming;Event->detail</numIndex>
+										<numIndex index="0">List upcoming events with minimal detail</numIndex>
+										<numIndex index="1">Event->listMinimal;Event->detail</numIndex>
 									</numIndex>
 									<numIndex index="3" type="array">
-										<numIndex index="0">List Past Events</numIndex>
+										<numIndex index="0">List past events with complete detail</numIndex>
 										<numIndex index="1">Event->past;Event->detail</numIndex>
 									</numIndex>
-									<numIndex index="4">
+									<numIndex index="4" type="array">
+										<numIndex index="0">List past events with minimal detail</numIndex>
+										<numIndex index="1">Event->pastMinimal;Event->detail</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">List the current month's events with complete detail</numIndex>
+										<numIndex index="1">Event->month;Event->detail</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">List the current month's events with minimal detail</numIndex>
+										<numIndex index="1">Event->monthMinimal;Event->detail</numIndex>
+									</numIndex>
+									<numIndex index="7">
 										<numIndex index="0">Single Events</numIndex>
 										<numIndex index="1">Event->detail</numIndex>
 									</numIndex>
@@ -38,6 +51,7 @@
 
 					<settings.max>
 						<TCEforms>
+							<displayCond>FIELD:switchableControllerActions:!=:Event->detail</displayCond>
 							<label>Number of Events (ignored if pagination is on)</label>
 							<config>
 								<type>input</type>
@@ -48,6 +62,7 @@
 
 					<settings.singlePid>
 						<TCEforms>
+							<displayCond>FIELD:switchableControllerActions:!=:Event->detail</displayCond>
 							<label>Show single events on a different page</label>
 							<config>
 								<type>input</type>
@@ -64,6 +79,27 @@
 							</config>
 						</TCEforms>
 					</settings.singlePid>
+
+					<settings.returnPid>
+						<TCEforms>
+							<displayCond>FIELD:switchableControllerActions:=:Event->detail</displayCond>
+							<label>Page to return to</label>
+							<config>
+								<type>input</type>
+								<wizards type="array">
+									<_PADDING type="integer">2</_PADDING>
+									<link type="array">
+										<type>popup</type>
+										<title>Link</title>
+										<icon>link_popup.gif</icon>
+										<script>browse_links.php?mode=wizard</script>
+										<JSopenParams>height=300,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
+									</link>
+								</wizards>
+								<eval>required</eval>
+							</config>
+						</TCEforms>
+					</settings.returnPid>
 
 				</el>
 			</ROOT>

@@ -55,6 +55,13 @@
 
 	</div>
 	<p>
-		<f:link.page class="btn">&larr; Return to List of Events</f:link.page>
+		<f:if condition="{settings.returnPid}">
+			<f:then>
+				<f:link.page pageUid="{settings.returnPid}" class="btn">&larr; Return to List of Events</f:link.page>
+			</f:then>
+			<f:else>
+				<f:link.page class="btn">&larr; Return to List of Events</f:link.page>
+			</f:else>
+		</f:if>
 	</p>
 </f:section>
