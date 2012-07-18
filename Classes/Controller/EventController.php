@@ -33,6 +33,9 @@
  */
 class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_ActionController {
 
+	const DATE_FORMAT = 'm/d/Y h:i a';
+	const DATE_FORMAT_FILTERS = 'm/d/Y';
+
 	/**
 	 * @var Tx_Cicevents_Domain_Repository_EventRepository
 	 */
@@ -568,16 +571,21 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	}
 
 	/**
-	 * Grabs string values from the locallang.xml file.
+	 * A template method for displaying custom error flash messages, or to
+	 * display no flash message at all on errors. Override this to customize
+	 * the flash message in your action controller.
 	 *
-	 * @static
-	 * @param string $string The name of the key in the locallang.xml file.
-	 * @return string The value of that key
+	 * @override
+	 * @return string|boolean The flash message or FALSE if no flash message should be set
+	 * @api
 	 */
-	protected static function translate($string) {
-		return htmlspecialchars(Tx_Extbase_Utility_Localization::translate('tx_cicevents_domain_model_event.'.$string, 'cicevents'));
+	protected function getErrorFlashMessage() {
+		switch ($this->actionMethodName) {
+			case 'createAction':
+				return 'Please fix the errors below.';
+			default:
+				return 'An error occurred while trying to call ' . get_class($this) . '->' . $this->actionMethodName . '()';
+		}
 	}
-
-
 }
 ?>
