@@ -558,7 +558,7 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 					$ranges[Tx_Cicevents_Domain_Repository_EventRepository::RANGE_THREE_MONTHS] = 'Next Three Months';
 					break;
 				case 'past':
-					$ranges[Tx_Cicevents_Domain_Repository_EventRepository::RANGE_PAST] = 'Past';
+					$ranges[Tx_Cicevents_Domain_Repository_EventRepository::RANGE_PAST] = 'Past Events';
 					break;
 				default:
 					continue;
