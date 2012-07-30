@@ -216,7 +216,7 @@
 										<numIndex index="1">nextThreeMonths</numIndex>
 									</numIndex>
 									<numIndex index="4" type="array">
-										<numIndex index="0">Past</numIndex>
+										<numIndex index="0">Past Events</numIndex>
 										<numIndex index="1">past</numIndex>
 									</numIndex>
 								</items>
