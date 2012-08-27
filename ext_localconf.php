@@ -9,7 +9,7 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	array(
 		'Event' => 'list, detail'),
 	// non-cacheable actions
-	array('Event' => '')
+	array('Event' => 'list')
 );
 
 

@@ -60,6 +60,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	/**
 	 * venue
 	 *
+	 * @validate NotEmpty
 	 * @var string
 	 */
 	protected $venue;
@@ -77,6 +78,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	/**
 	 * address
 	 *
+	 * @validate NotEmpty
 	 * @var string
 	 */
 	protected $address;
