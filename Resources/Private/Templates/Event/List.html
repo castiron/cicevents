@@ -35,7 +35,7 @@
 						<div class="span5">
 							<div class="input">
 								<label for="range">Range</label>
-								<f:form.select name="range" options="{ranges}"
+								<f:form.select class="chzn-select" name="range" options="{ranges}"
 											   value="{range}" optionValueField="id" optionLabelField=""/>
 							</div>
 						</div>
@@ -46,7 +46,7 @@
 						<div class="span5">
 							<div class="input">
 								<label for="category">Category</label>
-								<cic:form.select class="span5" name="category" value="{category}" options="{categories}"
+								<cic:form.select class="span5 chzn-select" name="category" value="{category}" options="{categories}"
 												 optionLabelField="title" nullOption="All Categories"/>
 							</div>
 						</div>
@@ -55,7 +55,7 @@
 						<div class="span5">
 							<div class="input">
 								<label for="type">Type</label>
-								<cic:form.select class="span5" name="type" value="{type}" options="{types}"
+								<cic:form.select class="span5 chzn-select" name="type" value="{type}" options="{types}"
 												 optionLabelField="title" nullOption="All Types"/>
 							</div>
 						</div>

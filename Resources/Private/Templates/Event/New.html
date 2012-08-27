@@ -22,7 +22,7 @@
 				<div class="span5">
 					<div class="input control-group">
 						<label>Type:</label>
-						<f:form.select property="type" options="{types}" optionValueField="uid" optionLabelField="title" class="span5"/>
+						<f:form.select property="type" options="{types}" optionValueField="uid" optionLabelField="title" class="span5 chzn-select"/>
 						<p class="message">Required Field</p>
 					</div>
 				</div>
@@ -38,9 +38,9 @@
 				<div class="span5">
 					<div class="input control-group">
 						<label>&nbsp;</label>
-						<f:form.select class="select-time hour" options="{hours}" optionValueField="id" value="{startTimeSelectedHour}"/>
-						<f:form.select class="select-time minute" options="{minutes}"  optionValueField="id" value="{startTimeSelectedMinute}"/>
-						<f:form.select class="select-time daypart" options="{am: 'am', pm: 'pm'}" optionValueField="id" value="{startTimeSelectedDaypart}"/>
+						<f:form.select class="select-time hour chzn-select" options="{hours}" optionValueField="id" value="{startTimeSelectedHour}"/>
+						<f:form.select class="select-time minute chzn-select" options="{minutes}"  optionValueField="id" value="{startTimeSelectedMinute}"/>
+						<f:form.select class="select-time daypart chzn-select" options="{am: 'am', pm: 'pm'}" optionValueField="id" value="{startTimeSelectedDaypart}"/>
 					</div>
 				</div>
 			</div>
@@ -55,9 +55,9 @@
 				<div class="span5">
 					<div class="input control-group">
 						<label>&nbsp;</label>
-						<f:form.select class="select-time hour" options="{hours}" optionValueField="id" value="{endTimeSelectedHour}" />
-						<f:form.select class="select-time minute" options="{minutes}"  optionValueField="id" value="{endTimeSelectedMinute}"/>
-						<f:form.select class="select-time daypart" options="{am: 'am', pm: 'pm'}" optionValueField="id" value="{endTimeSelectedDaypart}"/>
+						<f:form.select class="select-time hour chzn-select" options="{hours}" optionValueField="id" value="{endTimeSelectedHour}" />
+						<f:form.select class="select-time minute chzn-select" options="{minutes}"  optionValueField="id" value="{endTimeSelectedMinute}"/>
+						<f:form.select class="select-time daypart chzn-select" options="{am: 'am', pm: 'pm'}" optionValueField="id" value="{endTimeSelectedDaypart}"/>
 					</div>
 				</div>
 			</div>
