@@ -3,7 +3,7 @@
 <label for="cicevents-formInput-{propertyName}">{propertyLabel}: </label>
 <f:if condition="{propertyName}">
 	<f:then>
-		<f:form.textfield class="{inputClass}" id="cicevents-formInput-{propertyName}" property="{propertyName}" value="{defaultValue}" errorClass="{errorClass}"/>
+		<f:form.textfield class="{inputClass}" id="cicevents-formInput-{propertyName}" property="{propertyName}" value="{defaultValue}" />
 		<f:if condition="{required}">
 			<p class="message">Required Field</p>
 		</f:if>
@@ -12,7 +12,7 @@
 		</div>
 	</f:then>
 	<f:else>
-		<f:form.textfield class="{inputClass}" id="cicevents-formInput-{name}" name="{name}" value="{defaultValue}" errorClass="{errorClass}" />
+		<f:form.textfield class="{inputClass}" id="cicevents-formInput-{name}" name="{name}" value="{defaultValue}" />
 		<f:if condition="{required}">
 			<p class="message">Required Field</p>
 		</f:if>
