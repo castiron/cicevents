@@ -313,6 +313,7 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	/**
 	 * action detail
 	 *
+	 * @ignorevalidation $event
 	 * @param $event
 	 * @return void
 	 */
