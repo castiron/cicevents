@@ -53,6 +53,11 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	private $typeRepository = null;
 
 	/**
+	 * @var Tx_Cicbase_Domain_Repository_FileRepository
+	 */
+	protected $fileRepository;
+
+	/**
 	 * Dependency injection of the Event Repository
 	 *
 	 * @param Tx_Cicevents_Domain_Repository_EventRepository $eventRepository
@@ -84,6 +89,15 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 		$this->typeRepository = $typeRepository;
 	}
 
+	/**
+	 * inject the fileRepository
+	 *
+	 * @param Tx_Cicbase_Domain_Repository_FileRepository fileRepository
+	 * @return void
+	 */
+	public function injectFileRepository(Tx_Cicbase_Domain_Repository_FileRepository $fileRepository) {
+		$this->fileRepository = $fileRepository;
+	}
 
 	/**
 	 * Initialize the create action
@@ -110,6 +124,15 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 			self::DATE_FORMAT
 		);
 
+		$this->arguments['image1']
+			->getPropertyMappingConfiguration()
+			->setTypeConverterOption('Tx_Cicbase_Property_TypeConverter_File', 'propertyPath', 'image1');
+		$this->arguments['image2']
+			->getPropertyMappingConfiguration()
+			->setTypeConverterOption('Tx_Cicbase_Property_TypeConverter_File', 'propertyPath', 'image2');
+		$this->arguments['image3']
+			->getPropertyMappingConfiguration()
+			->setTypeConverterOption('Tx_Cicbase_Property_TypeConverter_File', 'propertyPath', 'image3');
 
 	}
 
@@ -402,11 +425,15 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 
 
 	/**
-	 * action create
-	 *
 	 * @param Tx_Cicevents_Domain_Model_Event $event
+	 * @param Tx_Cicbase_Domain_Model_File $image1
+	 * @param Tx_Cicbase_Domain_Model_File $image2
+	 * @param Tx_Cicbase_Domain_Model_File $image3
 	 */
-	public function createAction(Tx_Cicevents_Domain_Model_Event $event) {
+	public function createAction(Tx_Cicevents_Domain_Model_Event $event,
+									Tx_Cicbase_Domain_Model_File $image1 = null,
+									Tx_Cicbase_Domain_Model_File $image2 = null,
+									Tx_Cicbase_Domain_Model_File $image3 = null ) {
 		$post = array_values(t3lib_div::_POST());
 		$post = $post[0];
 		foreach($post as $key => $val) {
@@ -417,6 +444,10 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 				$event->addCategory($cat);
 			}
 		}
+		$this->fileRepository->add($image1);
+		$this->fileRepository->add($image2);
+		$this->fileRepository->add($image3);
+		$event->setImages($image1, $image2, $image3);
 		$this->eventRepository->add($event);
 	}
 
