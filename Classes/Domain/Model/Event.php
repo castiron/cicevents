@@ -98,11 +98,25 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	protected $description;
 
 	/**
-	 * images
+	 * image1
 	 *
-	 * @var string
+	 * @var Tx_Cicbase_Domain_Model_File
 	 */
-	protected $images;
+	protected $image1;
+
+	/**
+	 * image2
+	 *
+	 * @var Tx_Cicbase_Domain_Model_File
+	 */
+	protected $image2;
+
+	/**
+	 * image3
+	 *
+	 * @var Tx_Cicbase_Domain_Model_File
+	 */
+	protected $image3;
 
 	/**
 	 * categories
@@ -382,35 +396,70 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	/**
 	 * @return bool
 	 */
-	public function getHasImage() {
-		if($this->getImages()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public function getFirstImage() {
-		$images = explode(',',$this->getImages());
-		if(count($images)) {
-			return 'uploads/tx_cicevents/'.$images[0];
-		} else {
-			return false;
-		}
+	public function hasImage() {
+		return $this->image1 || $this->image2 || $this->image3;
 	}
 
 	/**
-	 * @param string $images
+	 * @param Tx_Cicbase_Domain_Model_File $image1
+	 * @param Tx_Cicbase_Domain_Model_File $image2
+	 * @param Tx_Cicbase_Domain_Model_File $image3
 	 */
-	public function setImages($images) {
-		$this->images = $images;
+	public function setImages(Tx_Cicbase_Domain_Model_File $image1, Tx_Cicbase_Domain_Model_File $image2 = null, Tx_Cicbase_Domain_Model_File $image3 = null) {
+		$this->image1 = $image1;
+		$this->image2 = $image2;
+		$this->image3 = $image3;
 	}
 
 	/**
-	 * @return string
+	 * @return array
 	 */
 	public function getImages() {
-		return $this->images;
+		return array($this->image1, $this->image2, $this->image3);
 	}
+
+	/**
+	 * @param \Tx_Cicbase_Domain_Model_File $image1
+	 */
+	public function setImage1($image1) {
+		$this->image1 = $image1;
+	}
+
+	/**
+	 * @return \Tx_Cicbase_Domain_Model_File
+	 */
+	public function getImage1() {
+		return $this->image1;
+	}
+
+	/**
+	 * @param \Tx_Cicbase_Domain_Model_File $image2
+	 */
+	public function setImage2($image2) {
+		$this->image2 = $image2;
+	}
+
+	/**
+	 * @return \Tx_Cicbase_Domain_Model_File
+	 */
+	public function getImage2() {
+		return $this->image2;
+	}
+
+	/**
+	 * @param \Tx_Cicbase_Domain_Model_File $image3
+	 */
+	public function setImage3($image3) {
+		$this->image3 = $image3;
+	}
+
+	/**
+	 * @return \Tx_Cicbase_Domain_Model_File
+	 */
+	public function getImage3() {
+		return $this->image3;
+	}
+
+
 }
 ?>

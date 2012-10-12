@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_cicevents_domain_model_event'] = array(
 	'ctrl' => $TCA['tx_cicevents_domain_model_event']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type,title, start_time, end_time, url, link_to_url, venue, address, teaser, description, images, categories',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type,title, start_time, end_time, url, link_to_url, venue, address, teaser, description, categories',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1,type, title, start_time, end_time, url, link_to_url, venue, address, teaser, description, --div--;Images, images,--div--;Categories, categories, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1,type, title, start_time, end_time, url, link_to_url, venue, address, teaser, description,--div--;Categories, categories, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -144,22 +144,6 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 				)
 			),
 			'defaultExtras' => 'richtext[]',
-		),
-		'images' => Array (
-			"exclude" => 0,
-			'label' => 'Images',
-			"config" => Array(
-				'type' => 'group',
-				'uploadfolder' => 'uploads/tx_cicevents',
-				'show_thumbs' => true,
-				'internal_type' => 'file',
-				'allowed' => 'gif,jpg,jpeg,tif,tiff,bmp,pcx,tga,png,pdf,ai',
-				'max_size' => 10000,
-				'size' => 6,
-				'maxitems' => 20,
-				'minitems' => 0,
-				'autoSizeMax' => 30
-			)
 		),
 		'starttime' => array(
 			'exclude' => 1,

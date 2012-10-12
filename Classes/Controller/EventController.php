@@ -388,7 +388,7 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 		$this->view->assign('minutes', $minutes);
 
 		if($this->settings['maxImages'] == "") {
-			$this->view->assign('numImages', 5);
+			$this->view->assign('numImages', 3);
 		} else {
 			$this->view->assign('numImages', $this->settings['maxImages']);
 		}

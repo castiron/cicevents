@@ -30,10 +30,10 @@
 
 			<settings.maxImages>
 				<TCEforms>
-					<label>Number of images that can be uploaded</label>
+					<label>Number of images that can be uploaded (max: 3)</label>
 					<config>
 						<type>input</type>
-						<size>10</size>
+						<size>4</size>
 					</config>
 				</TCEforms>
 			</settings.maxImages>
