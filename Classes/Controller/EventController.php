@@ -416,6 +416,16 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 			$this->view->assign('numImages', $this->settings['maxImages']);
 		}
 
+		if($this->request->getOriginalRequest()) {
+			$this->view->assign('image1', $this->fileRepository->getHeld('image1'));
+			$this->view->assign('image2', $this->fileRepository->getHeld('image2'));
+			$this->view->assign('image3', $this->fileRepository->getHeld('image3'));
+		} else {
+			$this->fileRepository->clearHeld('image1');
+			$this->fileRepository->clearHeld('image2');
+			$this->fileRepository->clearHeld('image3');
+		}
+
 		$cats = $this->categoryRepository->findAll();
 		$types = $this->typeRepository->findAll();
 		$this->view->assign('categories', $cats);
@@ -444,9 +454,15 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 				$event->addCategory($cat);
 			}
 		}
-		$this->fileRepository->add($image1);
-		$this->fileRepository->add($image2);
-		$this->fileRepository->add($image3);
+		if($image1) {
+			$this->fileRepository->add($image1, 'image1');
+		}
+		if($image2) {
+			$this->fileRepository->add($image2, 'image2');
+		}
+		if($image3) {
+			$this->fileRepository->add($image3, 'image3');
+		}
 		$event->setImages($image1, $image2, $image3);
 		$this->eventRepository->add($event);
 	}

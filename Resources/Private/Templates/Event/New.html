@@ -109,25 +109,9 @@
 				<div class="span5">
 					<div class="input control-group">
 						<label>Images:</label>
-						<ce:repeat count="{numImages}" iteration="index">
-							<div class="uploader">
-								<f:form.upload name="image{index}[file]" />
-								<f:form.hidden name="image{index}[title]" value="image{index}" />
-								<f:form.validationResults for="image{index}">
-									<f:if condition="{validationResults.flattenedErrors}">
-										<div class="message error">
-											<f:for each="{validationResults.errors}" as="error">
-												<div>
-													<f:translate
-															key="LLL:EXT:cicevents/Resources/Private/Language/locallang.xml:fileError-{error.code}"
-															default="{error.message} (#{error.code})"/>
-												</div>
-											</f:for>
-										</div>
-									</f:if>
-								</f:form.validationResults>
-							</div>
-						</ce:repeat>
+						<f:render arguments="{name: 'image1', image: image1}" partial="Event/ImageUpload" />
+						<f:render arguments="{name: 'image2', image: image2}" partial="Event/ImageUpload" />
+						<f:render arguments="{name: 'image3', image: image3}" partial="Event/ImageUpload" />
 					</div>
 				</div>
 			</div>
