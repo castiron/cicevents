@@ -396,7 +396,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	/**
 	 * @return bool
 	 */
-	public function hasImage() {
+	public function getHasImage() {
 		return $this->image1 || $this->image2 || $this->image3;
 	}
 
