@@ -400,6 +400,13 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 		return $this->image1 || $this->image2 || $this->image3;
 	}
 
+	public function getFirstImage() {
+		if($this->image1) return $this->image1;
+		if($this->image2) return $this->image2;
+		if($this->image3) return $this->image3;
+
+	}
+
 	/**
 	 * @param Tx_Cicbase_Domain_Model_File $image1
 	 * @param Tx_Cicbase_Domain_Model_File $image2
