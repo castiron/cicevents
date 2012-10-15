@@ -17,6 +17,9 @@
 			<label index="tx_cicevents_domain_model_event.images">Images</label>
 			<label index="tx_cicevents_domain_model_event.category">Category</label>
 			<label index="tx_cicevents_domain_model_event.type">Type</label>
+			<label index="tx_cicevents_domain_model_event.image1">Image 1</label>
+			<label index="tx_cicevents_domain_model_event.image2">Image 2</label>
+			<label index="tx_cicevents_domain_model_event.image3">Image 3</label>
 
 			<label index="tx_cicevents_domain_model_category">Category</label>
 			<label index="tx_cicevents_domain_model_category.title">Title</label>
