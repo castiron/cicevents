@@ -13,31 +13,9 @@
 		</h2>
 
 		<div class="news-img-wrap">
-			<f:if condition="{event.hasImage}">
-				<f:then>
-					<f:if condition="{event.linkToUrl}">
-						<f:then>
-							<f:link.external uri="{event.url}" target="_blank">
-								<f:image src="{event.firstImage}" alt="" width="90"/>
-							</f:link.external>
-						</f:then>
-						<f:else>
-							<f:if condition="{settings.singlePid}">
-								<f:then>
-									<f:link.action action="detail" pluginName="EventsListing" pageUid="{settings.singlePid}" arguments="{event : event}">
-										<f:image src="{event.firstImage}" alt="" width="90"/>
-									</f:link.action>
-								</f:then>
-								<f:else>
-									<f:link.action action="detail" pluginName="EventsListing" arguments="{event : event}">
-										<f:image src="{event.firstImage}" alt="" width="90"/>
-									</f:link.action>
-								</f:else>
-							</f:if>
-						</f:else>
-					</f:if>
-				</f:then>
-			</f:if>
+			<f:render partial="Event/Image" arguments="{event: event, image: event.image1, width: '90', settings: settings}" />
+			<f:render partial="Event/Image" arguments="{event: event, image: event.image2, width: '90', settings: settings}" />
+			<f:render partial="Event/Image" arguments="{event: event, image: event.image3, width: '90', settings: settings}" />
 		</div>
 
 		<f:if condition="{event.spansMultipleDays}">
