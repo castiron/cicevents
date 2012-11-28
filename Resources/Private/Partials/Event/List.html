@@ -55,18 +55,27 @@
 
 		<f:if condition="{event.type.title}">
 			<strong>Event Type:</strong>
-			<f:link.action arguments="{actionMethodName:actionMethodName, type: event.type}" class="">
+			<f:link.action arguments="{type: event.type}" class="">
 				{event.type.title}
 			</f:link.action>
 			<br/>
 		</f:if>
 
-		<strong>Event Category:</strong>
-		<f:for each="{event.categories}" as="category">
-			<f:link.action arguments="{actionMethodName:actionMethodName, category: category}" class="">
-				{category.title}
-			</f:link.action>
-		</f:for>
+		<f:if condition="{event.categories}">
+			<f:if condition="{event.categoryCount} > 1">
+				<f:then>
+					<strong>Event Categories:</strong>
+				</f:then>
+				<f:else>
+					<strong>Event Category:</strong>
+				</f:else>
+			</f:if>
+			<f:for each="{event.categories}" as="category" iteration="iteration">
+				<f:link.action action="list" arguments="{category: category}" class="">
+					{category.title}</f:link.action><f:if condition="{iteration.isLast} != 1">,</f:if>
+
+			</f:for>
+		</f:if>
 
 	</div>
 </f:for>

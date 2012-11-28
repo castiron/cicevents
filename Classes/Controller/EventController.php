@@ -182,12 +182,17 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 			$uri = $uriBuilder
 				->reset()
 				->uriFor('detail', array('event' => $event));
-			$eventsArray[] = array(
+			$eventDetails = array(
 				'title' => $event->getTitle(),
-				'start' => $event->getStartTime()->format($dateFormat),
-				'end' => $event->getEndTime()->format($dateFormat),
 				'url' => $uri
 			);
+			if($event->getStartTime() instanceof DateTime) {
+				$eventDetails['start'] = $event->getStartTime()->format($dateFormat);
+			}
+			if($event->getEndTime() instanceof DateTime) {
+				$eventDetails['end'] = $event->getEndTime()->format($dateFormat);
+			}
+			$eventsArray[] = $eventDetails;
 		}
 		$this->view->assign('eventData', $eventsArray);
 	}

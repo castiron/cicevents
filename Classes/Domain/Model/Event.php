@@ -337,6 +337,13 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	}
 
 	/**
+	 * @return int
+	 */
+	public function getCategoryCount() {
+		return $this->categories->count();
+	}
+
+	/**
 	 * Sets the categories
 	 *
 	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_Cicevents_Domain_Model_Category> $categories
