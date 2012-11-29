@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_cicevents_domain_model_category'] = array(
 	'ctrl' => $TCA['tx_cicevents_domain_model_category']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, color',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, color,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -105,6 +105,26 @@ $TCA['tx_cicevents_domain_model_category'] = array(
 		'event' => array(
 			'config' => array(
 				'type' => 'passthrough',
+			),
+		),
+		'color' => array(
+			'exclude' => 0,
+			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_category.color',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim',
+				'wizards' => array(
+					'colorpick' => array(
+						'type' => 'colorbox',
+						'title' => 'Color picker',
+						'script' => 'wizard_colorpicker.php',
+						'dim' => '20x20',
+						'tableStyle' => 'border: solid 0; margin-top: 2px;',
+						'JSopenParams' => 'height=660,width=365,status=0,menubar=0,scrollbars=0',
+						'exampleImg' => 'EXT:cicevents/Resources/Public/Images/color-picker.png',
+					),
+				),
 			),
 		),
 	),

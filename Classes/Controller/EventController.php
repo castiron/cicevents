@@ -184,7 +184,8 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 				->uriFor('detail', array('event' => $event));
 			$eventDetails = array(
 				'title' => $event->getTitle(),
-				'url' => $uri
+				'url' => $uri,
+				'colorStyle' => $event->getLinkCssColorStyleDeclaration(),
 			);
 			if($event->getStartTime() instanceof DateTime) {
 				$eventDetails['start'] = $event->getStartTime()->format($dateFormat);

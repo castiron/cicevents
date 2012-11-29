@@ -337,6 +337,28 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	}
 
 	/**
+	 * @return Tx_Cicevents_Domain_Model_Category
+	 */
+	public function getPrimaryCategory() {
+		$this->categories->rewind();
+		return $this->categories->current();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLinkCssColorStyleDeclaration() {
+		$out = '';
+		if(
+			$this->getCategoryCount()
+			&& $style = $this->getPrimaryCategory()->getColorStyleDeclaration()
+		) {
+			$out = $style;
+		}
+		return $out;
+	}
+
+	/**
 	 * @return int
 	 */
 	public function getCategoryCount() {

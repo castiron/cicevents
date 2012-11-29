@@ -21,6 +21,7 @@
 
 			<label index="tx_cicevents_domain_model_category">Category</label>
 			<label index="tx_cicevents_domain_model_category.title">title</label>
+			<label index="tx_cicevents_domain_model_category.color">CSS color</label>
 			<label index="tx_cicevents_domain_model_category.nullOption">All Categories</label>
 
 			<label index="tx_cicevents_domain_model_type">Type</label>

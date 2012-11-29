@@ -23,6 +23,7 @@
 
 			<label index="tx_cicevents_domain_model_category">Category</label>
 			<label index="tx_cicevents_domain_model_category.title">Title</label>
+			<label index="tx_cicevents_domain_model_category.color">CSS color for calendar links of this category</label>
 
 			<label index="tx_cicevents_domain_model_type">Type</label>
 			<label index="tx_cicevents_domain_model_type.title">Title</label>
