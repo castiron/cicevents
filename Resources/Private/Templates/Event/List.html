@@ -6,12 +6,24 @@
 	<f:flashMessages renderMode="div"/>
 	<f:if condition="{events}">
 		<f:else>
-			<ul class="unstyled flash-messages">
-				<li class="alert alert-info">
-					No events were found matching your search criteria. Please adjust the search filters and
-					try again.
-				</li>
-			</ul>
+			<f:if condition="{minimal}">
+				<f:then>
+					<ul class="icon-list icon-list-events unstyled">
+						<li>
+							<span class="event-icon"></span>
+							<span>There are currently no upcoming events planned. Please check back soon.</span>
+						</li>
+					</ul>
+				</f:then>
+				<f:else>
+					<ul class="unstyled flash-messages">
+						<li class="alert alert-info">
+							No events were found matching your search criteria. Please adjust the search filters and
+							try again.
+						</li>
+					</ul>
+				</f:else>
+			</f:if>
 		</f:else>
 	</f:if>
 
