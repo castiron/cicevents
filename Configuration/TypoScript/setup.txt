@@ -19,6 +19,21 @@ plugin.tx_cicevents {
             jpg = image/jpeg
             png = image/png
         }
+#		emailNotifications {
+#			subject = A new event has been created
+#			senders {
+#				0 {
+#					name = Sustainable Jersey
+#					email = no-reply@sustainablejersey.org
+#				}
+#			}
+#			recipients {
+#				0 {
+#					name = Peter Soots
+#					email = peter@castironcoding.com
+#				}
+#			}
+#		}
 	}
 }
 

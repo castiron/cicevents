@@ -58,6 +58,11 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	protected $fileRepository;
 
 	/**
+	 * @var Tx_Cicbase_Service_EmailService
+	 */
+	protected $emailService;
+
+	/**
 	 * Dependency injection of the Event Repository
 	 *
 	 * @param Tx_Cicevents_Domain_Repository_EventRepository $eventRepository
@@ -97,6 +102,16 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	 */
 	public function injectFileRepository(Tx_Cicbase_Domain_Repository_FileRepository $fileRepository) {
 		$this->fileRepository = $fileRepository;
+	}
+
+	/**
+	 * inject the emailService
+	 *
+	 * @param Tx_Cicbase_Service_EmailService emailService
+	 * @return void
+	 */
+	public function injectEmailService(Tx_Cicbase_Service_EmailService $emailService) {
+		$this->emailService = $emailService;
 	}
 
 	/**
@@ -472,6 +487,18 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 		$event->setImages($image1, $image2, $image3);
 		$event->setHidden(true);
 		$this->eventRepository->add($event);
+
+		$emailSettings = $this->settings['emailNotifications'];
+		$senders = array();
+		$recipients = array();
+		foreach($emailSettings['senders'] as $sender) {
+			$senders[$sender['email']] = $sender['name'];
+		}
+		foreach($emailSettings['recipients'] as $recipient) {
+			$recipients[$recipient['email']] = $recipient['name'];
+		}
+
+		$this->emailService->sendTemplateEmail($recipients, $senders, $emailSettings['subject'], 'NewEvent.html', array('event' => $event));
 	}
 
 
