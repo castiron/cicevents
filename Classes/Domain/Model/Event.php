@@ -133,6 +133,11 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	protected $type;
 
 	/**
+	 * @var boolean
+	 */
+	protected $hidden;
+
+	/**
 	 * __construct
 	 *
 	 * @return void
@@ -441,7 +446,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 * @param Tx_Cicbase_Domain_Model_File $image2
 	 * @param Tx_Cicbase_Domain_Model_File $image3
 	 */
-	public function setImages(Tx_Cicbase_Domain_Model_File $image1, Tx_Cicbase_Domain_Model_File $image2 = null, Tx_Cicbase_Domain_Model_File $image3 = null) {
+	public function setImages(Tx_Cicbase_Domain_Model_File $image1 = null, Tx_Cicbase_Domain_Model_File $image2 = null, Tx_Cicbase_Domain_Model_File $image3 = null) {
 		$this->image1 = $image1;
 		$this->image2 = $image2;
 		$this->image3 = $image3;
@@ -494,6 +499,20 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 */
 	public function getImage3() {
 		return $this->image3;
+	}
+
+	/**
+	 * @param boolean $hidden
+	 */
+	public function setHidden($hidden) {
+		$this->hidden = $hidden;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getHidden() {
+		return $this->hidden;
 	}
 
 

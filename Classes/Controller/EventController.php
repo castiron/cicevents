@@ -470,6 +470,7 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 			$this->fileRepository->add($image3, 'image3');
 		}
 		$event->setImages($image1, $image2, $image3);
+		$event->setHidden(true);
 		$this->eventRepository->add($event);
 	}
 
