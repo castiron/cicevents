@@ -32,13 +32,12 @@
 			<f:form class="FiltersForm" enctype="multipart/form-data" controller="Event" method="post">
 				<h3>Filter Events by:</h3>
 
-
 				<div class="row row-flush">
 					<f:if condition="{filters.location}">
 						<div class="span5">
 							<div class="input">
-								<label for="location">Location</label>
-								<f:form.textfield id="location" name="location" value="{location}" class="span5"/>
+								<label for="locality">Location</label>
+								<cic:form.select id="locality" class="span5 chzn-select" name="locality" value="{locality}" options="{localities}" optionLabelField="name" nullOption="All Locations"/>
 							</div>
 						</div>
 					</f:if>
