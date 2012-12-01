@@ -138,16 +138,23 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	protected $hidden;
 
 	/**
-	 * __construct
+	 * Localities
 	 *
-	 * @return void
+	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Cicevents_Domain_Model_Locality>
+	 */
+	protected $localities;
+
+	/**
+	 * Constructor
 	 */
 	public function __construct() {
 		//Do not remove the next line: It would break the functionality
 		$this->initStorageObjects();
 	}
 
-
+	/**
+	 *
+	 */
 	public function initializeObject() {
 		$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
 	}
@@ -515,6 +522,33 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 		return $this->hidden;
 	}
 
+	/**
+	 * @param Tx_Cicevents_Domain_Model_Locality $locality
+	 */
+	public function addLocality($locality) {
+		$this->localities->attach($locality);
+	}
 
+	/**
+	 * @return Tx_Cicevents_Domain_Model_Locality
+	 */
+	public function getLocalities() {
+		return $this->localities;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLocalityCount() {
+		return $this->localities->count();
+	}
+
+	/**
+	 * @return Tx_Cicevents_Domain_Model_Locality
+	 */
+	public function getPrimaryLocality() {
+		$this->localities->rewind();
+		return $this->localities->current();
+	}
 }
 ?>

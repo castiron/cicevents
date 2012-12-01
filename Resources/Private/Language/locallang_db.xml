@@ -16,12 +16,15 @@
 			<label index="tx_cicevents_domain_model_event.description">Description</label>
 			<label index="tx_cicevents_domain_model_event.images">Images</label>
 			<label index="tx_cicevents_domain_model_event.category">Category</label>
+			<label index="tx_cicevents_domain_model_event.locality">Locality</label>
 			<label index="tx_cicevents_domain_model_event.type">Type</label>
 			<label index="tx_cicevents_domain_model_event.image1">Image 1</label>
 			<label index="tx_cicevents_domain_model_event.image2">Image 2</label>
 			<label index="tx_cicevents_domain_model_event.image3">Image 3</label>
 
 			<label index="tx_cicevents_domain_model_category">Category</label>
+			<label index="tx_cicevents_domain_model_locality">Locality</label>
+			<label index="tx_cicevents_domain_model_locality.name">Name</label>
 			<label index="tx_cicevents_domain_model_category.title">Title</label>
 			<label index="tx_cicevents_domain_model_category.color">CSS color for calendar links of this category</label>
 

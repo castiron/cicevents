@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_cicevents_domain_model_event'] = array(
 	'ctrl' => $TCA['tx_cicevents_domain_model_event']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type,title, start_time, end_time, url, link_to_url, venue, address, teaser, description, categories',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type,title, start_time, end_time, url, link_to_url, venue, address, localities, teaser, description, categories',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1,type, title, start_time, end_time, url, link_to_url, venue, address, teaser, description,--div--;Categories, categories, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1,type, title, start_time, end_time, url, link_to_url, venue, address, localities, teaser, description,--div--;Categories, categories, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -103,6 +103,42 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 				'type' => 'input',
 				'size' => 30,
 				'eval' => 'trim'
+			),
+		),
+		'localities' => array(
+			'exclude' => 0,
+			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event.locality',
+			'config' => array(
+				'type' => 'select',
+				'foreign_table' => 'tx_cicevents_domain_model_locality',
+				'MM' => 'tx_cicevents_domain_model_event_locality_mm',
+				'size' => 3,
+				'autoSizeMax' => 30,
+				'maxitems' => 9999,
+				'multiple' => 0,
+				'wizards' => array(
+					'_PADDING' => 1,
+					'_VERTICAL' => 1,
+					'edit' => array(
+						'type' => 'popup',
+						'title' => 'Edit',
+						'script' => 'wizard_edit.php',
+						'icon' => 'edit2.gif',
+						'popup_onlyOpenIfSelected' => 1,
+						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
+					),
+					'add' => Array(
+						'type' => 'script',
+						'title' => 'Create new',
+						'icon' => 'add.gif',
+						'params' => array(
+							'table' => 'fe_users',
+							'pid' => '###CURRENT_PID###',
+							'setValue' => 'prepend'
+						),
+						'script' => 'wizard_add.php',
+					),
+				),
 			),
 		),
 		'address' => array(
