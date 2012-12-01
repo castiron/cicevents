@@ -82,5 +82,11 @@
 				</tr>
 			</table>
 		</div>
+		<h3>Legend</h3>
+		<ul style="margin-left: 0;">
+		<f:for each="{categories}" as="category">
+			<li style="list-style: none; margin-left: 0;"><span class="label" style="background: {category.color};">{category.title}</span></li>
+		</f:for>
+		</ul>
 	</div>
 </f:section>

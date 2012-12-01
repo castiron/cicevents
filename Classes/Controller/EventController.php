@@ -206,6 +206,7 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 		$events = $this->eventRepository->findAll();
 		$eventsArray = array();
 		foreach($events as $event) {
+
 			$uriBuilder = $this->uriBuilder;
 			$uri = $uriBuilder
 				->reset()
@@ -223,6 +224,7 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 			}
 			$eventsArray[] = $eventDetails;
 		}
+		$this->view->assign('categories', $this->categoryRepository->findAll());
 		$this->view->assign('eventData', $eventsArray);
 	}
 
