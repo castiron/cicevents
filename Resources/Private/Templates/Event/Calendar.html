@@ -82,10 +82,10 @@
 				</tr>
 			</table>
 		</div>
-		<h3>Legend</h3>
-		<ul style="margin-left: 0;">
-		<f:for each="{categories}" as="category">
-			<li style="list-style: none; margin-left: 0;"><span class="label" style="background: {category.color};">{category.title}</span></li>
+		<h3>Calendar Legend</h3>
+		<ul class="calendar-legend">
+		<f:for each="{legendCategories}" as="category">
+			<li style="{category.colorStyleDeclaration}"><span class="label legend-swatch" style="background: {category.color};"></span>{category.title}</li>
 		</f:for>
 		</ul>
 	</div>

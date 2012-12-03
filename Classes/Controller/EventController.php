@@ -224,7 +224,7 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 			}
 			$eventsArray[] = $eventDetails;
 		}
-		$this->view->assign('categories', $this->categoryRepository->findAll());
+		$this->view->assign('legendCategories', $this->categoryRepository->findAllHavingColor());
 		$this->view->assign('eventData', $eventsArray);
 	}
 
