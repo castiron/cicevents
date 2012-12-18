@@ -43,11 +43,7 @@
 			<address class="small address">{event.address}</address>
 		</f:if>
 
-		<p>
-			<strong>
-				<f:format.crop maxCharacters="75" append="...">{event.teaser}</f:format.crop>
-			</strong>
-		</p>
+		<p><strong>{event.teaser}</strong></p>
 
 		<div class="description">
 			<f:format.html>{event.description}</f:format.html>
