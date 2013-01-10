@@ -28,26 +28,8 @@
  ***************************************************************/
 
 
-class Tx_Cicevents_Domain_Repository_CategoryRepository extends Tx_Cicbase_Persistence_Repository {
-	protected $defaultOrderings = array(
-		'title' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING,
-	);
+class Tx_Cicevents_Domain_Repository_LocalityRepository extends Tx_Cicbase_Persistence_Repository {
 
-	/**
-	 * Get all categories that have a color set on them.  Couldn't get
-	 * $query->logicalNot($query->like('color','')) to work - not sure
-	 * why.  Just brute force it instead.
-	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage
-	 */
-	public function findAllHavingColor() {
-		$res = $this->findAll();
-		$out = t3lib_div::makeInstance('Tx_Extbase_Persistence_ObjectStorage');
-		foreach($res as $cat) {
-			if($cat->getColor()) $out->attach($cat);
-		}
-		return $out;
-	}
 }
 
 ?>

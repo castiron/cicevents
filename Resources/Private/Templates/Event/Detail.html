@@ -7,8 +7,13 @@
 	<div class="with-trim" style="margin-bottom: 25px;">
 		<h2>{event.title}</h2>
 
-
 		<div class="event-details">
+			<div class="event-images">
+				<f:render partial="Event/Image" arguments="{event: event, image: event.image1, width: '200', settings: settings, nolink: 1}" />
+				<f:render partial="Event/Image" arguments="{event: event, image: event.image2, width: '200', settings: settings, nolink: 1}" />
+				<f:render partial="Event/Image" arguments="{event: event, image: event.image3, width: '200', settings: settings, nolink: 1}" />
+			</div>
+
 			<div class="event-teaser"><f:format.html>{event.teaser}</f:format.html></div>
 			<f:if condition="{event.spansMultipleDays}">
 				<f:then>
@@ -37,18 +42,25 @@
 		<p>
 			<f:if condition="{event.type.title}">
 				<strong>Event Type:</strong>
-				<f:link.action action="search" arguments="{actionMethodName:actionMethodName, type: event.type}" class="">
+				<f:link.action action="list" arguments="{type: event.type}" class="">
 					{event.type.title}
 				</f:link.action>
 				<br/>
 			</f:if>
 
 			<f:if condition="{event.categories}">
-				<strong>Event Category:</strong>
-				<f:for each="{event.categories}" as="category">
-					<f:link.action action="search" arguments="{actionMethodName:actionMethodName, category: category}" class="">
-						{category.title}
-					</f:link.action>
+				<f:if condition="{event.categoryCount} > 1">
+					<f:then>
+						<strong>Event Categories:</strong>
+					</f:then>
+					<f:else>
+						<strong>Event Category:</strong>
+					</f:else>
+				</f:if>
+				<f:for each="{event.categories}" as="category" iteration="iteration">
+					<f:link.action action="list" arguments="{category: category}" class="">
+						{category.title}</f:link.action><f:if condition="{iteration.isLast} != 1">,</f:if>
+
 				</f:for>
 			</f:if>
 		</p>

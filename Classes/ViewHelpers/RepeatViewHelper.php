@@ -39,7 +39,7 @@ class Tx_Cicevents_ViewHelpers_RepeatViewHelper extends Tx_Fluid_Core_ViewHelper
 		$output = "";
 		for($i = 0; $i < $count; ++$i) {
 			if ($arguments['as'] !== '') {
-				$templateVariableContainer->add($arguments['iteration'], $i);
+				$templateVariableContainer->add($arguments['iteration'], $i + 1);
 			}
 			$output .= $renderChildrenClosure();
 			if ($arguments['as'] !== '') {

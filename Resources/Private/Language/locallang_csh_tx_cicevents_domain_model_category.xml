@@ -6,8 +6,9 @@
 		<csh_table>tx_cicevents_domain_model_category</csh_table>
 	</meta>
 	<data type="array">
-	<languageKey index="default" type="array">
-			<label index="title.description">title</label>
+		<languageKey index="default" type="array">
+			<label index="title.description">Title</label>
+			<label index="color.description">A CSS color, for example: '#ff0000' | 'red' | 'rgb(255,0,0)'</label>
 		</languageKey>
 	</data>
 </T3locallang>

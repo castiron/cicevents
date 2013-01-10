@@ -11,6 +11,30 @@ plugin.tx_cicevents {
 	features {
 		rewrittenPropertyMapper = 1
 	}
+	settings {
+		fileMaxSize = 20971520
+        fileAllowedMime {
+            gif = image/gif
+            jpg = image/jpg
+            jpg = image/jpeg
+            png = image/png
+        }
+#		emailNotifications {
+#			subject = A new event has been created
+#			senders {
+#				0 {
+#					name = Sustainable Jersey
+#					email = no-reply@sustainablejersey.org
+#				}
+#			}
+#			recipients {
+#				0 {
+#					name = Peter Soots
+#					email = peter@castironcoding.com
+#				}
+#			}
+#		}
+	}
 }
 
 page.includeCSS {

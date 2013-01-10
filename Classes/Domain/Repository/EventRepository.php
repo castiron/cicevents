@@ -133,6 +133,9 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 				case 'category':
 					$this->filters[] = $query->contains('categories', $value);
 					break;
+				case 'locality':
+					$this->filters[] = $query->contains('localities', $value);
+					break;
 				case 'type':
 					$this->filters[] = $query->equals('type', $value);
 					break;

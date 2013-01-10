@@ -109,16 +109,16 @@
 				<div class="span5">
 					<div class="input control-group">
 						<label>Images:</label>
-						<ce:repeat count="{numImages}" iteration="index">
-							<div class="uploader"><f:form.upload name="image{index}" /></div>
-						</ce:repeat>
+						<f:render arguments="{name: 'image1', image: image1}" partial="Event/ImageUpload" />
+						<f:render arguments="{name: 'image2', image: image2}" partial="Event/ImageUpload" />
+						<f:render arguments="{name: 'image3', image: image3}" partial="Event/ImageUpload" />
 					</div>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="span10">
-					<f:form.submit id="submitbutton" value="Create Event" class="btn"></f:form.submit>
+					<f:form.submit id="submitbutton" value="Create Event" class="btn"/>
 				</div>
 			</div>
 

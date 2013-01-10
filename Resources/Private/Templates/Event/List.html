@@ -6,12 +6,24 @@
 	<f:flashMessages renderMode="div"/>
 	<f:if condition="{events}">
 		<f:else>
-			<ul class="unstyled flash-messages">
-				<li class="alert alert-info">
-					No events were found matching your search criteria. Please adjust the search filters and
-					try again.
-				</li>
-			</ul>
+			<f:if condition="{minimal}">
+				<f:then>
+					<ul class="icon-list icon-list-events unstyled">
+						<li>
+							<span class="event-icon"></span>
+							<span>There are currently no upcoming events planned. Please check back soon.</span>
+						</li>
+					</ul>
+				</f:then>
+				<f:else>
+					<ul class="unstyled flash-messages">
+						<li class="alert alert-info">
+							No events were found matching your search criteria. Please adjust the search filters and
+							try again.
+						</li>
+					</ul>
+				</f:else>
+			</f:if>
 		</f:else>
 	</f:if>
 
@@ -20,13 +32,12 @@
 			<f:form class="FiltersForm" enctype="multipart/form-data" controller="Event" method="post">
 				<h3>Filter Events by:</h3>
 
-
 				<div class="row row-flush">
 					<f:if condition="{filters.location}">
 						<div class="span5">
 							<div class="input">
-								<label for="location">Location</label>
-								<f:form.textfield id="location" name="location" value="{location}" class="span5"/>
+								<label for="locality">Location</label>
+								<cic:form.select id="locality" class="span5 chzn-select" name="locality" value="{locality}" options="{localities}" optionLabelField="name" nullOption="All Locations"/>
 							</div>
 						</div>
 					</f:if>

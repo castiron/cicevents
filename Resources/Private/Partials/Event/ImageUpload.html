@@ -1,0 +1,20 @@
+<div class="uploader">
+	<f:form.upload name="{name}[file]" />
+	<f:form.hidden name="{name}[title]" value="{name}" />
+	<f:form.validationResults for="{name}">
+		<f:if condition="{validationResults.flattenedErrors}">
+			<div class="message error">
+				<f:for each="{validationResults.errors}" as="error">
+					<div>
+						<f:translate
+								key="LLL:EXT:cicevents/Resources/Private/Language/locallang.xml:fileError-{error.code}"
+								default="{error.message} (#{error.code})"/>
+					</div>
+				</f:for>
+			</div>
+		</f:if>
+	</f:form.validationResults>
+	<f:if condition="{image}">
+		<div class="message">{image.originalFilename} was uploaded successfully.</div>
+	</f:if>
+</div>

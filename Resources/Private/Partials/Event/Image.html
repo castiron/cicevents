@@ -1,0 +1,23 @@
+<f:if condition="{image}">
+	<f:if condition="{event.linkToUrl}">
+		<f:then>
+			<f:link.external uri="{event.url}" target="_blank">
+				<img src="{image.pathAndFileName}" alt="" width="{width}"/>
+			</f:link.external>
+		</f:then>
+		<f:else>
+			<f:if condition="{settings.singlePid}">
+				<f:then>
+					<f:link.action action="detail" pluginName="EventsListing" pageUid="{settings.singlePid}" arguments="{event : event}">
+					<img src="{image.pathAndFileName}" alt="" width="{width}"/>
+					</f:link.action>
+				</f:then>
+				<f:else>
+					<f:link.action action="detail" pluginName="EventsListing" arguments="{event : event}">
+						<img src="{image.pathAndFileName}" alt="" width="{width}"/>
+					</f:link.action>
+				</f:else>
+			</f:if>
+		</f:else>
+	</f:if>
+</f:if>

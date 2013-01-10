@@ -13,31 +13,9 @@
 		</h2>
 
 		<div class="news-img-wrap">
-			<f:if condition="{event.hasImage}">
-				<f:then>
-					<f:if condition="{event.linkToUrl}">
-						<f:then>
-							<f:link.external uri="{event.url}" target="_blank">
-								<f:image src="{event.firstImage}" alt="" width="90"/>
-							</f:link.external>
-						</f:then>
-						<f:else>
-							<f:if condition="{settings.singlePid}">
-								<f:then>
-									<f:link.action action="detail" pluginName="EventsListing" pageUid="{settings.singlePid}" arguments="{event : event}">
-										<f:image src="{event.firstImage}" alt="" width="90"/>
-									</f:link.action>
-								</f:then>
-								<f:else>
-									<f:link.action action="detail" pluginName="EventsListing" arguments="{event : event}">
-										<f:image src="{event.firstImage}" alt="" width="90"/>
-									</f:link.action>
-								</f:else>
-							</f:if>
-						</f:else>
-					</f:if>
-				</f:then>
-			</f:if>
+			<f:render partial="Event/Image" arguments="{event: event, image: event.image1, width: '90', settings: settings}" />
+			<f:render partial="Event/Image" arguments="{event: event, image: event.image2, width: '90', settings: settings}" />
+			<f:render partial="Event/Image" arguments="{event: event, image: event.image3, width: '90', settings: settings}" />
 		</div>
 
 		<f:if condition="{event.spansMultipleDays}">
@@ -65,11 +43,7 @@
 			<address class="small address">{event.address}</address>
 		</f:if>
 
-		<p>
-			<strong>
-				<f:format.crop maxCharacters="75" append="...">{event.teaser}</f:format.crop>
-			</strong>
-		</p>
+		<p><strong>{event.teaser}</strong></p>
 
 		<div class="description">
 			<f:format.html>{event.description}</f:format.html>
@@ -77,18 +51,27 @@
 
 		<f:if condition="{event.type.title}">
 			<strong>Event Type:</strong>
-			<f:link.action arguments="{actionMethodName:actionMethodName, type: event.type}" class="">
+			<f:link.action arguments="{type: event.type}" class="">
 				{event.type.title}
 			</f:link.action>
 			<br/>
 		</f:if>
 
-		<strong>Event Category:</strong>
-		<f:for each="{event.categories}" as="category">
-			<f:link.action arguments="{actionMethodName:actionMethodName, category: category}" class="">
-				{category.title}
-			</f:link.action>
-		</f:for>
+		<f:if condition="{event.categories}">
+			<f:if condition="{event.categoryCount} > 1">
+				<f:then>
+					<strong>Event Categories:</strong>
+				</f:then>
+				<f:else>
+					<strong>Event Category:</strong>
+				</f:else>
+			</f:if>
+			<f:for each="{event.categories}" as="category" iteration="iteration">
+				<f:link.action action="list" arguments="{category: category}" class="">
+					{category.title}</f:link.action><f:if condition="{iteration.isLast} != 1">,</f:if>
+
+			</f:for>
+		</f:if>
 
 	</div>
 </f:for>

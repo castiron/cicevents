@@ -7,7 +7,7 @@
 	</cic:includeJavascriptString>
 
 	<script type="text/html" id="template-eventListing">
-		<div><a class="title" href="<%= url %>"><%= title %></a></div>
+		<div><a class="title" style="<%= colorStyle %>" href="<%= url %>"><%= title %></a></div>
 	</script>
 
 	<script type="text/html" id="template-dayBox">
@@ -82,5 +82,11 @@
 				</tr>
 			</table>
 		</div>
+		<h3>Calendar Legend</h3>
+		<ul class="calendar-legend">
+		<f:for each="{legendCategories}" as="category">
+			<li style="{category.colorStyleDeclaration}"><span class="label legend-swatch" style="background: {category.color};"></span>{category.title}</li>
+		</f:for>
+		</ul>
 	</div>
 </f:section>

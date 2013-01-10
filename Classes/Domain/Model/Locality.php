@@ -3,10 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Zach Davis <zach@castironcoding.com>, Cast Iron Coding
- *  Lucas Thurston <lucas@castironcoding.com>, Cast Iron Coding
- *  Gabe Blair <gabe@castironcoding.com>, Cast Iron Coding
- *  Peter Soots <peter@castironcoding.com>, Cast Iron Coding
+ *  (c) 2012 Cast Iron Coding
  *
  *  All rights reserved
  *
@@ -27,27 +24,30 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-
-class Tx_Cicevents_Domain_Repository_CategoryRepository extends Tx_Cicbase_Persistence_Repository {
-	protected $defaultOrderings = array(
-		'title' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING,
-	);
+/**
+ *
+ *
+ * @package cicevents
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ *
+ */
+class Tx_Cicevents_Domain_Model_Locality extends Tx_Extbase_DomainObject_AbstractEntity {
+	/**
+	 * @var string
+	 */
+	protected $name;
 
 	/**
-	 * Get all categories that have a color set on them.  Couldn't get
-	 * $query->logicalNot($query->like('color','')) to work - not sure
-	 * why.  Just brute force it instead.
-	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage
+	 * @return string
 	 */
-	public function findAllHavingColor() {
-		$res = $this->findAll();
-		$out = t3lib_div::makeInstance('Tx_Extbase_Persistence_ObjectStorage');
-		foreach($res as $cat) {
-			if($cat->getColor()) $out->attach($cat);
-		}
-		return $out;
+	public function getName() {
+		return $this->name;
+	}
+
+	/**
+	 * @param $name
+	 */
+	public function setName($name) {
+		$this->name = $name;
 	}
 }
-
-?>

@@ -98,11 +98,25 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	protected $description;
 
 	/**
-	 * images
+	 * image1
 	 *
-	 * @var string
+	 * @var Tx_Cicbase_Domain_Model_File
 	 */
-	protected $images;
+	protected $image1;
+
+	/**
+	 * image2
+	 *
+	 * @var Tx_Cicbase_Domain_Model_File
+	 */
+	protected $image2;
+
+	/**
+	 * image3
+	 *
+	 * @var Tx_Cicbase_Domain_Model_File
+	 */
+	protected $image3;
 
 	/**
 	 * categories
@@ -119,16 +133,28 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	protected $type;
 
 	/**
-	 * __construct
+	 * @var boolean
+	 */
+	protected $hidden;
+
+	/**
+	 * Localities
 	 *
-	 * @return void
+	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Cicevents_Domain_Model_Locality>
+	 */
+	protected $localities;
+
+	/**
+	 * Constructor
 	 */
 	public function __construct() {
 		//Do not remove the next line: It would break the functionality
 		$this->initStorageObjects();
 	}
 
-
+	/**
+	 *
+	 */
 	public function initializeObject() {
 		$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
 	}
@@ -323,6 +349,35 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	}
 
 	/**
+	 * @return Tx_Cicevents_Domain_Model_Category
+	 */
+	public function getPrimaryCategory() {
+		$this->categories->rewind();
+		return $this->categories->current();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLinkCssColorStyleDeclaration() {
+		$out = '';
+		if(
+			$this->getCategoryCount()
+			&& $style = $this->getPrimaryCategory()->getColorStyleDeclaration()
+		) {
+			$out = $style;
+		}
+		return $out;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getCategoryCount() {
+		return $this->categories->count();
+	}
+
+	/**
 	 * Sets the categories
 	 *
 	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_Cicevents_Domain_Model_Category> $categories
@@ -383,34 +438,117 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 * @return bool
 	 */
 	public function getHasImage() {
-		if($this->getImages()) {
-			return true;
-		} else {
-			return false;
-		}
+		return $this->image1 || $this->image2 || $this->image3;
 	}
 
 	public function getFirstImage() {
-		$images = explode(',',$this->getImages());
-		if(count($images)) {
-			return 'uploads/tx_cicevents/'.$images[0];
-		} else {
-			return false;
-		}
+		if($this->image1) return $this->image1;
+		if($this->image2) return $this->image2;
+		if($this->image3) return $this->image3;
+
 	}
 
 	/**
-	 * @param string $images
+	 * @param Tx_Cicbase_Domain_Model_File $image1
+	 * @param Tx_Cicbase_Domain_Model_File $image2
+	 * @param Tx_Cicbase_Domain_Model_File $image3
 	 */
-	public function setImages($images) {
-		$this->images = $images;
+	public function setImages(Tx_Cicbase_Domain_Model_File $image1 = null, Tx_Cicbase_Domain_Model_File $image2 = null, Tx_Cicbase_Domain_Model_File $image3 = null) {
+		$this->image1 = $image1;
+		$this->image2 = $image2;
+		$this->image3 = $image3;
 	}
 
 	/**
-	 * @return string
+	 * @return array
 	 */
 	public function getImages() {
-		return $this->images;
+		return array($this->image1, $this->image2, $this->image3);
+	}
+
+	/**
+	 * @param \Tx_Cicbase_Domain_Model_File $image1
+	 */
+	public function setImage1($image1) {
+		$this->image1 = $image1;
+	}
+
+	/**
+	 * @return \Tx_Cicbase_Domain_Model_File
+	 */
+	public function getImage1() {
+		return $this->image1;
+	}
+
+	/**
+	 * @param \Tx_Cicbase_Domain_Model_File $image2
+	 */
+	public function setImage2($image2) {
+		$this->image2 = $image2;
+	}
+
+	/**
+	 * @return \Tx_Cicbase_Domain_Model_File
+	 */
+	public function getImage2() {
+		return $this->image2;
+	}
+
+	/**
+	 * @param \Tx_Cicbase_Domain_Model_File $image3
+	 */
+	public function setImage3($image3) {
+		$this->image3 = $image3;
+	}
+
+	/**
+	 * @return \Tx_Cicbase_Domain_Model_File
+	 */
+	public function getImage3() {
+		return $this->image3;
+	}
+
+	/**
+	 * @param boolean $hidden
+	 */
+	public function setHidden($hidden) {
+		$this->hidden = $hidden;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getHidden() {
+		return $this->hidden;
+	}
+
+	/**
+	 * @param Tx_Cicevents_Domain_Model_Locality $locality
+	 */
+	public function addLocality($locality) {
+		$this->localities->attach($locality);
+	}
+
+	/**
+	 * @return Tx_Cicevents_Domain_Model_Locality
+	 */
+	public function getLocalities() {
+		return $this->localities;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLocalityCount() {
+		return $this->localities->count();
+	}
+
+	/**
+	 * @return Tx_Cicevents_Domain_Model_Locality
+	 */
+	public function getPrimaryLocality() {
+		$this->localities->rewind();
+		return $this->localities->current();
 	}
 }
 ?>

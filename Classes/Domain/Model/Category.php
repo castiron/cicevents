@@ -4,7 +4,7 @@
  *  Copyright notice
  *
  *  (c) 2012 Peter Soots <peter@castironcoding.com>, Cast Iron Coding
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -42,6 +42,13 @@ class Tx_Cicevents_Domain_Model_Category extends Tx_Extbase_DomainObject_Abstrac
 	protected $title;
 
 	/**
+	 * color
+	 *
+	 * @var string
+	 */
+	protected $color;
+
+	/**
 	 * Returns the title
 	 *
 	 * @return string $title
@@ -58,6 +65,28 @@ class Tx_Cicevents_Domain_Model_Category extends Tx_Extbase_DomainObject_Abstrac
 	 */
 	public function setTitle($title) {
 		$this->title = $title;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getColor() {
+		return $this->color;
+	}
+
+	/**
+	 * @param string $color
+	 * @return void
+	 */
+	public function setColor($color) {
+		$this->color = $color;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getColorStyleDeclaration() {
+		return $this->color ? 'color: '.$this->color . ';' : '';
 	}
 
 }
