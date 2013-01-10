@@ -276,5 +276,29 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 		),
 	),
 );
+$confVars = @unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cicevents']);
+if($confVars['teaserRTE']) {
+	$TCA['tx_cicevents_domain_model_event']['columns']['teaser'] = array(
+	'exclude' => 0,
+	'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event.teaser',
+	'config' => array(
+		'type' => 'text',
+		'cols' => 40,
+		'rows' => 15,
+		'eval' => 'trim',
+		'wizards' => array(
+			'RTE' => array(
+				'icon' => 'wizard_rte2.gif',
+				'notNewRecords'=> 1,
+				'RTEonly' => 1,
+				'script' => 'wizard_rte.php',
+				'title' => 'LLL:EXT:cms/locallang_ttc.xml:bodytext.W.RTE',
+				'type' => 'script'
+			)
+		)
+	),
+	'defaultExtras' => 'richtext[]',
+);
+}
 
 ?>

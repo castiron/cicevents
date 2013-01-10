@@ -1,0 +1,2 @@
+# cat=basic/teaserRTE; type=boolean; label=Use RTE for teaser field rather than text field
+teaserRTE = 0
