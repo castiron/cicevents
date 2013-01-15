@@ -29,11 +29,20 @@
 					</p>
 				</f:else>
 			</f:if>
-			<f:if condition="{event.venue}">
-				<p class="small event-venue">{event.venue}</p>
-			</f:if>
-			<f:if condition="{event.address}">
-				<p class="small event-address">{event.address}</p>
+			<f:if condition="{event.venue} == {event.address}">
+				<f:then>
+					<f:if condition="{event.venue}">
+						<p class="small event-venue">{event.venue}</p>
+					</f:if>
+				</f:then>
+				<f:else>
+					<f:if condition="{event.venue}">
+						<p class="small event-venue">{event.venue}</p>
+					</f:if>
+					<f:if condition="{event.address}">
+						<p class="small event-address">{event.address}</p>
+					</f:if>
+				</f:else>
 			</f:if>
 		</div>
 

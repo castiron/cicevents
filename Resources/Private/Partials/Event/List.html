@@ -35,12 +35,21 @@
 			</f:else>
 		</f:if>
 
-		<f:if condition="{event.venue}">
-			<p class="small venue flush">{event.venue}</p>
-		</f:if>
+		<f:if condition="{event.venue} == {event.address}">
+			<f:then>
+				<f:if condition="{event.venue}">
+					<p class="small venue flush">{event.venue}</p>
+				</f:if>
+			</f:then>
+			<f:else>
+				<f:if condition="{event.venue}">
+					<p class="small venue flush">{event.venue}</p>
+				</f:if>
 
-		<f:if condition="{event.address}">
-			<address class="small address">{event.address}</address>
+				<f:if condition="{event.address}">
+					<address class="small address">{event.address}</address>
+				</f:if>
+			</f:else>
 		</f:if>
 
 		<p><strong>{event.teaser}</strong></p>
