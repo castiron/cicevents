@@ -506,7 +506,7 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 		if($image3) {
 			$this->fileRepository->add($image3, 'image3');
 		}
-		$event->setImages($image1, $image2, $image3);
+		$event->setUserImages($image1, $image2, $image3);
 		$event->setHidden(true);
 		$this->eventRepository->add($event);
 
@@ -546,17 +546,23 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 			'range' => intval($range)
 		);
 
+		$conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cicevents']);
+
 		$limit = $this->findLimit();
 		$offset = $this->findOffset($limit, $currentPage);
 
 		$this->eventRepository->addFilters($params);
 		$events = $this->eventRepository->findAll($limit, $offset);
-		$this->view->assign('events', $events);
 		$allFilteredEvents = $this->eventRepository->findAll();
 		$numberOfPages = ceil($allFilteredEvents->count() / $limit);
 
 		$this->setupFiltersForm();
 		$this->setupPagination($currentPage, $numberOfPages);
+
+		// View variables
+		$this->view->assign('events', $events);
+		$this->view->assign('userImagesEnabled', (boolean) $conf['eventUserImages']);
+		$this->view->assign('adminImagesEnabled', (boolean) $conf['eventAdminImages']);
 
 		// Maintain form state
 		$this->view->assign('category',$category);

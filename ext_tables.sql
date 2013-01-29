@@ -16,6 +16,7 @@ CREATE TABLE tx_cicevents_domain_model_event (
 	image1 int(11) unsigned DEFAULT '0',
 	image2 int(11) unsigned DEFAULT '0',
 	image3 int(11) unsigned DEFAULT '0',
+	images text NOT NULL,
 	categories int(11) unsigned DEFAULT '0' NOT NULL,
 	localities int(11) unsigned DEFAULT '0' NOT NULL,
 	type int(11) unsigned DEFAULT '0',

@@ -98,6 +98,11 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	protected $description;
 
 	/**
+	 * @var string
+	 */
+	protected $images;
+
+	/**
 	 * image1
 	 *
 	 * @var Tx_Cicbase_Domain_Model_File
@@ -438,14 +443,31 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 * @return bool
 	 */
 	public function getHasImage() {
-		return $this->image1 || $this->image2 || $this->image3;
+		$conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cicevents']);
+		$result = FALSE;
+		if($conf['eventUserImages']) {
+			$result = $this->image1 || $this->image2 || $this->image3;
+		}
+		if($conf['eventAdminImages']) {
+			$result = $result || $this->images;
+		}
+		return $result;
 	}
 
 	public function getFirstImage() {
-		if($this->image1) return $this->image1;
-		if($this->image2) return $this->image2;
-		if($this->image3) return $this->image3;
-
+		$conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cicevents']);
+		if($conf['eventAdminImages']) {
+			$images = explode(',', $this->images);
+			if(count($images)) {
+				return 'uploads/tx_cicevents/'.$images[0];
+			}
+		}
+		if($conf['eventUserImages']) {
+			if($this->image1) return $this->image1;
+			if($this->image2) return $this->image2;
+			if($this->image3) return $this->image3;
+		}
+		return '';
 	}
 
 	/**
@@ -453,10 +475,17 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 * @param Tx_Cicbase_Domain_Model_File $image2
 	 * @param Tx_Cicbase_Domain_Model_File $image3
 	 */
-	public function setImages(Tx_Cicbase_Domain_Model_File $image1 = null, Tx_Cicbase_Domain_Model_File $image2 = null, Tx_Cicbase_Domain_Model_File $image3 = null) {
+	public function setUserImages(Tx_Cicbase_Domain_Model_File $image1 = null, Tx_Cicbase_Domain_Model_File $image2 = null, Tx_Cicbase_Domain_Model_File $image3 = null) {
 		$this->image1 = $image1;
 		$this->image2 = $image2;
 		$this->image3 = $image3;
+	}
+
+	/**
+	 * @param string $images
+	 */
+	public function setImages($images) {
+		$this->images = $images;
 	}
 
 	/**

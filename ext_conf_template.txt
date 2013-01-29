@@ -1,2 +1,8 @@
 # cat=basic/teaserRTE; type=boolean; label=Use RTE for teaser field rather than text field
 teaserRTE = 0
+
+# cat=basic/eventUserImages; type=boolean; label=Enable User Image:Enable user image uploading in the frontend and display user images for event listings. Can be enabled in conjunction with admin images.
+eventUserImages = 0
+
+# cat=basic/eventAdminImages; type=boolean; label=Enable Admin Images:Enable admin image uploading in the backend and display admin images for event listings. Can be enabled in conjunction with user images.
+eventAdminImages = 1

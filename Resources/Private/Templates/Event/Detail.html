@@ -9,9 +9,16 @@
 
 		<div class="event-details">
 			<div class="event-images">
-				<f:render partial="Event/Image" arguments="{event: event, image: event.image1, width: '200', settings: settings, nolink: 1}" />
-				<f:render partial="Event/Image" arguments="{event: event, image: event.image2, width: '200', settings: settings, nolink: 1}" />
-				<f:render partial="Event/Image" arguments="{event: event, image: event.image3, width: '200', settings: settings, nolink: 1}" />
+				<f:if condition="{adminImagesEnabled}">
+					<f:if condition="{event.hasImage}">
+						<f:image src="{event.firstImage}" alt="" width="200"/>
+					</f:if>
+				</f:if>
+				<f:if condition="{userImagesEnabled}">
+					<f:render partial="Event/Image" arguments="{event: event, image: event.image1, width: '200', settings: settings, nolink: 1}" />
+					<f:render partial="Event/Image" arguments="{event: event, image: event.image2, width: '200', settings: settings, nolink: 1}" />
+					<f:render partial="Event/Image" arguments="{event: event, image: event.image3, width: '200', settings: settings, nolink: 1}" />
+				</f:if>
 			</div>
 
 			<div class="event-teaser"><f:format.html>{event.teaser}</f:format.html></div>

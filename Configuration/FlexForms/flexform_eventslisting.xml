@@ -49,6 +49,16 @@
 						</TCEforms>
 					</switchableControllerActions>
 
+					<settings.showJustOneImage>
+						<TCEforms>
+							<label>Show just the first image</label>
+							<displayCond>FIELD:settings.showImages:REQ:true</displayCond>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</settings.showJustOneImage>
+
 					<settings.max>
 						<TCEforms>
 							<displayCond>FIELD:switchableControllerActions:!=:Event->detail</displayCond>
