@@ -94,10 +94,10 @@
 	<f:if condition="{events}">
 		<f:if condition="{minimal}">
 			<f:then>
-				<f:render partial="Event/ListMinimal" arguments="{settings: settings, allEvents: events}"></f:render>
+				<f:render partial="Event/ListMinimal" arguments="{settings: settings, allEvents: events, userImagesEnabled: userImagesEnabled, adminImagesEnabled:adminImagesEnabled}"></f:render>
 			</f:then>
 			<f:else>
-				<f:render partial="Event/List" arguments="{settings: settings, allEvents: events}"></f:render>
+				<f:render partial="Event/List" arguments="{settings: settings, allEvents: events, userImagesEnabled: userImagesEnabled, adminImagesEnabled:adminImagesEnabled}"></f:render>
 			</f:else>
 		</f:if>
 	</f:if>
