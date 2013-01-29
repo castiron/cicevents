@@ -388,6 +388,10 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 		$register = array();
 		$register['eventTitle'] = $event->getTitle();
 		$cObj->LOAD_REGISTER($register, '');
+		$conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cicevents']);
+		$this->view->assign('userImagesEnabled', (boolean) $conf['eventUserImages']);
+		$this->view->assign('adminImagesEnabled', (boolean) $conf['eventAdminImages']);
+
 		$this->view->assign('event', $event);
 	}
 
