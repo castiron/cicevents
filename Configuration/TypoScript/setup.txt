@@ -15,8 +15,8 @@ plugin.tx_cicevents {
 		fileMaxSize = 20971520
         fileAllowedMime {
             gif = image/gif
-            jpg = image/jpg
-            jpg = image/jpeg
+            jpg = image/jpg,image/jpeg
+            jpeg = image/jpg,image/jpeg
             png = image/png
         }
 #		emailNotifications {
