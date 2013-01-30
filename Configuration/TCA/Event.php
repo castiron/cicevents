@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_cicevents_domain_model_event'] = array(
 	'ctrl' => $TCA['tx_cicevents_domain_model_event']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type,title, start_time, end_time, url, link_to_url, venue, address, localities, teaser, description, categories, images, image1, image2, image3',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type,title, start_time, end_time, url, link_to_url, venue, address, localities, teaser, description, categories',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1,type, title, start_time, end_time, url, link_to_url, venue, address, localities, teaser, description,--div--;Images, images,--div--;Categories, categories,--div--;User Images, image1, image2, image3, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1,type, title, start_time, end_time, url, link_to_url, venue, address, localities, teaser, description,--div--;Categories, categories, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -389,6 +389,17 @@ if($confVars['teaserRTE']) {
 	),
 	'defaultExtras' => 'richtext[]',
 );
+}
+
+if($confVars['eventUserImages'] && $confVars['eventAdminImages']) {
+	$TCA['tx_cicevents_domain_model_event']['interface']['showRecordFieldList'] .= ', images, image1, image2, image3';
+	$TCA['tx_cicevents_domain_model_event']['types']['1']['showitem'] .= ',--div--;Images, images,--div--;User Images, image1, image2, image3';
+} else if($confVars['eventUserImages']) {
+	$TCA['tx_cicevents_domain_model_event']['interface']['showRecordFieldList'] .= ',image1, image2, image3';
+	$TCA['tx_cicevents_domain_model_event']['types']['1']['showitem'] .= ',--div--;User Images, image1, image2, image3';
+} else if($confVars['eventAdminImages']) {
+	$TCA['tx_cicevents_domain_model_event']['interface']['showRecordFieldList'] .= ',images';
+	$TCA['tx_cicevents_domain_model_event']['types']['1']['showitem'] .= ',--div--;Images, images';
 }
 
 ?>
