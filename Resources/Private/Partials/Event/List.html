@@ -49,14 +49,14 @@
 
 		<f:if condition="{event.spansMultipleDays}">
 			<f:then>
-				<p class="small date-string flush">
+				<p class="small date-string flush event-particulars">
 					<f:format.date format="F d, Y - h:i a">{event.startTime}</f:format.date>
 					to
 					<f:format.date format="F d, Y - h:i a">{event.endTime}</f:format.date>
 				</p>
 			</f:then>
 			<f:else>
-				<p class="small date-string flush">
+				<p class="small date-string flush event-particulars">
 					<f:format.date format="F d, Y - h:i a">{event.startTime}</f:format.date>
 					to
 					<f:format.date format="h:i a">{event.endTime}</f:format.date>
@@ -67,12 +67,12 @@
 		<f:if condition="{event.venue} == {event.address}">
 			<f:then>
 				<f:if condition="{event.venue}">
-					<p class="small venue flush">{event.venue}</p>
+					<p class="small venue flush event-particulars">{event.venue}</p>
 				</f:if>
 			</f:then>
 			<f:else>
 				<f:if condition="{event.venue}">
-					<p class="small venue flush">{event.venue}</p>
+					<p class="small venue flush event-particulars">{event.venue}</p>
 				</f:if>
 
 				<f:if condition="{event.address}">

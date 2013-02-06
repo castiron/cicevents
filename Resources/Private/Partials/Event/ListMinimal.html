@@ -12,8 +12,8 @@
 					</f:else>
 				</f:if>
 			</span>
-			<span>{event.venue}</span>
-			<span class="small">
+			<span class="event-particulars">{event.venue}</span>
+			<span class="small event-particulars">
 				<f:if condition="{event.spansMultipleDays}">
 					<f:then>
 						<f:format.date format="M d, Y - h:i a">{event.startTime}</f:format.date>
