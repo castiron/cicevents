@@ -76,6 +76,11 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	protected $linkToUrl;
 
 	/**
+	 * @var boolean
+	 */
+	protected $linkToUrlTarget;
+
+	/**
 	 * address
 	 *
 	 * @validate NotEmpty
@@ -437,6 +442,20 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 */
 	public function getLinkToUrl() {
 		return $this->linkToUrl;
+	}
+
+	/**
+	 * @param boolean $linkToUrlTarget
+	 */
+	public function setLinkToUrlTarget($linkToUrlTarget) {
+		$this->linkToUrlTarget = $linkToUrlTarget;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getLinkToUrlTarget() {
+		return $this->linkToUrlTarget;
 	}
 
 	/**
