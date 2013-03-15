@@ -98,10 +98,14 @@
 						<label>Categories:</label>
 						<!--<f:form.select property="categories" options="{categories}" optionValueField="uid" optionLabelField="title" multiple="multiple" class="span5"/>-->
 						<f:for each="{categories}" as="category" iteration="iteration">
-							<div>
-								<f:form.checkbox name="categories{iteration.index}" value="{category.uid}" />
-								<span>{category.title}</span>
-							</div>
+							<ul class="inputs-list">
+								<li>
+									<label class="checkbox">
+										<f:form.checkbox name="categories{iteration.index}" value="{category.uid}" />
+										{category.title}
+									</label>
+								</li>
+							</ul>
 						</f:for>
 
 					</div>
