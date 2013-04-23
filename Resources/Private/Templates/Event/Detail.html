@@ -24,15 +24,17 @@
 			<div class="event-teaser"><f:format.html>{event.teaser}</f:format.html></div>
 			<f:if condition="{event.spansMultipleDays}">
 				<f:then>
-					<p class="small date-string event-particulars">
-						<f:format.date format="M. d, Y - H:i">{event.startTime}</f:format.date> to
-						<f:format.date format="M. d, Y - H:i">{event.endTime}</f:format.date>
+					<p class="small date-string flush event-particulars">
+						<f:format.date format="F d, Y - g:i a">{event.startTime}</f:format.date>
+						to
+						<f:format.date format="F d, Y - g:i a">{event.endTime}</f:format.date>
 					</p>
 				</f:then>
 				<f:else>
-					<p class="small date-string event-particulars">
-						<f:format.date format="M. d, Y - H:i">{event.startTime}</f:format.date> to
-						<f:format.date format="H:i">{event.endTime}</f:format.date>
+					<p class="small date-string flush event-particulars">
+						<f:format.date format="F d, Y - g:i a">{event.startTime}</f:format.date>
+						to
+						<f:format.date format="g:i a">{event.endTime}</f:format.date>
 					</p>
 				</f:else>
 			</f:if>

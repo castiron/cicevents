@@ -50,16 +50,16 @@
 		<f:if condition="{event.spansMultipleDays}">
 			<f:then>
 				<p class="small date-string flush event-particulars">
-					<f:format.date format="F d, Y - h:i a">{event.startTime}</f:format.date>
+					<f:format.date format="F d, Y - g:i a">{event.startTime}</f:format.date>
 					to
-					<f:format.date format="F d, Y - h:i a">{event.endTime}</f:format.date>
+					<f:format.date format="F d, Y - g:i a">{event.endTime}</f:format.date>
 				</p>
 			</f:then>
 			<f:else>
 				<p class="small date-string flush event-particulars">
-					<f:format.date format="F d, Y - h:i a">{event.startTime}</f:format.date>
+					<f:format.date format="F d, Y - g:i a">{event.startTime}</f:format.date>
 					to
-					<f:format.date format="h:i a">{event.endTime}</f:format.date>
+					<f:format.date format="g:i a">{event.endTime}</f:format.date>
 				</p>
 			</f:else>
 		</f:if>
