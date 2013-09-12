@@ -30,7 +30,7 @@
 
 			<label index="tx_cicevents_domain_model_type">Type</label>
 			<label index="tx_cicevents_domain_model_type.title">Title</label>
-
+			<label index="tx_cicevents_domain_model_type.hide_times">Hide start and end times for events of this type</label>
 		</languageKey>
 	</data>
 </T3locallang>
