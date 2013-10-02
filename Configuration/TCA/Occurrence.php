@@ -9,11 +9,10 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, begin_time, finish_time, venue, address, directions',
 	),
 	'types' => array(
-		'1' => array('showitem' => '--palette--;When;when_palette, --palette--;Where;where_palette'),
+		'1' => array('showitem' => '--palette--;Occurrence;main_palette'),
 	),
 	'palettes' => array(
-		'when_palette' => array('showitem' => 'begin_time, finish_time', 'canNotCollapse' => TRUE),
-		'where_palette' => array('showitem' => 'venue, --linebreak--, address, --linebreak--, directions', 'canNotCollapse' => TRUE),
+		'main_palette' => array('showitem' => 'venue, begin_time, finish_time, --linebreak--, address, directions', 'canNotCollapse' => TRUE),
 	),
 	'columns' => array(
 		'sys_language_uid' => array(
@@ -123,7 +122,7 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_occurrence.venue',
 			'config' => array(
 				'type' => 'input',
-				'size' => 38,
+				'size' => 20,
 				'eval' => 'trim, required'
 			),
 		),
@@ -132,7 +131,7 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_occurrence.address',
 			'config' => array(
 				'type' => 'text',
-				'cols' => 40,
+				'cols' => 22,
 				'rows' => 2,
 				'eval' => 'trim'
 			),
@@ -142,7 +141,7 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_occurrence.directions',
 			'config' => array(
 				'type' => 'text',
-				'cols' => 40,
+				'cols' => 36,
 				'rows' => 3,
 				'eval' => 'trim'
 			),
