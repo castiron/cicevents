@@ -9,7 +9,7 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, begin_time, finish_time, venue, address, directions',
 	),
 	'types' => array(
-		'1' => array('showitem' => '--palette--;When;when_palette, --palette--;Where;where_palette, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access, hidden;;1, starttime, endtime'),
+		'1' => array('showitem' => '--palette--;When;when_palette, --palette--;Where;where_palette'),
 	),
 	'palettes' => array(
 		'when_palette' => array('showitem' => 'begin_time, finish_time', 'canNotCollapse' => TRUE),
