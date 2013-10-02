@@ -209,20 +209,6 @@ CREATE TABLE tx_cicevents_domain_model_event_locality_mm (
 );
 
 #
-# Table structure for table 'tx_cicevents_event_occurrence_mm'
-#
-CREATE TABLE tx_cicevents_event_occurrence_mm (
-	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
-	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
-	sorting int(11) unsigned DEFAULT '0' NOT NULL,
-	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
-
-	KEY uid_local (uid_local),
-	KEY uid_foreign (uid_foreign)
-);
-
-
-#
 # Table structure for table 'tx_cicevents_domain_model_event_images_mm'
 #
 CREATE TABLE tx_cicevents_domain_model_event_images_mm (
@@ -251,6 +237,7 @@ CREATE TABLE tx_cicevents_domain_model_occurrence (
 	directions text NOT NULL,
 	description text NOT NULL,
 	url text NOT NULL,
+	event int(11) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
