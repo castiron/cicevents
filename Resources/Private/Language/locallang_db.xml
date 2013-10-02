@@ -37,8 +37,6 @@
 			<label index="tx_cicevents_domain_model_occurrence.venue">Venue</label>
 			<label index="tx_cicevents_domain_model_occurrence.address">Address</label>
 			<label index="tx_cicevents_domain_model_occurrence.directions">Directions</label>
-			<label index="tx_cicevents_domain_model_occurrence.url">URL</label>
-			<label index="tx_cicevents_domain_model_occurrence.description">Description</label>
 
 		</languageKey>
 	</data>

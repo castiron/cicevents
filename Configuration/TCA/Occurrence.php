@@ -6,15 +6,14 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_cicevents_domain_model_occurrence'] = array(
 	'ctrl' => $TCA['tx_cicevents_domain_model_occurrence']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, begin_time, finish_time, venue, address, directions, description, url',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, begin_time, finish_time, venue, address, directions',
 	),
 	'types' => array(
-		'1' => array('showitem' => '--palette--;When;when_palette, --palette--;Where;where_palette, --palette--;What;what_palette, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access, hidden;;1, starttime, endtime'),
+		'1' => array('showitem' => '--palette--;When;when_palette, --palette--;Where;where_palette, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access, hidden;;1, starttime, endtime'),
 	),
 	'palettes' => array(
 		'when_palette' => array('showitem' => 'begin_time, finish_time', 'canNotCollapse' => TRUE),
 		'where_palette' => array('showitem' => 'venue, --linebreak--, address, --linebreak--, directions', 'canNotCollapse' => TRUE),
-		'what_palette' => array('showitem' => 'url, --linebreak--, description', 'canNotCollapse' => TRUE),
 	),
 	'columns' => array(
 		'sys_language_uid' => array(
@@ -146,37 +145,6 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 				'cols' => 40,
 				'rows' => 3,
 				'eval' => 'trim'
-			),
-		),
-		'description' => array(
-			'exclude' => 0,
-			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_occurrence.description',
-			'config' => array(
-				'type' => 'text',
-				'cols' => 40,
-				'rows' => 3,
-				'eval' => 'trim'
-			)
-		),
-		'url' => array(
-			'exclude' => 0,
-			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_occurrence.url',
-			'config' => array(
-				'type' => 'input',
-				'size' => 38,
-				'max' => '255',
-				'checkbox' => '',
-				'eval' => 'trim',
-				'wizards' => array(
-					'_PADDING' => 2,
-					'link' => array(
-						'type' => 'popup',
-						'title' => 'Link',
-						'icon' => 'link_popup.gif',
-						'script' => 'browse_links.php?mode=wizard',
-						'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
-					)
-				),
 			),
 		),
 	),

@@ -235,8 +235,6 @@ CREATE TABLE tx_cicevents_domain_model_occurrence (
 	venue varchar(255) DEFAULT '' NOT NULL,
 	address varchar(255) DEFAULT '' NOT NULL,
 	directions text NOT NULL,
-	description text NOT NULL,
-	url text NOT NULL,
 	event int(11) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,

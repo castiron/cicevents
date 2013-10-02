@@ -64,17 +64,6 @@ class Tx_Cicevents_Domain_Model_Occurrence extends Tx_Extbase_DomainObject_Abstr
 
 
 	/**
-	 * @var String
-	 */
-	protected $description;
-
-
-	/**
-	 * @var String
-	 */
-	protected $url;
-
-	/**
 	 * @param String $address
 	 */
 	public function setAddress($address) {
@@ -103,20 +92,6 @@ class Tx_Cicevents_Domain_Model_Occurrence extends Tx_Extbase_DomainObject_Abstr
 	}
 
 	/**
-	 * @param String $description
-	 */
-	public function setDescription($description) {
-		$this->description = $description;
-	}
-
-	/**
-	 * @return String
-	 */
-	public function getDescription() {
-		return $this->description;
-	}
-
-	/**
 	 * @param String $directions
 	 */
 	public function setDirections($directions) {
@@ -142,20 +117,6 @@ class Tx_Cicevents_Domain_Model_Occurrence extends Tx_Extbase_DomainObject_Abstr
 	 */
 	public function getFinishTime() {
 		return $this->finishTime;
-	}
-
-	/**
-	 * @param String $url
-	 */
-	public function setUrl($url) {
-		$this->url = $url;
-	}
-
-	/**
-	 * @return String
-	 */
-	public function getUrl() {
-		return $this->url;
 	}
 
 	/**
