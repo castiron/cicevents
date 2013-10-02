@@ -31,6 +31,14 @@
 			<label index="tx_cicevents_domain_model_type">Type</label>
 			<label index="tx_cicevents_domain_model_type.title">Title</label>
 
+			<label index="tx_cicevents_domain_model_occurrence.begin_time">Start Time</label>
+			<label index="tx_cicevents_domain_model_occurrence.finish_time">End Time</label>
+			<label index="tx_cicevents_domain_model_occurrence.venue">Venue</label>
+			<label index="tx_cicevents_domain_model_occurrence.address">Address</label>
+			<label index="tx_cicevents_domain_model_occurrence.directions">Directions</label>
+			<label index="tx_cicevents_domain_model_occurrence.url">URL</label>
+			<label index="tx_cicevents_domain_model_occurrence.description">Description</label>
+
 		</languageKey>
 	</data>
 </T3locallang>

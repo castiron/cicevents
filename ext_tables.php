@@ -152,4 +152,33 @@ $TCA['tx_cicevents_domain_model_type'] = array(
 	),
 );
 
+
+t3lib_extMgm::addLLrefForTCAdescr('tx_cicevents_domain_model_occurrence', 'EXT:cicevents/Resources/Private/Language/locallang_csh_tx_cicevents_domain_model_occurrence.xml');
+t3lib_extMgm::allowTableOnStandardPages('tx_cicevents_domain_model_occurrence');
+$TCA['tx_cicevents_domain_model_occurrence'] = array(
+	'ctrl' => array(
+		'title'	=> 'Occurrence',
+		'label' => 'venue',
+		'label_userFunc' => 'Tx_Cicevents_Domain_Model_Occurrence->getTCALabel',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
+		'versioningWS' => 2,
+		'versioning_followPages' => TRUE,
+		'origUid' => 't3_origuid',
+		'languageField' => 'sys_language_uid',
+		'transOrigPointerField' => 'l10n_parent',
+		'transOrigDiffSourceField' => 'l10n_diffsource',
+		'delete' => 'deleted',
+		'enablecolumns' => array(
+			'disabled' => 'hidden',
+			'starttime' => 'starttime',
+			'endtime' => 'endtime',
+		),
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Occurrence.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_cicevents_domain_model_occurrence.gif'
+	),
+);
+
 ?>
