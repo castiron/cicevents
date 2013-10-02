@@ -124,7 +124,7 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_occurrence.venue',
 			'config' => array(
 				'type' => 'input',
-				'size' => 30,
+				'size' => 38,
 				'eval' => 'trim, required'
 			),
 		),
@@ -134,7 +134,7 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 			'config' => array(
 				'type' => 'text',
 				'cols' => 40,
-				'rows' => 15,
+				'rows' => 2,
 				'eval' => 'trim'
 			),
 		),
@@ -144,7 +144,7 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 			'config' => array(
 				'type' => 'text',
 				'cols' => 40,
-				'rows' => 15,
+				'rows' => 3,
 				'eval' => 'trim'
 			),
 		),
@@ -174,7 +174,7 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_occurrence.url',
 			'config' => array(
 				'type' => 'input',
-				'size' => '45',
+				'size' => 38,
 				'max' => '255',
 				'checkbox' => '',
 				'eval' => 'trim',
