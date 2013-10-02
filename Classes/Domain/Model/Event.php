@@ -155,6 +155,13 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	protected $localities;
 
 	/**
+	 * Occurrences
+	 *
+	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Cicevents_Domain_Model_Occurrence>
+	 */
+	protected $occurrences;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -181,6 +188,8 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 		 * You may modify the constructor of this class instead
 		 */
 		$this->categories = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->localities = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->occurrences = new Tx_Extbase_Persistence_ObjectStorage();
 	}
 
 	/**
@@ -598,5 +607,36 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 		$this->localities->rewind();
 		return $this->localities->current();
 	}
+
+	/**
+	 * @param \Tx_Extbase_Persistence_ObjectStorage $occurrences
+	 */
+	public function setOccurrences($occurrences) {
+		$this->occurrences = $occurrences;
+	}
+
+	/**
+	 * @return \Tx_Extbase_Persistence_ObjectStorage
+	 */
+	public function getOccurrences() {
+		return $this->occurrences;
+	}
+
+
+	/**
+	 * @param Tx_Cicevents_Domain_Model_Occurrence $occurrence
+	 */
+	public function addOccurrence($occurrence) {
+		$this->occurrences->attach($occurrence);
+	}
+
+
+	/**
+	 * @param Tx_Cicevents_Domain_Model_Occurrence $occurrence
+	 */
+	public function removeOccurrence($occurrence) {
+		$this->occurrences->detach($occurrence);
+	}
+
 }
 ?>

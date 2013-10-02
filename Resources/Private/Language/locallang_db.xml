@@ -17,6 +17,7 @@
 			<label index="tx_cicevents_domain_model_event.images">Images</label>
 			<label index="tx_cicevents_domain_model_event.category">Category</label>
 			<label index="tx_cicevents_domain_model_event.locality">Locality</label>
+			<label index="tx_cicevents_domain_model_event.occurrences">Occurrences</label>
 			<label index="tx_cicevents_domain_model_event.type">Type</label>
 			<label index="tx_cicevents_domain_model_event.image1">Image 1</label>
 			<label index="tx_cicevents_domain_model_event.image2">Image 2</label>
