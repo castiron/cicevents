@@ -20,6 +20,7 @@ class ext_update {
 	 */
 	protected function initialize() {
 		$this->db = $GLOBALS['TYPO3_DB'];
+		$this->msgs[] = '<strong>CIC Events update script created on October 2nd, 2013</strong>';
 	}
 
 	/**
@@ -41,12 +42,14 @@ class ext_update {
 
 		$fields = $this->db->admin_get_fields(self::EVENT_TABLE);
 		if(!isset($fields['occurrences'])) {
-			return 'You need to run the database migrations first.';
+			$this->msgs[] = 'You need to run the database migrations first.';
+			return $this->results();
 		}
 
 		$countOccurrences = $this->db->exec_SELECTcountRows('*', self::OCCURRENCE_TABLE);
 		if($countOccurrences) {
-			return 'Existing Event Occurrences have been found. Aborting update.';
+			$this->msgs[] = 'Existing Event Occurrences have been found. Aborting update. Maybe already updated?';
+			return $this->results();
 		}
 
 		$rows = $this->db->exec_SELECTgetRows('*', self::EVENT_TABLE, '');
@@ -67,13 +70,7 @@ class ext_update {
 		}
 
 
-		$list = '<ul>';
-		foreach($this->msgs as $msg) {
-			$list .= "<li>$msg</li>";
-		}
-		$list .= '</ul>';
-
-		return "$list<br><p>All done.</p>";
+		return $this->results();
 	}
 
 
@@ -86,5 +83,14 @@ class ext_update {
 		}
 	}
 
+	protected function results() {
+		$list = '<ul>';
+		foreach($this->msgs as $msg) {
+			$list .= "<li>$msg</li>";
+		}
+		$list .= '</ul>';
+
+		return "$list<br><p>All done.</p>";
+	}
 }
 ?>
