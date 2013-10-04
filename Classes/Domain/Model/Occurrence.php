@@ -46,22 +46,26 @@ class Tx_Cicevents_Domain_Model_Occurrence extends Tx_Extbase_DomainObject_Abstr
 
 
 	/**
-	 * @var String
+	 * @var string
 	 */
 	protected $venue;
 
 
 	/**
-	 * @var String
+	 * @var string
 	 */
 	protected $address;
 
 
 	/**
-	 * @var String
+	 * @var string
 	 */
 	protected $directions;
 
+	/**
+	 * @var Tx_Cicevents_Domain_Model_Event
+	 */
+	protected $event;
 
 	/**
 	 * @param String $address
@@ -149,6 +153,20 @@ class Tx_Cicevents_Domain_Model_Occurrence extends Tx_Extbase_DomainObject_Abstr
 		$start = date($format, $occ['begin_time']);
 
 		$params['title'] = "$venue ($start)";
+	}
+
+	/**
+	 * @param \Tx_Cicevents_Domain_Model_Event $event
+	 */
+	public function setEvent($event) {
+		$this->event = $event;
+	}
+
+	/**
+	 * @return \Tx_Cicevents_Domain_Model_Event
+	 */
+	public function getEvent() {
+		return $this->event;
 	}
 
 

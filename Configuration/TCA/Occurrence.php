@@ -146,6 +146,17 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 				'eval' => 'trim'
 			),
 		),
+		'event' => array(
+			'exclude' => 0,
+			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_occurrence.event',
+			'config' => array(
+				'type' => 'select',
+				#	'foreign_table_where' => 'AND tx_cicevents_domain_model_event.pid = ###CURRENT_PID###',
+				'foreign_table' => 'tx_cicevents_domain_model_event',
+				'maxitems' => 1,
+				'minitems' => 1,
+			),
+		),
 	),
 );
 
