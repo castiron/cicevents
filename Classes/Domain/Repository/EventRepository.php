@@ -18,6 +18,21 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 	protected $filterOrderings;
 
 	/**
+	 * @var Tx_Cicevents_Domain_Repository_OccurrenceRepository
+	 */
+	protected $occurrenceRepository;
+
+	/**
+	 * inject the occurrenceRepository
+	 *
+	 * @param Tx_Cicevents_Domain_Repository_OccurrenceRepository $occurrenceRepository
+	 * @return void
+	 */
+	public function injectOccurrenceRepository(Tx_Cicevents_Domain_Repository_OccurrenceRepository $occurrenceRepository) {
+		$this->occurrenceRepository = $occurrenceRepository;
+	}
+
+	/**
 	 * Returns all objects of this repository (overridden)
 	 *
 	 * @param integer $limit An optional limit on the number of events returned. Defaults to all events.
@@ -26,13 +41,13 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 	 */
 	public function findAll($limit = 0, $offset = 0) {
 		$query = $this->getQuery();
-		$query->setOrderings(array('startTime' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING));
+//		$query->setOrderings(array('startTime' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING));
 		if($limit > 0) {
 			$query->setLimit($limit);
 			$query->setOffset($offset);
 		}
 		if(count($this->filters) > 0) {
-			$query->setOrderings($this->filterOrderings);
+//			$query->setOrderings($this->filterOrderings);
 			$query->matching($query->logicalAnd($this->filters));
 		}
 		$result = $query->execute();
@@ -61,14 +76,17 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 	public function addFilters(array $params) {
 		$query = $this->createQuery();
 		$this->filters = array();
-		$this->filterOrderings = array('startTime' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING);
+//		$this->filterOrderings = array('startTime' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING);
+
+		$occurrenceQuery = $this->occurrenceRepository->createQuery();
+		$occurrenceFilters = array();
 
 		foreach($params as $key => $value) {
-			if($value !== 0 &&$value == null)
+			if($value !== 0 && $value == null)
 				continue;
 			switch($key) {
 				case 'location':
-						$this->filters[] = $query->logicalOr(
+						$occurrenceFilters[] = $query->logicalOr(
 							$query->like('address', '%'.$value.'%'),
 							$query->like('venue', '%'.$value.'%')
 						);
@@ -78,9 +96,9 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 						$dateStart = clone $value;
 						$dateEnd->setTime(23,59,59);
 						$dateStart->setTime(0,0,0);
-						$A = $query->lessThanOrEqual('startTime', $dateEnd);
-						$B = $query->greaterThanOrEqual('endTime', $dateStart);
-						$this->filters[] = $query->logicalAnd($A, $B);
+						$A = $occurrenceQuery->lessThanOrEqual('beginTime', $dateEnd);
+						$B = $occurrenceQuery->greaterThanOrEqual('finishTime', $dateStart);
+						$occurrenceFilters[] = $occurrenceQuery->logicalAnd($A, $B);
 					break;
 				case 'range':
 					$today = new DateTime();
@@ -88,7 +106,7 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 						case self::RANGE_CURRENT:
 							$start = new DateTime();
 							$start->setTime(0,0,0);
-							$this->filters[] = $query->greaterThanOrEqual('endTime', $start);
+							$occurrenceFilters[] = $occurrenceQuery->greaterThanOrEqual('finishTime', $start);
 							break;
 						case self::RANGE_NEXT_MONTH:
 							$start = new DateTime();
@@ -97,9 +115,9 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 							$end->setTime(23, 59, 59);
 							$start->setDate($today->format('Y'), $today->format('n') + 1, 1);
 							$end->setDate($today->format('Y'), $today->format('n') + 2, 0);
-							$A = $query->lessThanOrEqual('startTime', $end);
-							$B = $query->greaterThanOrEqual('endTime', $start);
-							$this->filters[] = $query->logicalAnd($A, $B);
+							$A = $occurrenceQuery->lessThanOrEqual('beginTime', $end);
+							$B = $occurrenceQuery->greaterThanOrEqual('finishTime', $start);
+							$occurrenceFilters[] = $occurrenceQuery->logicalAnd($A, $B);
 							break;
 						case self::RANGE_THIS_MONTH:
 							$start = new DateTime();
@@ -107,9 +125,9 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 							$start->setTime(0, 0, 0);
 							$end->setTime(23, 59, 59);
 							$end->setDate($today->format('Y'), $today->format('n') + 1, 0);
-							$A = $query->lessThanOrEqual('startTime', $end);
-							$B = $query->greaterThanOrEqual('endTime', $start);
-							$this->filters[] = $query->logicalAnd($A, $B);
+							$A = $occurrenceQuery->lessThanOrEqual('beginTime', $end);
+							$B = $occurrenceQuery->greaterThanOrEqual('finishTime', $start);
+							$occurrenceFilters[] = $occurrenceQuery->logicalAnd($A, $B);
 							break;
 						case self::RANGE_THREE_MONTHS:
 							$start = new DateTime();
@@ -118,15 +136,16 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 							$end->setTime(23, 59, 59);
 							$start->setDate($today->format('Y'), $today->format('n') + 1, 1);
 							$end->setDate($today->format('Y'), $today->format('n') + 4, 0);
-							$A = $query->lessThanOrEqual('startTime', $end);
-							$B = $query->greaterThanOrEqual('endTime', $start);
-							$this->filters[] = $query->logicalAnd($A, $B);
+							$A = $occurrenceQuery->lessThanOrEqual('beginTime', $end);
+							$B = $occurrenceQuery->greaterThanOrEqual('finishTime', $start);
+							$occurrenceFilters[] = $occurrenceQuery->logicalAnd($A, $B);
 							break;
 						case self::RANGE_PAST:
 							$start = $today;
 							$start->setTime(0,0,0);
-							$this->filters[] = $query->lessThanOrEqual('endTime', $start);
-							$this->filterOrderings = array('startTime' => Tx_Extbase_Persistence_QueryInterface::ORDER_DESCENDING);
+							$occurrenceFilters[] = $occurrenceQuery->lessThanOrEqual('finishTime', $start);
+							// TODO Find a way to sort using occurrences
+							// $this->filterOrderings = array('startTime' => Tx_Extbase_Persistence_QueryInterface::ORDER_DESCENDING);
 							break;
 					}
 					break;
@@ -143,6 +162,11 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 					// skip unknown parameters
 					continue;
 			}
+		}
+
+		$occurrences = $occurrenceQuery->matching($occurrenceQuery->logicalAnd($occurrenceFilters))->execute();
+		foreach($occurrences as $occurrence) {
+			$this->filters[] = $query->contains('occurrences', $occurrence);
 		}
 
 		$this->tempQuery = $query;

@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_cicevents_domain_model_event'] = array(
 	'ctrl' => $TCA['tx_cicevents_domain_model_event']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type,title, start_time, end_time, url, link_to_url, link_to_url_target, venue, address, localities, teaser, description, categories, occurrences',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type,title, url, link_to_url, link_to_url_target, localities, teaser, description, categories, occurrences',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1,type, title, start_time, end_time, url, link_to_url, link_to_url_target, venue, address, localities, occurrences, teaser, description,--div--;Categories, categories, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'type, title, url, link_to_url, link_to_url_target, localities, occurrences, teaser, description,--div--;Categories, categories, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -61,32 +61,6 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 				'type' => 'check',
 			),
 		),
-		'start_time' => array(
-			'exclude' => 1,
-			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event.startTime',
-			'config' => array(
-				'type' => 'input',
-				'size' => 13,
-				'max' => 20,
-				'eval' => 'datetime,required',
-				'checkbox' => 0,
-				'default' => 0,
-			),
-		),
-		'end_time' => array(
-			'exclude' => 1,
-			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event.endTime',
-			'config' => array(
-				'type' => 'input',
-				'size' => 13,
-				'max' => 20,
-				'eval' => 'datetime,required',
-				'checkbox' => 0,
-				'default' => 0,
-			),
-		),
 		'title' => array(
 			'exclude' => 0,
 			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event.title',
@@ -94,15 +68,6 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 				'type' => 'input',
 				'size' => 30,
 				'eval' => 'trim,required'
-			),
-		),
-		'venue' => array(
-			'exclude' => 0,
-			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event.venue',
-			'config' => array(
-				'type' => 'input',
-				'size' => 30,
-				'eval' => 'trim'
 			),
 		),
 		'localities' => array(
@@ -157,15 +122,6 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 					'showAllLocalizationLink' => 1
 				),
 				'multiple' => 0,
-			),
-		),
-		'address' => array(
-			'exclude' => 0,
-			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event.address',
-			'config' => array(
-				'type' => 'input',
-				'size' => 30,
-				'eval' => 'trim'
 			),
 		),
 		'teaser' => array(
