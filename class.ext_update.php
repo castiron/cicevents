@@ -60,6 +60,7 @@ class ext_update {
 				'venue' => $row['venue'],
 				'event' => $row['uid'],
 				'address' => $row['address'],
+				'pid' => $row['pid'],
 			));
 			$this->logSQL();
 
