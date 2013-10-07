@@ -202,6 +202,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 */
 	public function getStartTime() {
 		if($this->occurrences->count()) {
+			$this->occurrences->rewind();
 			$firstOccurrence = $this->occurrences->current();
 			return $firstOccurrence->getBeginTime();
 		}
@@ -217,6 +218,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 */
 	public function setStartTime($startTime) {
 		if($this->occurrences->count()) {
+			$this->occurrences->rewind();
 			$firstOccurrence = $this->occurrences->current();
 			$firstOccurrence->setBeginTime($startTime);
 		} else {
@@ -234,6 +236,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 */
 	public function getEndTime() {
 		if($this->occurrences->count()) {
+			$this->occurrences->rewind();
 			$firstOccurrence = $this->occurrences->current();
 			return $firstOccurrence->getFinishTime();
 		}
@@ -249,6 +252,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 */
 	public function setEndTime($endTime) {
 		if($this->occurrences->count()) {
+			$this->occurrences->rewind();
 			$firstOccurrence = $this->occurrences->current();
 			$firstOccurrence->setFinishTime($endTime);
 		} else {
@@ -265,6 +269,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 */
 	public function getSpansMultipleDays() {
 		if($this->occurrences->count()) {
+			$this->occurrences->rewind();
 			$firstOccurrence = $this->occurrences->current();
 			$begin = $firstOccurrence->getBeginTime();
 			$finish = $firstOccurrence->getFinishTime();
@@ -283,6 +288,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 */
 	public function alreadyHappened() {
 		if($this->occurrences->count()) {
+			$this->occurrences->rewind();
 			$firstOccurrence = $this->occurrences->current();
 			$finish = $firstOccurrence->getFinishTime();
 			if($finish instanceof DateTime) {
@@ -300,6 +306,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 */
 	public function getIsCurrentlyHappening() {
 		if($this->occurrences->count()) {
+			$this->occurrences->rewind();
 			$firstOccurrence = $this->occurrences->current();
 			$begin = $firstOccurrence->getBeginTime();
 			$finish = $firstOccurrence->getFinishTime();
@@ -319,6 +326,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 */
 	public function getVenue() {
 		if($this->occurrences->count()) {
+			$this->occurrences->rewind();
 			$firstOccurrence = $this->occurrences->current();
 			return $firstOccurrence->getVenue();
 		}
@@ -334,6 +342,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 */
 	public function setVenue($venue) {
 		if($this->occurrences->count()) {
+			$this->occurrences->rewind();
 			$firstOccurrence = $this->occurrences->current();
 			$firstOccurrence->setVenue($venue);
 		} else {
@@ -351,6 +360,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 */
 	public function getAddress() {
 		if($this->occurrences->count()) {
+			$this->occurrences->rewind();
 			$firstOccurrence = $this->occurrences->current();
 			return $firstOccurrence->getAddress();
 		}
@@ -366,6 +376,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 */
 	public function setAddress($address) {
 		if($this->occurrences->count()) {
+			$this->occurrences->rewind();
 			$firstOccurrence = $this->occurrences->current();
 			$firstOccurrence->setAddress($address);
 		} else {
