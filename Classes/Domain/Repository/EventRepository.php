@@ -44,18 +44,19 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 	public function findAll($limit = 0, $offset = 0) {
 		$query = $this->getQuery();
 
-		if($limit > 0) {
-			$query->setLimit($limit);
-			$query->setOffset($offset);
-		}
-
 		if(count($this->filters) > 0) {
 			$query->matching($query->logicalAnd($this->filters));
 		}
 
 		$result = $query->execute()->toArray();
 
-		return $this->sortEvents($result);
+		$sorted = $this->sortEvents($result);
+
+		if($limit > 0) {
+			$sorted =  array_slice($sorted, $offset, $limit);
+		}
+
+		return $sorted;
 	}
 
 	/**
@@ -67,7 +68,7 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 	 */
 	public function sortEvents($events) {
 
-		if(!$this->sortFunction) {
+		if(!$this->sortBy) {
 			$this->sortBy = 'soonest';
 		}
 
@@ -95,7 +96,7 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 						$aOccBegin = $aOcc->getBeginTime();
 						$bOccBegin = $bOcc->getBeginTime();
 						if($aOccBegin && $bOccBegin) {
-							return $aOccBegin < $bOccBegin ? -1 : 1;
+							return $aOccBegin > $bOccBegin ? -1 : 1;
 						}
 					}
 				};
