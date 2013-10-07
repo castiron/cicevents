@@ -148,7 +148,7 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 		),
 		'event' => array(
 			'exclude' => 0,
-			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_occurrence.event',
+			'label' => 'Event',
 			'config' => array(
 				'type' => 'select',
 				#	'foreign_table_where' => 'AND tx_cicevents_domain_model_event.pid = ###CURRENT_PID###',
