@@ -67,6 +67,21 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	protected $emailService;
 
 	/**
+	 * @var Tx_Cicevents_Domain_Repository_OccurrenceRepository
+	 */
+	protected $occurrenceRepository;
+
+	/**
+	 * inject the occurrenceRepository
+	 *
+	 * @param Tx_Cicevents_Domain_Repository_OccurrenceRepository occurrenceRepository
+	 * @return void
+	 */
+	public function injectOccurrenceRepository(Tx_Cicevents_Domain_Repository_OccurrenceRepository $occurrenceRepository) {
+		$this->occurrenceRepository = $occurrenceRepository;
+	}
+
+	/**
 	 * Dependency injection of the Event Repository
 	 *
 	 * @param Tx_Cicevents_Domain_Repository_EventRepository $eventRepository
@@ -203,10 +218,16 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	 */
 	public function calendarAction() {
 		$dateFormat = 'D, d M Y H:i:s';// Wed, 09 Aug 1995 00:00:00 // <-- to match JavaScript Date format
-		$events = $this->eventRepository->findAll();
-		$eventsArray = array();
-		foreach($events as $event) {
 
+		$occurrences = $this->occurrenceRepository->findAll();
+
+		/** @var Tx_Cicevents_Domain_Model_Occurrence $occurrence */
+		foreach($occurrences as $occurrence) {
+			/** @var Tx_Cicevents_Domain_Model_Event $event */
+			$event = $occurrence->getEvent();
+			if(!$event) {
+				continue;
+			}
 			$uriBuilder = $this->uriBuilder;
 			$uri = $uriBuilder
 				->reset()
@@ -216,11 +237,14 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 				'url' => $uri,
 				'colorStyle' => $event->getLinkCssColorStyleDeclaration(),
 			);
-			if($event->getStartTime() instanceof DateTime) {
-				$eventDetails['start'] = $event->getStartTime()->format($dateFormat);
+
+			$begin = $occurrence->getBeginTime();
+			$finish = $occurrence->getFinishTime();
+			if($begin instanceof DateTime) {
+				$eventDetails['start'] = $begin->format($dateFormat);
 			}
-			if($event->getEndTime() instanceof DateTime) {
-				$eventDetails['end'] = $event->getEndTime()->format($dateFormat);
+			if($finish instanceof DateTime) {
+				$eventDetails['end'] = $finish->format($dateFormat);
 			}
 			$eventsArray[] = $eventDetails;
 		}
