@@ -170,4 +170,35 @@ class Tx_Cicevents_Domain_Model_Occurrence extends Tx_Extbase_DomainObject_Abstr
 	}
 
 
+	/**
+	 * @return bool
+	 */
+	public function spansMultipleDays() {
+		if($this->beginTime instanceof DateTime && $this->finishTime instanceof DateTime) {
+			$diff = $this->beginTime->diff($this->finishTime);
+			return $diff->days > 0;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function alreadyHappened() {
+		if($this->finishTime instanceof DateTime) {
+			return $this->finishTime < new DateTime();
+		}
+		return FALSE;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function currentlyHappening() {
+		if($this->beginTime instanceof DateTime && $this->finishTime instanceof DateTime) {
+			$now = new DateTime();
+			return $this->beginTime < $now && $this->finishTime > $now;
+		}
+		return FALSE;
+	}
 }

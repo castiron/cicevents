@@ -271,11 +271,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 		if($this->occurrences->count()) {
 			$this->occurrences->rewind();
 			$firstOccurrence = $this->occurrences->current();
-			$begin = $firstOccurrence->getBeginTime();
-			$finish = $firstOccurrence->getFinishTime();
-			if($begin instanceof DateTime && $finish instanceof DateTime) {
-				return intval($finish->format('j')) != intval($begin->format('j'));
-			}
+			return $firstOccurrence->spansMultipleDays();
 		}
 		return FALSE;
 	}
@@ -290,10 +286,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 		if($this->occurrences->count()) {
 			$this->occurrences->rewind();
 			$firstOccurrence = $this->occurrences->current();
-			$finish = $firstOccurrence->getFinishTime();
-			if($finish instanceof DateTime) {
-				return $finish < new DateTime();
-			}
+			return $firstOccurrence->alreadyHappened();
 		}
 		return FALSE;
 	}
@@ -308,12 +301,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 		if($this->occurrences->count()) {
 			$this->occurrences->rewind();
 			$firstOccurrence = $this->occurrences->current();
-			$begin = $firstOccurrence->getBeginTime();
-			$finish = $firstOccurrence->getFinishTime();
-			if($begin instanceof DateTime && $finish instanceof DateTime) {
-				$now = new DateTime();
-				return $begin < $now && $finish > $now;
-			}
+			return $firstOccurrence->currentlyHappening();
 		}
 		return FALSE;
 	}
