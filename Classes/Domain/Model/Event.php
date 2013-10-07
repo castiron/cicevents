@@ -724,5 +724,63 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 		$this->occurrences->detach($occurrence);
 	}
 
+
+	/**
+	 * Grabs the occurrence that hasn't happened yet but
+	 * will be the next occurrence to happen.
+	 */
+	public function getSoonestOccurrence() {
+		if(!$this->occurrences->count()) {
+			return NULL;
+		}
+		$soonest = NULL;
+		$now = new DateTime();
+
+		// Loop through all occurrences saving the soonest
+		// occurrence that is valid and in the future
+		foreach($this->occurrences as $occ) {
+			$occBegin = $occ->getBeginTime();
+			if(!$occBegin || $occBegin < $now) {
+				continue;
+			}
+			if(!$soonest) {
+				$soonest = $occ;
+				$soonestBegin = $occBegin; // cache the call
+			} elseif($occBegin < $soonestBegin) {
+				$soonest = $occ;
+			}
+		}
+		return $soonest;
+	}
+
+
+	/**
+	 * Grabs the occurrence that has happened and was
+	 * the last occurrence to happen.
+	 */
+	public function getMostRecentOccurrence() {
+		if(!$this->occurrences->count()) {
+			return NULL;
+		}
+		$recent = NULL;
+		$now = new DateTime();
+
+		// Loop through all occurrences saving the latest
+		// occurrence that is valid and in the past
+		foreach($this->occurrences as $occ) {
+			$occFinish = $occ->getFinishTime();
+			if(!$occFinish || $occFinish > $now) {
+				continue;
+			}
+			if(!$recent) {
+				$recent = $occ;
+				$recentFinish = $occFinish; // cache the call
+			} elseif($occFinish > $recentFinish) {
+				$recent = $occ;
+			}
+		}
+		return $recent;
+	}
+
 }
 ?>

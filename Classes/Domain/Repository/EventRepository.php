@@ -50,8 +50,24 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 //			$query->setOrderings($this->filterOrderings);
 			$query->matching($query->logicalAnd($this->filters));
 		}
-		$result = $query->execute();
-		return $result;
+		$result = $query->execute()->toArray();
+
+		return $this->sortEvents($result);
+	}
+
+	public function sortEvents(array &$events) {
+		usort($events, function(Tx_Cicevents_Domain_Model_Event $a, Tx_Cicevents_Domain_Model_Event $b) {
+			$aOcc = $a->getSoonestOccurrence();
+			$bOcc = $b->getSoonestOccurrence();
+			if($aOcc && $bOcc) {
+				$aOccBegin = $aOcc->getBeginTime();
+				$bOccBegin = $bOcc->getBeginTime();
+				if($aOccBegin && $bOccBegin) {
+					return $aOccBegin < $bOccBegin ? -1 : 1;
+				}
+			}
+		});
+		return $events;
 	}
 
 
