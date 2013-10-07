@@ -182,8 +182,9 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 
 		$occurrences = $occurrenceQuery->matching($occurrenceQuery->logicalAnd($occurrenceFilters))->execute();
 		foreach($occurrences as $occurrence) {
-			$this->filters[] = $query->contains('occurrences', $occurrence);
+			$occurrenceConstraints[] = $query->contains('occurrences', $occurrence);
 		}
+		$this->filters[] = $query->logicalOr($occurrenceConstraints);
 
 		$this->tempQuery = $query;
 	}
