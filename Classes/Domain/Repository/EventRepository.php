@@ -17,6 +17,8 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 
 	protected $filterOrderings;
 
+	protected $sortBy;
+
 	/**
 	 * @var Tx_Cicevents_Domain_Repository_OccurrenceRepository
 	 */
@@ -41,32 +43,82 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 	 */
 	public function findAll($limit = 0, $offset = 0) {
 		$query = $this->getQuery();
-//		$query->setOrderings(array('startTime' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING));
+
 		if($limit > 0) {
 			$query->setLimit($limit);
 			$query->setOffset($offset);
 		}
+
 		if(count($this->filters) > 0) {
-//			$query->setOrderings($this->filterOrderings);
 			$query->matching($query->logicalAnd($this->filters));
 		}
+
 		$result = $query->execute()->toArray();
 
 		return $this->sortEvents($result);
 	}
 
-	public function sortEvents(array &$events) {
-		usort($events, function(Tx_Cicevents_Domain_Model_Event $a, Tx_Cicevents_Domain_Model_Event $b) {
-			$aOcc = $a->getSoonestOccurrence();
-			$bOcc = $b->getSoonestOccurrence();
-			if($aOcc && $bOcc) {
-				$aOccBegin = $aOcc->getBeginTime();
-				$bOccBegin = $bOcc->getBeginTime();
-				if($aOccBegin && $bOccBegin) {
-					return $aOccBegin < $bOccBegin ? -1 : 1;
-				}
+	/**
+	 * Sorts an array of events based on an event's soonest occurrence or
+	 * based on an event's most recent occurrence.
+	 *
+	 * @param $events
+	 * @return array
+	 */
+	public function sortEvents($events) {
+
+		if(!$this->sortFunction) {
+			$this->sortBy = 'soonest';
+		}
+
+		switch(strtolower($this->sortBy)) {
+			case 'soonest':
+				$sorter = function(Tx_Cicevents_Domain_Model_Event $a, Tx_Cicevents_Domain_Model_Event $b) {
+					$aOcc = $a->getSoonestOccurrence();
+					$bOcc = $b->getSoonestOccurrence();
+					if($aOcc && $bOcc) {
+						$aOccBegin = $aOcc->getBeginTime();
+						$bOccBegin = $bOcc->getBeginTime();
+						if($aOccBegin && $bOccBegin) {
+							return $aOccBegin < $bOccBegin ? -1 : 1;
+						}
+					}
+				};
+				break;
+			case 'mostrecent':
+			case 'most-recent':
+			case 'most_recent':
+				$sorter = function(Tx_Cicevents_Domain_Model_Event $a, Tx_Cicevents_Domain_Model_Event $b) {
+					$aOcc = $a->getMostRecentOccurrence();
+					$bOcc = $b->getMostRecentOccurrence();
+					if($aOcc && $bOcc) {
+						$aOccBegin = $aOcc->getBeginTime();
+						$bOccBegin = $bOcc->getBeginTime();
+						if($aOccBegin && $bOccBegin) {
+							return $aOccBegin < $bOccBegin ? -1 : 1;
+						}
+					}
+				};
+				break;
 			}
-		});
+
+		if($events instanceof Tx_Extbase_Persistence_QueryResultInterface || $events instanceof Tx_Extbase_Persistence_ObjectStorage) {
+
+			$array = $events->toArray();
+			usort($array, $sorter);
+
+			// Return it as an iterator
+			$storage = new Tx_Extbase_Persistence_ObjectStorage();
+			foreach($array as $item) {
+				$storage->attach($item);
+			}
+
+			return $storage;
+
+		} elseif(is_array($events)) {
+			usort($events, $sorter);
+		}
+
 		return $events;
 	}
 
@@ -92,7 +144,6 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 	public function addFilters(array $params) {
 		$query = $this->createQuery();
 		$this->filters = array();
-//		$this->filterOrderings = array('startTime' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING);
 
 		$occurrenceQuery = $this->occurrenceRepository->createQuery();
 		$occurrenceFilters = array();
@@ -160,8 +211,7 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 							$start = $today;
 							$start->setTime(0,0,0);
 							$occurrenceFilters[] = $occurrenceQuery->lessThanOrEqual('finishTime', $start);
-							// TODO Find a way to sort using occurrences
-							// $this->filterOrderings = array('startTime' => Tx_Extbase_Persistence_QueryInterface::ORDER_DESCENDING);
+							$this->sortBy = 'mostRecent';
 							break;
 					}
 					break;
