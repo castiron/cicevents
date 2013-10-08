@@ -201,4 +201,19 @@ class Tx_Cicevents_Domain_Model_Occurrence extends Tx_Extbase_DomainObject_Abstr
 		}
 		return FALSE;
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function getSpansMultipleDays() { return $this->spansMultipleDays(); }
+
+	/**
+	 * @return bool
+	 */
+	public function getAlreadyHappened() { return $this->alreadyHappened(); }
+
+	/**
+	 * @return bool
+	 */
+	public function getCurrentlyHappening() { return $this->currentlyHappening(); }
 }
