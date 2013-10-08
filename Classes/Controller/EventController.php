@@ -147,24 +147,30 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	 * @return void
 	 */
 	public function initializeCreateAction() {
-		// start date property mapping
+
+		// Allow 1 occurrence to be created when mapping form elements to the Event object
 		$this->arguments['event']
-				->getPropertyMappingConfiguration()
-				->forProperty('startTime')
-				->setTypeConverterOption(
-			'Tx_Extbase_Property_TypeConverter_DateTimeConverter',
-			Tx_Extbase_Property_TypeConverter_DateTimeConverter::CONFIGURATION_DATE_FORMAT,
-			self::DATE_FORMAT
-		);
-		// end date property mapping
+			->getPropertyMappingConfiguration()
+			->allowCreationForSubProperty('occurrences.0');
+
+		// And use the DateTime converter for the start/end fields of the Occurrence
+
 		$this->arguments['event']
-				->getPropertyMappingConfiguration()
-				->forProperty('endTime')
-				->setTypeConverterOption(
-			'Tx_Extbase_Property_TypeConverter_DateTimeConverter',
-			Tx_Extbase_Property_TypeConverter_DateTimeConverter::CONFIGURATION_DATE_FORMAT,
-			self::DATE_FORMAT
-		);
+			->getPropertyMappingConfiguration()
+			->forProperty('occurrences.0.beginTime')
+			->setTypeConverterOption(
+				'Tx_Extbase_Property_TypeConverter_DateTimeConverter',
+				Tx_Extbase_Property_TypeConverter_DateTimeConverter::CONFIGURATION_DATE_FORMAT,
+				self::DATE_FORMAT
+			);
+		$this->arguments['event']
+			->getPropertyMappingConfiguration()
+			->forProperty('occurrences.0.finishTime')
+			->setTypeConverterOption(
+				'Tx_Extbase_Property_TypeConverter_DateTimeConverter',
+				Tx_Extbase_Property_TypeConverter_DateTimeConverter::CONFIGURATION_DATE_FORMAT,
+				self::DATE_FORMAT
+			);
 
 		$this->arguments['image1']
 			->getPropertyMappingConfiguration()
