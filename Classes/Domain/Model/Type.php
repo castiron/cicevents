@@ -41,6 +41,15 @@ class Tx_Cicevents_Domain_Model_Type extends Tx_Extbase_DomainObject_AbstractVal
 	 */
 	protected $title;
 
+
+	/**
+	 * hideTimes
+	 *
+	 * @var boolean
+	 * @validate NotEmpty
+	 */
+	protected $hideTimes = FALSE;
+
 	/**
 	 * Returns the title
 	 *
@@ -58,6 +67,34 @@ class Tx_Cicevents_Domain_Model_Type extends Tx_Extbase_DomainObject_AbstractVal
 	 */
 	public function setTitle($title) {
 		$this->title = $title;
+	}
+
+	/**
+	 * Returns whether to hide start/end times for events of this type
+	 *
+	 * @return boolean $hideTimes
+	 */
+	public function getHideTimes() {
+		return $this->hideTimes;
+	}
+
+	/**
+	 * Sets whether to hide start/end times for events of this type
+	 *
+	 * @param boolean $hideTimes
+	 * @return void
+	 */
+	public function setHideTimes($hideTimes) {
+		$this->hideTimes = $hideTimes;
+	}
+
+	/**
+	 * Returns the boolean state of hideTimes
+	 *
+	 * @return boolean
+	 */
+	public function isHideTimes() {
+		return $this->getHideTimes();
 	}
 
 }

@@ -31,6 +31,7 @@
 
 			<label index="tx_cicevents_domain_model_type">Type</label>
 			<label index="tx_cicevents_domain_model_type.title">Title</label>
+      <label index="tx_cicevents_domain_model_type.hide_times">Hide start and end times for events of this type</label>
 
 			<label index="tx_cicevents_domain_model_occurrence.begin_time">Start Time</label>
 			<label index="tx_cicevents_domain_model_occurrence.finish_time">End Time</label>

@@ -8,6 +8,7 @@
 	<data type="array">
 	<languageKey index="default" type="array">
 			<label index="title.description">title</label>
+			<label index="hide_times.description">Whether to hide start and end times for events of this type</label>
 		</languageKey>
 	</data>
 </T3locallang>
