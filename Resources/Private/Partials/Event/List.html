@@ -47,39 +47,43 @@
 			</f:if>
 		</div>
 
-		<f:if condition="{event.spansMultipleDays}">
-			<f:then>
-				<p class="small date-string flush event-particulars">
-					<f:format.date format="F d, Y - g:i a">{event.startTime}</f:format.date>
-					to
-					<f:format.date format="F d, Y - g:i a">{event.endTime}</f:format.date>
-				</p>
-			</f:then>
-			<f:else>
-				<p class="small date-string flush event-particulars">
-					<f:format.date format="F d, Y - g:i a">{event.startTime}</f:format.date>
-					to
-					<f:format.date format="g:i a">{event.endTime}</f:format.date>
-				</p>
-			</f:else>
-		</f:if>
-
-		<f:if condition="{event.venue} == {event.address}">
-			<f:then>
-				<f:if condition="{event.venue}">
-					<p class="small venue flush event-particulars">{event.venue}</p>
-				</f:if>
-			</f:then>
-			<f:else>
-				<f:if condition="{event.venue}">
-					<p class="small venue flush event-particulars">{event.venue}</p>
+		<f:for each="{event.occurrences}" as="occurrence">
+			<div class="occurrence">
+				<f:if condition="{occurrence.spansMultipleDays}">
+					<f:then>
+						<p class="small date-string flush event-particulars">
+							<f:format.date format="F d, Y - g:i a">{occurrence.beginTime}</f:format.date>
+							to
+							<f:format.date format="F d, Y - g:i a">{occurrence.finishTime}</f:format.date>
+						</p>
+					</f:then>
+					<f:else>
+						<p class="small date-string flush event-particulars">
+							<f:format.date format="F d, Y - g:i a">{occurrence.beginTime}</f:format.date>
+							to
+							<f:format.date format="g:i a">{occurrence.finishTime}</f:format.date>
+						</p>
+					</f:else>
 				</f:if>
 
-				<f:if condition="{event.address}">
-					<address class="small address">{event.address}</address>
+				<f:if condition="{occurrence.venue} == {occurrence.address}">
+					<f:then>
+						<f:if condition="{occurrence.venue}">
+							<p class="small venue flush event-particulars">{occurrence.venue}</p>
+						</f:if>
+					</f:then>
+					<f:else>
+						<f:if condition="{event.venue}">
+							<p class="small venue flush event-particulars">{occurrence.venue}</p>
+						</f:if>
+
+						<f:if condition="{event.address}">
+							<address class="small address">{occurrence.address}</address>
+						</f:if>
+					</f:else>
 				</f:if>
-			</f:else>
-		</f:if>
+			</div>
+		</f:for>
 
 		<p><strong>{event.teaser}</strong></p>
 

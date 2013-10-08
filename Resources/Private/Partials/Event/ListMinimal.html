@@ -12,23 +12,25 @@
 					</f:else>
 				</f:if>
 			</span>
-			<span class="event-particulars">{event.venue}</span>
-			<span class="small event-particulars">
-				<f:if condition="{event.spansMultipleDays}">
-					<f:then>
-						<f:format.date format="M d, Y - h:i a">{event.startTime}</f:format.date>
-						to
-						<f:format.date format="M d, Y - h:i a">{event.endTime}</f:format.date>
-					</f:then>
-					<f:else>
-						<f:format.date format="M d, Y">{event.startTime}</f:format.date>
-						from
-						<f:format.date format="h:i a">{event.startTime}</f:format.date>
-						to
-						<f:format.date format="h:i a">{event.endTime}</f:format.date>
-					</f:else>
-				</f:if>
-			</span>
+			<f:alias map="{occurrence: event.soonestOccurrence}">
+				<span class="event-particulars">{occurrence.venue}</span>
+				<span class="small event-particulars">
+					<f:if condition="{occurrence.spansMultipleDays}">
+						<f:then>
+							<f:format.date format="M d, Y - h:i a">{occurrence.beginTime}</f:format.date>
+							to
+							<f:format.date format="M d, Y - h:i a">{occurrence.finishTime}</f:format.date>
+						</f:then>
+						<f:else>
+							<f:format.date format="M d, Y">{occurrence.beginTime}</f:format.date>
+							from
+							<f:format.date format="h:i a">{occurrence.beginTime}</f:format.date>
+							to
+							<f:format.date format="h:i a">{occurrence.finishTime}</f:format.date>
+						</f:else>
+					</f:if>
+				</span>
+			</f:alias>
 		</li>
 	</f:for>
 </ul>
