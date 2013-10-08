@@ -123,7 +123,7 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 			'config' => array(
 				'type' => 'input',
 				'size' => 20,
-				'eval' => 'trim, required'
+				'eval' => 'trim,'
 			),
 		),
 		'address' => array(
