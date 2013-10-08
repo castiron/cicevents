@@ -135,6 +135,16 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	protected $objectManager;
 
 	/**
+	 * @var boolean
+	 */
+	protected $ongoing;
+
+	/**
+	 * @var boolean
+	 */
+	protected $tbd;
+
+	/**
 	 * inject the objectManager
 	 *
 	 * @param Tx_Extbase_Object_ObjectManagerInterface objectManager
@@ -768,6 +778,34 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 			}
 		}
 		return $recent;
+	}
+
+	/**
+	 * @param boolean $ongoing
+	 */
+	public function setOngoing($ongoing) {
+		$this->ongoing = $ongoing;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getOngoing() {
+		return $this->ongoing;
+	}
+
+	/**
+	 * @param boolean $tbd
+	 */
+	public function setTbd($tbd) {
+		$this->tbd = $tbd;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getTbd() {
+		return $this->tbd;
 	}
 
 }

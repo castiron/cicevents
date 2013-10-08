@@ -22,6 +22,8 @@
 			<label index="tx_cicevents_domain_model_event.image1">Image 1</label>
 			<label index="tx_cicevents_domain_model_event.image2">Image 2</label>
 			<label index="tx_cicevents_domain_model_event.image3">Image 3</label>
+			<label index="tx_cicevents_domain_model_event.ongoing">Ongoing</label>
+			<label index="tx_cicevents_domain_model_event.tbd">Time and places to be determined?</label>
 
 			<label index="tx_cicevents_domain_model_category">Category</label>
 			<label index="tx_cicevents_domain_model_locality">Locality</label>

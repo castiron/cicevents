@@ -231,7 +231,7 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 		foreach($occurrences as $occurrence) {
 			/** @var Tx_Cicevents_Domain_Model_Event $event */
 			$event = $occurrence->getEvent();
-			if(!$event) {
+			if(!$event || $event->getTbd() || $event->getOngoing()) {
 				continue;
 			}
 			$uriBuilder = $this->uriBuilder;

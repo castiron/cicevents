@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_cicevents_domain_model_event'] = array(
 	'ctrl' => $TCA['tx_cicevents_domain_model_event']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type,title, url, link_to_url, link_to_url_target, localities, teaser, description, categories, occurrences',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type,title, url, link_to_url, link_to_url_target, localities, teaser, description, categories, occurrences, ongoing, tbd',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'type, title, url, link_to_url, link_to_url_target, localities, occurrences, teaser, description,--div--;Categories, categories, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, starttime, endtime'),
+		'1' => array('showitem' => 'type, title, url, link_to_url, link_to_url_target, ongoing, localities, tbd, occurrences, teaser, description,--div--;Categories, categories, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -57,6 +57,20 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 		'hidden' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
+			'config' => array(
+				'type' => 'check',
+			),
+		),
+		'ongoing' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event.ongoing',
+			'config' => array(
+				'type' => 'check',
+			),
+		),
+		'tbd' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event.tbd',
 			'config' => array(
 				'type' => 'check',
 			),
