@@ -148,29 +148,32 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	 */
 	public function initializeCreateAction() {
 
-		// Allow 1 occurrence to be created when mapping form elements to the Event object
-		$this->arguments['event']
-			->getPropertyMappingConfiguration()
-			->allowCreationForSubProperty('occurrences.0');
+		// Allow 10 occurrences to be created when mapping form elements to the Event object
+		for($i = 0; $i < 10; ++$i) {
 
-		// And use the DateTime converter for the start/end fields of the Occurrence
+			$this->arguments['event']
+				->getPropertyMappingConfiguration()
+				->allowCreationForSubProperty("occurrences.$i");
 
-		$this->arguments['event']
-			->getPropertyMappingConfiguration()
-			->forProperty('occurrences.0.beginTime')
-			->setTypeConverterOption(
-				'Tx_Extbase_Property_TypeConverter_DateTimeConverter',
-				Tx_Extbase_Property_TypeConverter_DateTimeConverter::CONFIGURATION_DATE_FORMAT,
-				self::DATE_FORMAT
-			);
-		$this->arguments['event']
-			->getPropertyMappingConfiguration()
-			->forProperty('occurrences.0.finishTime')
-			->setTypeConverterOption(
-				'Tx_Extbase_Property_TypeConverter_DateTimeConverter',
-				Tx_Extbase_Property_TypeConverter_DateTimeConverter::CONFIGURATION_DATE_FORMAT,
-				self::DATE_FORMAT
-			);
+			// And use the DateTime converter for the start/end fields of the Occurrence
+
+			$this->arguments['event']
+				->getPropertyMappingConfiguration()
+				->forProperty("occurrences.$i.beginTime")
+				->setTypeConverterOption(
+					'Tx_Extbase_Property_TypeConverter_DateTimeConverter',
+					Tx_Extbase_Property_TypeConverter_DateTimeConverter::CONFIGURATION_DATE_FORMAT,
+					self::DATE_FORMAT
+				);
+			$this->arguments['event']
+				->getPropertyMappingConfiguration()
+				->forProperty("occurrences.$i.finishTime")
+				->setTypeConverterOption(
+					'Tx_Extbase_Property_TypeConverter_DateTimeConverter',
+					Tx_Extbase_Property_TypeConverter_DateTimeConverter::CONFIGURATION_DATE_FORMAT,
+					self::DATE_FORMAT
+				);
+		}
 
 		$this->arguments['image1']
 			->getPropertyMappingConfiguration()
