@@ -781,6 +781,25 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	}
 
 	/**
+	 * @return array
+	 */
+	public function getSortedOccurrences() {
+		$occurrences = $this->occurrences->toArray();
+		usort($occurrences, function(Tx_Cicevents_Domain_Model_Occurrence $a, Tx_Cicevents_Domain_Model_Occurrence $b) {
+			return $a->getBeginTime() < $b->getBeginTime() ? -1 : 1;
+		});
+		return $occurrences;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getSortedOccurrencesReverse() {
+		$sorted = $this->getSortedOccurrences();
+		return array_reverse($sorted);
+	}
+
+	/**
 	 * @param boolean $ongoing
 	 */
 	public function setOngoing($ongoing) {
