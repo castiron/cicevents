@@ -62,14 +62,14 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 			),
 		),
 		'ongoing' => array(
-			'exclude' => 1,
+			'exclude' => 0,
 			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event.ongoing',
 			'config' => array(
 				'type' => 'check',
 			),
 		),
 		'tbd' => array(
-			'exclude' => 1,
+			'exclude' => 0,
 			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event.tbd',
 			'config' => array(
 				'type' => 'check',
