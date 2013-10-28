@@ -175,8 +175,7 @@ class Tx_Cicevents_Domain_Model_Occurrence extends Tx_Extbase_DomainObject_Abstr
 	 */
 	public function spansMultipleDays() {
 		if($this->beginTime instanceof DateTime && $this->finishTime instanceof DateTime) {
-			$diff = $this->beginTime->diff($this->finishTime);
-			return $diff->days > 0;
+			return $this->beginTime->format('Y m d') == $this->finishTime->format('Y m d');
 		}
 		return FALSE;
 	}
