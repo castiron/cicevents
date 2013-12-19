@@ -582,7 +582,7 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 		$this->eventRepository->addFilters($params);
 		$events = $this->eventRepository->findAll($limit, $offset);
 		$allFilteredEvents = $this->eventRepository->findAll();
-		$numberOfPages = ceil(count($allFilteredEvents) / $limit);
+		$numberOfPages = $limit ? ceil(count($allFilteredEvents) / $limit) : 1;
 
 		$this->setupFiltersForm();
 		$this->setupPagination($currentPage, $numberOfPages);
