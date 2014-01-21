@@ -23,6 +23,44 @@
 					</config>
 				</TCEforms>
 			</switchableControllerActions>
+
+			<settings.singlePid>
+				<TCEforms>
+					<label>Show single events on a different page</label>
+					<config>
+						<type>input</type>
+						<wizards type="array">
+							<_PADDING type="integer">2</_PADDING>
+							<link type="array">
+								<type>popup</type>
+								<title>Link</title>
+								<icon>link_popup.gif</icon>
+								<script>browse_links.php?mode=wizard</script>
+								<JSopenParams>height=300,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
+							</link>
+						</wizards>
+					</config>
+				</TCEforms>
+			</settings.singlePid>
+
+			<settings.returnPid>
+				<TCEforms>
+					<label>Page to return to</label>
+					<config>
+						<type>input</type>
+						<wizards type="array">
+							<_PADDING type="integer">2</_PADDING>
+							<link type="array">
+								<type>popup</type>
+								<title>Link</title>
+								<icon>link_popup.gif</icon>
+								<script>browse_links.php?mode=wizard</script>
+								<JSopenParams>height=300,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
+							</link>
+						</wizards>
+					</config>
+				</TCEforms>
+			</settings.returnPid>
 		</el>
 	</ROOT>
 </T3DataStructure>

@@ -228,10 +228,15 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 			if(!$event || $event->getTbd() || $event->getOngoing()) {
 				continue;
 			}
-			$uriBuilder = $this->uriBuilder;
-			$uri = $uriBuilder
-				->reset()
-				->uriFor('detail', array('event' => $event));
+
+			$uriBuilder = $this->uriBuilder->reset();
+
+			if ($this->settings['singlePid']) {
+				$uriBuilder->setTargetPageUid($this->settings['singlePid']);
+			}
+
+			$uri = $uriBuilder->uriFor('detail', array('event' => $event));
+
 			$eventDetails = array(
 				'title' => $event->getTitle(),
 				'url' => $uri,
