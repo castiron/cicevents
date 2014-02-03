@@ -62,8 +62,7 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	protected $fileRepository;
 
 	/**
-	 * @var \CIC\Cicbase\Service\EmailService
-	 * @inject
+	 * @var Tx_Cicbase_Service_EmailServiceInterface
 	 */
 	protected $emailService;
 
@@ -130,6 +129,16 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	 */
 	public function injectFileRepository(Tx_Cicbase_Domain_Repository_FileRepository $fileRepository) {
 		$this->fileRepository = $fileRepository;
+	}
+
+	/**
+	 * inject the emailService
+	 *
+	 * @param Tx_Cicbase_Service_EmailServiceInterface emailService
+	 * @return void
+	 */
+	public function injectEmailService(Tx_Cicbase_Service_EmailServiceInterface $emailService) {
+		$this->emailService = $emailService;
 	}
 
 	/**
