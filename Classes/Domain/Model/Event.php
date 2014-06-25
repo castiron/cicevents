@@ -1,4 +1,5 @@
 <?php
+namespace CIC\Cicevents\Domain\Model;
 
 /***************************************************************
  *  Copyright notice
@@ -31,7 +32,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEntity {
+class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
 	 * title
@@ -78,35 +79,35 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	/**
 	 * image1
 	 *
-	 * @var Tx_Cicbase_Domain_Model_File
+	 * @var \CIC\Cicbase\Domain\Model\File
 	 */
 	protected $image1;
 
 	/**
 	 * image2
 	 *
-	 * @var Tx_Cicbase_Domain_Model_File
+	 * @var \CIC\Cicbase\Domain\Model\File
 	 */
 	protected $image2;
 
 	/**
 	 * image3
 	 *
-	 * @var Tx_Cicbase_Domain_Model_File
+	 * @var \CIC\Cicbase\Domain\Model\File
 	 */
 	protected $image3;
 
 	/**
 	 * categories
 	 *
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Cicevents_Domain_Model_Category>
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\CIC\Cicevents\Domain\Model\Category>
 	 */
 	protected $categories;
 
 	/**
 	 * type
 	 *
-	 * @var Tx_Cicevents_Domain_Model_Type
+	 * @var \CIC\Cicevents\Domain\Model\Type
 	 */
 	protected $type;
 
@@ -118,19 +119,19 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	/**
 	 * Localities
 	 *
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Cicevents_Domain_Model_Locality>
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\CIC\Cicevents\Domain\Model\Locality>
 	 */
 	protected $localities;
 
 	/**
 	 * Occurrences
 	 *
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Cicevents_Domain_Model_Occurrence>
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\CIC\Cicevents\Domain\Model\Occurrence>
 	 */
 	protected $occurrences;
 
 	/**
-	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	protected $objectManager;
 
@@ -147,10 +148,10 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	/**
 	 * inject the objectManager
 	 *
-	 * @param Tx_Extbase_Object_ObjectManagerInterface objectManager
+	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface objectManager
 	 * @return void
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
 	}
 
@@ -166,11 +167,11 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 *
 	 */
 	public function initializeObject() {
-		$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
 	}
 
 	/**
-	 * Initializes all Tx_Extbase_Persistence_ObjectStorage properties.
+	 * Initializes all \TYPO3\CMS\Extbase\Persistence\ObjectStorage properties.
 	 *
 	 * @return void
 	 */
@@ -180,9 +181,9 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 		 * It will be rewritten on each save in the extension builder
 		 * You may modify the constructor of this class instead
 		 */
-		$this->categories = new Tx_Extbase_Persistence_ObjectStorage();
-		$this->localities = new Tx_Extbase_Persistence_ObjectStorage();
-		$this->occurrences = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->categories = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+		$this->localities = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+		$this->occurrences = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 	}
 
 	/**
@@ -207,7 +208,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	/**
 	 * Returns the startTime
 	 *
-	 * @return DateTime $startTime
+	 * @return \DateTime $startTime
 	 * @deprecated use occurrences
 	 */
 	public function getStartTime() {
@@ -222,7 +223,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	/**
 	 * Sets the startTime
 	 *
-	 * @param DateTime $startTime
+	 * @param \DateTime $startTime
 	 * @return void
 	 * @deprecated use occurrences
 	 */
@@ -232,7 +233,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 			$firstOccurrence = $this->occurrences->current();
 			$firstOccurrence->setBeginTime($startTime);
 		} else {
-			$firstOccurrence = $this->objectManager->create('Tx_Cicevents_Domain_Model_Occurrence');
+			$firstOccurrence = $this->objectManager->create('CIC\Cicevents\Domain\Model\Occurrence');
 			$firstOccurrence->setBeginTime($startTime);
 			$this->occurrences->attach($firstOccurrence);
 		}
@@ -241,7 +242,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	/**
 	 * Returns the endTime
 	 *
-	 * @return DateTime $endTime
+	 * @return \DateTime $endTime
 	 * @deprecated use occurrences
 	 */
 	public function getEndTime() {
@@ -256,7 +257,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	/**
 	 * Sets the endTime
 	 *
-	 * @param DateTime $endTime
+	 * @param \DateTime $endTime
 	 * @return void
 	 * @deprecated use occurrences
 	 */
@@ -266,7 +267,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 			$firstOccurrence = $this->occurrences->current();
 			$firstOccurrence->setFinishTime($endTime);
 		} else {
-			$firstOccurrence = $this->objectManager->create('Tx_Cicevents_Domain_Model_Occurrence');
+			$firstOccurrence = $this->objectManager->create('CIC\Cicevents\Domain\Model\Occurrence');
 			$firstOccurrence->setFinishTime($endTime);
 			$this->occurrences->attach($firstOccurrence);
 		}
@@ -344,7 +345,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 			$firstOccurrence = $this->occurrences->current();
 			$firstOccurrence->setVenue($venue);
 		} else {
-			$firstOccurrence = $this->objectManager->create('Tx_Cicevents_Domain_Model_Occurrence');
+			$firstOccurrence = $this->objectManager->create('CIC\Cicevents\Domain\Model\Occurrence');
 			$firstOccurrence->setVenue($venue);
 			$this->occurrences->attach($firstOccurrence);
 		}
@@ -378,7 +379,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 			$firstOccurrence = $this->occurrences->current();
 			$firstOccurrence->setAddress($address);
 		} else {
-			$firstOccurrence = $this->objectManager->create('Tx_Cicevents_Domain_Model_Occurrence');
+			$firstOccurrence = $this->objectManager->create('CIC\Cicevents\Domain\Model\Occurrence');
 			$firstOccurrence->setAddress($address);
 			$this->occurrences->attach($firstOccurrence);
 		}
@@ -425,34 +426,34 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	/**
 	 * Adds a Category
 	 *
-	 * @param Tx_Cicevents_Domain_Model_Category $category
+	 * @param \CIC\Cicevents\Domain\Model\Category $category
 	 * @return void
 	 */
-	public function addCategory(Tx_Cicevents_Domain_Model_Category $category) {
+	public function addCategory(\CIC\Cicevents\Domain\Model\Category $category) {
 		$this->categories->attach($category);
 	}
 
 	/**
 	 * Removes a Category
 	 *
-	 * @param Tx_Cicevents_Domain_Model_Category $categoryToRemove The Category to be removed
+	 * @param \CIC\Cicevents\Domain\Model\Category $categoryToRemove The Category to be removed
 	 * @return void
 	 */
-	public function removeCategory(Tx_Cicevents_Domain_Model_Category $categoryToRemove) {
+	public function removeCategory(\CIC\Cicevents\Domain\Model\Category $categoryToRemove) {
 		$this->categories->detach($categoryToRemove);
 	}
 
 	/**
 	 * Returns the categories
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Cicevents_Domain_Model_Category> $categories
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\CIC\Cicevents\Domain\Model\Category> $categories
 	 */
 	public function getCategories() {
 		return $this->categories;
 	}
 
 	/**
-	 * @return Tx_Cicevents_Domain_Model_Category
+	 * @return \CIC\Cicevents\Domain\Model\Category
 	 */
 	public function getPrimaryCategory() {
 		$this->categories->rewind();
@@ -483,17 +484,17 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	/**
 	 * Sets the categories
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_Cicevents_Domain_Model_Category> $categories
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\CIC\Cicevents\Domain\Model\Category> $categories
 	 * @return void
 	 */
-	public function setCategories(Tx_Extbase_Persistence_ObjectStorage $categories) {
+	public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories) {
 		$this->categories = $categories;
 	}
 
 	/**
 	 * Returns the type
 	 *
-	 * @return Tx_Cicevents_Domain_Model_Type $type
+	 * @return \CIC\Cicevents\Domain\Model\Type $type
 	 */
 	public function getType() {
 		return $this->type;
@@ -502,10 +503,10 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	/**
 	 * Sets the type
 	 *
-	 * @param Tx_Cicevents_Domain_Model_Type $type
+	 * @param \CIC\Cicevents\Domain\Model\Type $type
 	 * @return void
 	 */
-	public function setType(Tx_Cicevents_Domain_Model_Type $type) {
+	public function setType(\CIC\Cicevents\Domain\Model\Type $type) {
 		$this->type = $type;
 	}
 
@@ -583,11 +584,11 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	}
 
 	/**
-	 * @param Tx_Cicbase_Domain_Model_File $image1
-	 * @param Tx_Cicbase_Domain_Model_File $image2
-	 * @param Tx_Cicbase_Domain_Model_File $image3
+	 * @param \CIC\Cicbase\Domain\Model\File $image1
+	 * @param \CIC\Cicbase\Domain\Model\File $image2
+	 * @param \CIC\Cicbase\Domain\Model\File $image3
 	 */
-	public function setUserImages(Tx_Cicbase_Domain_Model_File $image1 = null, Tx_Cicbase_Domain_Model_File $image2 = null, Tx_Cicbase_Domain_Model_File $image3 = null) {
+	public function setUserImages(\CIC\Cicbase\Domain\Model\File $image1 = null, \CIC\Cicbase\Domain\Model\File $image2 = null, \CIC\Cicbase\Domain\Model\File $image3 = null) {
 		$this->image1 = $image1;
 		$this->image2 = $image2;
 		$this->image3 = $image3;
@@ -608,42 +609,42 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	}
 
 	/**
-	 * @param \Tx_Cicbase_Domain_Model_File $image1
+	 * @param \CIC\Cicbase\Domain\Model\File $image1
 	 */
 	public function setImage1($image1) {
 		$this->image1 = $image1;
 	}
 
 	/**
-	 * @return \Tx_Cicbase_Domain_Model_File
+	 * @return \CIC\Cicbase\Domain\Model\File
 	 */
 	public function getImage1() {
 		return $this->image1;
 	}
 
 	/**
-	 * @param \Tx_Cicbase_Domain_Model_File $image2
+	 * @param \CIC\Cicbase\Domain\Model\File $image2
 	 */
 	public function setImage2($image2) {
 		$this->image2 = $image2;
 	}
 
 	/**
-	 * @return \Tx_Cicbase_Domain_Model_File
+	 * @return \CIC\Cicbase\Domain\Model\File
 	 */
 	public function getImage2() {
 		return $this->image2;
 	}
 
 	/**
-	 * @param \Tx_Cicbase_Domain_Model_File $image3
+	 * @param \CIC\Cicbase\Domain\Model\File $image3
 	 */
 	public function setImage3($image3) {
 		$this->image3 = $image3;
 	}
 
 	/**
-	 * @return \Tx_Cicbase_Domain_Model_File
+	 * @return \CIC\Cicbase\Domain\Model\File
 	 */
 	public function getImage3() {
 		return $this->image3;
@@ -664,14 +665,14 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	}
 
 	/**
-	 * @param Tx_Cicevents_Domain_Model_Locality $locality
+	 * @param \CIC\Cicevents\Domain\Model\Locality $locality
 	 */
 	public function addLocality($locality) {
 		$this->localities->attach($locality);
 	}
 
 	/**
-	 * @return Tx_Cicevents_Domain_Model_Locality
+	 * @return \CIC\Cicevents\Domain\Model\Locality
 	 */
 	public function getLocalities() {
 		return $this->localities;
@@ -685,7 +686,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	}
 
 	/**
-	 * @return Tx_Cicevents_Domain_Model_Locality
+	 * @return \CIC\Cicevents\Domain\Model\Locality
 	 */
 	public function getPrimaryLocality() {
 		$this->localities->rewind();
@@ -693,14 +694,14 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	}
 
 	/**
-	 * @param \Tx_Extbase_Persistence_ObjectStorage $occurrences
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $occurrences
 	 */
 	public function setOccurrences($occurrences) {
 		$this->occurrences = $occurrences;
 	}
 
 	/**
-	 * @return \Tx_Extbase_Persistence_ObjectStorage
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
 	 */
 	public function getOccurrences() {
 		return $this->occurrences;
@@ -708,7 +709,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 
 
 	/**
-	 * @param Tx_Cicevents_Domain_Model_Occurrence $occurrence
+	 * @param \CIC\Cicevents\Domain\Model\Occurrence $occurrence
 	 */
 	public function addOccurrence($occurrence) {
 		$this->occurrences->attach($occurrence);
@@ -716,7 +717,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 
 
 	/**
-	 * @param Tx_Cicevents_Domain_Model_Occurrence $occurrence
+	 * @param \CIC\Cicevents\Domain\Model\Occurrence $occurrence
 	 */
 	public function removeOccurrence($occurrence) {
 		$this->occurrences->detach($occurrence);
@@ -732,7 +733,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 			return NULL;
 		}
 		$soonest = NULL;
-		$now = new DateTime();
+		$now = new \DateTime();
 
 		// Loop through all occurrences saving the soonest
 		// occurrence that is valid and in the future
@@ -761,7 +762,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 			return NULL;
 		}
 		$recent = NULL;
-		$now = new DateTime();
+		$now = new \DateTime();
 
 		// Loop through all occurrences saving the latest
 		// occurrence that is valid and in the past
@@ -785,7 +786,7 @@ class Tx_Cicevents_Domain_Model_Event extends Tx_Extbase_DomainObject_AbstractEn
 	 */
 	public function getSortedOccurrences() {
 		$occurrences = $this->occurrences->toArray();
-		usort($occurrences, function(Tx_Cicevents_Domain_Model_Occurrence $a, Tx_Cicevents_Domain_Model_Occurrence $b) {
+		usort($occurrences, function(\CIC\Cicevents\Domain\Model\Occurrence $a, \CIC\Cicevents\Domain\Model\Occurrence $b) {
 			return $a->getBeginTime() < $b->getBeginTime() ? -1 : 1;
 		});
 		return $occurrences;

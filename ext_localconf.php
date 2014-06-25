@@ -3,8 +3,8 @@ if (!defined('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-Tx_Extbase_Utility_Extension::configurePlugin(
-	$_EXTKEY,
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+	'CIC.' . $_EXTKEY,
 	'EventsListing',
 	array(
 		'Event' => 'list, detail'),
@@ -13,8 +13,8 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 );
 
 
-Tx_Extbase_Utility_Extension::configurePlugin(
-	$_EXTKEY,
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+	'CIC.' . $_EXTKEY,
 	'EventsAdmin',
 	array(
 		'Event' => 'new, create, edit, update, delete'),
@@ -23,8 +23,8 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 );
 
 
-Tx_Extbase_Utility_Extension::configurePlugin(
-	$_EXTKEY,
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+	'CIC.' . $_EXTKEY,
 	'EventsCalendar',
 	array('Event' => 'calendar, detail'),
 	// non-cacheable actions
@@ -32,7 +32,7 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 );
 
 
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['Tx_Cicevents_Task_EventArchiver'] = array(
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['CIC\Cicevents\Task\EventArchiver'] = array(
 	'extension' => $_EXTKEY,
 	'title' => 'Event Archiver',
 	'description' => 'This task will archive expired events according to configurations set in typoscript. Events

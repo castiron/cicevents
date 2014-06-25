@@ -1,4 +1,5 @@
 <?php
+namespace CIC\Cicevents\Test;
 
 /***************************************************************
  *  Copyright notice
@@ -25,7 +26,7 @@
  ***************************************************************/
 
 /**
- * Test case for class Tx_Cicevents_Domain_Model_Event.
+ * Test case for class \CIC\Cicevents\Domain\Model\Event.
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
@@ -36,14 +37,14 @@
  *
  * @author Peter Soots <peter@castironcoding.com>
  */
-class Tx_Cicevents_Domain_Model_EventTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class EventTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
-	 * @var Tx_Cicevents_Domain_Model_Event
+	 * @var \CIC\Cicevents\Domain\Model\Event
 	 */
 	protected $fixture;
 
 	public function setUp() {
-		$this->fixture = new Tx_Cicevents_Domain_Model_Event();
+		$this->fixture = new \CIC\Cicevents\Domain\Model\Event();
 	}
 
 	public function tearDown() {
@@ -176,7 +177,7 @@ class Tx_Cicevents_Domain_Model_EventTest extends Tx_Extbase_Tests_Unit_BaseTest
 	 * @test
 	 */
 	public function getCategoryReturnsInitialValueForObjectStorageContainingTx_Cicevents_Domain_Model_Category() { 
-		$newObjectStorage = new Tx_Extbase_Persistence_ObjectStorage();
+		$newObjectStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 		$this->assertEquals(
 			$newObjectStorage,
 			$this->fixture->getCategory()
@@ -187,8 +188,8 @@ class Tx_Cicevents_Domain_Model_EventTest extends Tx_Extbase_Tests_Unit_BaseTest
 	 * @test
 	 */
 	public function setCategoryForObjectStorageContainingTx_Cicevents_Domain_Model_CategorySetsCategory() { 
-		$category = new Tx_Cicevents_Domain_Model_Category();
-		$objectStorageHoldingExactlyOneCategory = new Tx_Extbase_Persistence_ObjectStorage();
+		$category = new \CIC\Cicevents\Domain\Model\Category();
+		$objectStorageHoldingExactlyOneCategory = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 		$objectStorageHoldingExactlyOneCategory->attach($category);
 		$this->fixture->setCategory($objectStorageHoldingExactlyOneCategory);
 
@@ -202,8 +203,8 @@ class Tx_Cicevents_Domain_Model_EventTest extends Tx_Extbase_Tests_Unit_BaseTest
 	 * @test
 	 */
 	public function addCategoryToObjectStorageHoldingCategory() {
-		$category = new Tx_Cicevents_Domain_Model_Category();
-		$objectStorageHoldingExactlyOneCategory = new Tx_Extbase_Persistence_ObjectStorage();
+		$category = new \CIC\Cicevents\Domain\Model\Category();
+		$objectStorageHoldingExactlyOneCategory = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 		$objectStorageHoldingExactlyOneCategory->attach($category);
 		$this->fixture->addCategory($category);
 
@@ -217,8 +218,8 @@ class Tx_Cicevents_Domain_Model_EventTest extends Tx_Extbase_Tests_Unit_BaseTest
 	 * @test
 	 */
 	public function removeCategoryFromObjectStorageHoldingCategory() {
-		$category = new Tx_Cicevents_Domain_Model_Category();
-		$localObjectStorage = new Tx_Extbase_Persistence_ObjectStorage();
+		$category = new \CIC\Cicevents\Domain\Model\Category();
+		$localObjectStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 		$localObjectStorage->attach($category);
 		$localObjectStorage->detach($category);
 		$this->fixture->addCategory($category);
@@ -244,7 +245,7 @@ class Tx_Cicevents_Domain_Model_EventTest extends Tx_Extbase_Tests_Unit_BaseTest
 	 * @test
 	 */
 	public function setTypeForTx_Cicevents_Domain_Model_TypeSetsType() { 
-		$dummyObject = new Tx_Cicevents_Domain_Model_Type();
+		$dummyObject = new \CIC\Cicevents\Domain\Model\Type();
 		$this->fixture->setType($dummyObject);
 
 		$this->assertSame(

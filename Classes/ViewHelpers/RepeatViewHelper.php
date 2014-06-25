@@ -1,5 +1,7 @@
 <?php
 
+namespace CIC\Cicevents\ViewHelpers;
+
 /**
  * ViewHelper for repeating elements
  *
@@ -13,7 +15,7 @@
  * 		<p>Iteration number: {index}</p>
  * </ce:repeat>
  */
-class Tx_Cicevents_ViewHelpers_RepeatViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class RepeatViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * Iterates through elements
@@ -28,11 +30,11 @@ class Tx_Cicevents_ViewHelpers_RepeatViewHelper extends Tx_Fluid_Core_ViewHelper
 
 	/**
 	 * @param array $arguments
-	 * @param Closure $renderChildrenClosure
-	 * @param Tx_Fluid_Core_Rendering_RenderingContextInterface $renderingContext
+	 * @param \Closure $renderChildrenClosure
+	 * @param \TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
 	 * @return string
 	 */
-	static public function renderStatic(array $arguments, Closure $renderChildrenClosure, Tx_Fluid_Core_Rendering_RenderingContextInterface $renderingContext) {
+	static public function renderStatic(array $arguments, \Closure $renderChildrenClosure, \TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface $renderingContext) {
 		$templateVariableContainer = $renderingContext->getTemplateVariableContainer();
 
 		$count = $arguments['count'];

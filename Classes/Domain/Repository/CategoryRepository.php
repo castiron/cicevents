@@ -1,4 +1,5 @@
 <?php
+namespace CIC\Cicevents\Domain\Repository;
 
 /***************************************************************
  *  Copyright notice
@@ -28,9 +29,9 @@
  ***************************************************************/
 
 
-class Tx_Cicevents_Domain_Repository_CategoryRepository extends Tx_Cicbase_Persistence_Repository {
+class CategoryRepository extends \CIC\Cicbase\Persistence\Repository {
 	protected $defaultOrderings = array(
-		'title' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING,
+		'title' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING,
 	);
 
 	/**
@@ -38,11 +39,11 @@ class Tx_Cicevents_Domain_Repository_CategoryRepository extends Tx_Cicbase_Persi
 	 * $query->logicalNot($query->like('color','')) to work - not sure
 	 * why.  Just brute force it instead.
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
 	 */
 	public function findAllHavingColor() {
 		$res = $this->findAll();
-		$out = t3lib_div::makeInstance('Tx_Extbase_Persistence_ObjectStorage');
+		$out = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Persistence\ObjectStorage');
 		foreach($res as $cat) {
 			if($cat->getColor()) $out->attach($cat);
 		}

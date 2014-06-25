@@ -1,5 +1,7 @@
 <?php
 
+namespace CIC\Cicevents\Test;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -25,7 +27,7 @@
  ***************************************************************/
 
 /**
- * Test case for class Tx_Cicevents_Controller_EventController.
+ * Test case for class CIC\Cicevents\Controller\EventController.
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
@@ -36,14 +38,14 @@
  *
  * @author Peter Soots <peter@castironcoding.com>
  */
-class Tx_Cicevents_Controller_EventControllerTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class TEventControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
-	 * @var Tx_Cicevents_Domain_Model_Event
+	 * @var \CIC\Cicevents\Domain\Model\Event
 	 */
 	protected $fixture;
 
 	public function setUp() {
-		$this->fixture = new Tx_Cicevents_Domain_Model_Event();
+		$this->fixture = new \CIC\Cicevents\Domain\Model\Event();
 	}
 
 	public function tearDown() {

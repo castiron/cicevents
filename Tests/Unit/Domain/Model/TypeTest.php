@@ -1,5 +1,5 @@
 <?php
-
+namespace CIC\Cicevents\Test;
 /***************************************************************
  *  Copyright notice
  *
@@ -25,7 +25,7 @@
  ***************************************************************/
 
 /**
- * Test case for class Tx_Cicevents_Domain_Model_Type.
+ * Test case for class \CIC\Cicevents\Domain\Model\Type.
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
@@ -36,14 +36,14 @@
  *
  * @author Peter Soots <peter@castironcoding.com>
  */
-class Tx_Cicevents_Domain_Model_TypeTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class TypeTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
-	 * @var Tx_Cicevents_Domain_Model_Type
+	 * @var \CIC\Cicevents\Domain\Model\Type
 	 */
 	protected $fixture;
 
 	public function setUp() {
-		$this->fixture = new Tx_Cicevents_Domain_Model_Type();
+		$this->fixture = new \CIC\Cicevents\Domain\Model\Type();
 	}
 
 	public function tearDown() {

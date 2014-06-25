@@ -2,13 +2,10 @@
 
 <f:section name="main">
 
-	{namespace cic=Tx_Cicbase_ViewHelpers}
-	{namespace ce=Tx_Cicevents_ViewHelpers}
-	{namespace sjc=Tx_Sjcert_ViewHelpers}
+	{namespace cic=CIC\Cicbase\ViewHelpers}
+	{namespace ce=CIC\Cicevents\ViewHelpers}
 
 	<div class="callout">
-
-		<sjc:flashMessages renderMode="ul" class="unstyled flash-messages"/>
 
 		<f:form class="CiceventsForm" enctype="multipart/form-data" action="create" method="post" name="event">
 

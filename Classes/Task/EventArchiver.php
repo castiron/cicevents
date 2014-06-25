@@ -1,4 +1,7 @@
 <?php
+
+namespace CIC\Cicevents\Task;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -65,52 +68,52 @@
  *}
  *
  *
- * Class Tx_Cicevents_Task_EventArchiver
+ * Class \CIC\Cicevents\Task\EventArchiver
  */
-class Tx_Cicevents_Task_EventArchiver extends Tx_Cicbase_Scheduler_AbstractTask {
+class EventArchiver extends \CIC\Cicbase\Scheduler\AbstractTask {
 
 	/**
-	 * @var Tx_Cicevents_Domain_Repository_EventRepository
+	 * @var \CIC\Cicevents\Domain\Repository\EventRepository
 	 */
 	protected $eventRepository;
 
 	/**
-	 * @var Tx_Cicevents_Domain_Repository_TypeRepository
+	 * @var \CIC\Cicevents\Domain\Repository\TypeRepository
 	 */
 	protected $typeRepository;
 
 	/**
-	 * @var Tx_Cicevents_Domain_Repository_CategoryRepository
+	 * @var \CIC\Cicevents\Domain\Repository\CategoryRepository
 	 */
 	protected $categoryRepository;
 
 	/**
 	 * inject the categoryRepository
 	 *
-	 * @param Tx_Cicevents_Domain_Repository_CategoryRepository categoryRepository
+	 * @param \CIC\Cicevents\Domain\Repository\CategoryRepository categoryRepository
 	 * @return void
 	 */
-	public function injectCategoryRepository(Tx_Cicevents_Domain_Repository_CategoryRepository $categoryRepository) {
+	public function injectCategoryRepository(\CIC\Cicevents\Domain\Repository\CategoryRepository $categoryRepository) {
 		$this->categoryRepository = $categoryRepository;
 	}
 
 	/**
 	 * inject the typeRepository
 	 *
-	 * @param Tx_Cicevents_Domain_Repository_TypeRepository typeRepository
+	 * @param \CIC\Cicevents\Domain\Repository\TypeRepository typeRepository
 	 * @return void
 	 */
-	public function injectTypeRepository(Tx_Cicevents_Domain_Repository_TypeRepository $typeRepository) {
+	public function injectTypeRepository(\CIC\Cicevents\Domain\Repository\TypeRepository $typeRepository) {
 		$this->typeRepository = $typeRepository;
 	}
 
 	/**
 	 * inject the eventRepository
 	 *
-	 * @param Tx_Cicevents_Domain_Repository_EventRepository eventRepository
+	 * @param \CIC\Cicevents\Domain\Repository\EventRepository eventRepository
 	 * @return void
 	 */
-	public function injectEventRepository(Tx_Cicevents_Domain_Repository_EventRepository $eventRepository) {
+	public function injectEventRepository(\CIC\Cicevents\Domain\Repository\EventRepository $eventRepository) {
 		$this->eventRepository = $eventRepository;
 	}
 
@@ -139,7 +142,7 @@ class Tx_Cicevents_Task_EventArchiver extends Tx_Cicbase_Scheduler_AbstractTask 
 			if(!$moveTarget)
 				throw new \Exception('You must designate a target for archiving events by moving them. Use the targetPID configuration.');
 
-			/** @var $event Tx_Cicevents_Domain_Model_Event */
+			/** @var $event \CIC\Cicevents\Domain\Model\Event */
 			foreach($events as $event) {
 				if($this->shouldArchive($event, $conf['move'])) {
 					$this->setPID($event, $moveTarget);
@@ -150,7 +153,7 @@ class Tx_Cicevents_Task_EventArchiver extends Tx_Cicbase_Scheduler_AbstractTask 
 		// DELETE
 		if($conf['delete']) {
 			$this->prepareArchiver($conf['delete']);
-			/** @var $event Tx_Cicevents_Domain_Model_Event */
+			/** @var $event \CIC\Cicevents\Domain\Model\Event */
 			foreach($events as $event) {
 				if($this->shouldArchive($event, $conf['delete'])) {
 					$this->eventRepository->remove($event);
@@ -161,7 +164,7 @@ class Tx_Cicevents_Task_EventArchiver extends Tx_Cicbase_Scheduler_AbstractTask 
 		// HIDE
 		if($conf['hide']) {
 			$this->prepareArchiver($conf['hide']);
-			/** @var $event Tx_Cicevents_Domain_Model_Event */
+			/** @var $event \CIC\Cicevents\Domain\Model\Event */
 			foreach($events as $event) {
 				if($this->shouldArchive($event, $conf['hide'])) {
 					$event->setHidden(TRUE);
@@ -183,11 +186,11 @@ class Tx_Cicevents_Task_EventArchiver extends Tx_Cicbase_Scheduler_AbstractTask 
 	 * Thus, if both are provided, type constraints will take precedence and
 	 * category constraints may be ignored.
 	 *
-	 * @param Tx_Cicevents_Domain_Model_Event $event
+	 * @param \CIC\Cicevents\Domain\Model\Event $event
 	 * @param array $conf
 	 * @return bool
 	 */
-	protected function shouldArchive(Tx_Cicevents_Domain_Model_Event $event, $conf = array()) {
+	protected function shouldArchive(\CIC\Cicevents\Domain\Model\Event $event, $conf = array()) {
 		$typeUID = $event->getType()->getUid();
 		$hasOnlyCategories = count($this->onlyCategories);
 		$hasExcludeCategories = count($this->excludeCategories);
@@ -200,7 +203,7 @@ class Tx_Cicevents_Task_EventArchiver extends Tx_Cicbase_Scheduler_AbstractTask 
 		}
 
 		if($hasOnlyCategories || $hasExcludeCategories) {
-			/** @var $category Tx_Cicevents_Domain_Model_Category */
+			/** @var $category \CIC\Cicevents\Domain\Model\Category */
 			foreach($event->getCategories() as $category) {
 				$categoryUID = $category->getUid();
 				if($hasExcludeCategories && in_array($categoryUID, $this->excludeCategories)) {
@@ -245,10 +248,10 @@ class Tx_Cicevents_Task_EventArchiver extends Tx_Cicbase_Scheduler_AbstractTask 
 	protected function explodeConf(array &$only, array &$exclude, $conf = array()) {
 		if(!count($conf)) return;
 		if($conf['only']) {
-			$only = t3lib_div::trimExplode(',',$conf['only']);
+			$only = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',',$conf['only']);
 		}
 		if($conf['exclude']) {
-			$exclude = t3lib_div::trimExplode(',',$conf['exclude']);
+			$exclude = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',',$conf['exclude']);
 		}
 	}
 
@@ -260,15 +263,15 @@ class Tx_Cicevents_Task_EventArchiver extends Tx_Cicbase_Scheduler_AbstractTask 
 		$settings = $query->getQuerySettings();
 		$settings->setRespectStoragePage(FALSE);
 		$query->setQuerySettings($settings);
-		$constraint = $query->lessThan('endTime', new DateTime());
+		$constraint = $query->lessThan('endTime', new \DateTime());
 		return $query->matching($constraint)->execute();
 	}
 
 	/**
-	 * @param Tx_Cicevents_Domain_Model_Event $event
+	 * @param \CIC\Cicevents\Domain\Model\Event $event
 	 * @param $pid
 	 */
-	protected function setPID(Tx_Cicevents_Domain_Model_Event $event, $pid) {
+	protected function setPID(\CIC\Cicevents\Domain\Model\Event $event, $pid) {
 		$table = 'tx_cicevents_domain_model_event';
 		$where = 'uid = '. $event->getUid();
 		$values = array('pid' => $pid);

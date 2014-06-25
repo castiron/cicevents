@@ -1,4 +1,5 @@
 plugin.tx_cicevents {
+	vendorName = CIC
 	view {
 		templateRootPath = {$plugin.tx_cicevents.view.templateRootPath}
 		partialRootPath = {$plugin.tx_cicevents.view.partialRootPath}

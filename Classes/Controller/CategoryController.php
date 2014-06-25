@@ -1,5 +1,7 @@
 <?php
 
+namespace CIC\Cicevents\Controller;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -31,7 +33,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Cicevents_Controller_CategoryController extends Tx_Extbase_MVC_Controller_ActionController {
+class CategoryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
 	 * action list
@@ -49,7 +51,7 @@ class Tx_Cicevents_Controller_CategoryController extends Tx_Extbase_MVC_Controll
 	 * @param $category
 	 * @return void
 	 */
-	public function showAction(Tx_Cicevents_Domain_Model_Category $category) {
+	public function showAction(\CIC\Cicevents\Domain\Model\Category $category) {
 		$this->view->assign('category', $category);
 	}
 
@@ -60,7 +62,7 @@ class Tx_Cicevents_Controller_CategoryController extends Tx_Extbase_MVC_Controll
 	 * @dontvalidate $newCategory
 	 * @return void
 	 */
-	public function newAction(Tx_Cicevents_Domain_Model_Category $newCategory = NULL) {
+	public function newAction(\CIC\Cicevents\Domain\Model\Category $newCategory = NULL) {
 		$this->view->assign('newCategory', $newCategory);
 	}
 
@@ -70,7 +72,7 @@ class Tx_Cicevents_Controller_CategoryController extends Tx_Extbase_MVC_Controll
 	 * @param $newCategory
 	 * @return void
 	 */
-	public function createAction(Tx_Cicevents_Domain_Model_Category $newCategory) {
+	public function createAction(\CIC\Cicevents\Domain\Model\Category $newCategory) {
 		$this->categoryRepository->add($newCategory);
 		$this->flashMessageContainer->add('Your new Category was created.');
 		$this->redirect('list');
@@ -82,7 +84,7 @@ class Tx_Cicevents_Controller_CategoryController extends Tx_Extbase_MVC_Controll
 	 * @param $category
 	 * @return void
 	 */
-	public function editAction(Tx_Cicevents_Domain_Model_Category $category) {
+	public function editAction(\CIC\Cicevents\Domain\Model\Category $category) {
 		$this->view->assign('category', $category);
 	}
 
@@ -92,7 +94,7 @@ class Tx_Cicevents_Controller_CategoryController extends Tx_Extbase_MVC_Controll
 	 * @param $category
 	 * @return void
 	 */
-	public function updateAction(Tx_Cicevents_Domain_Model_Category $category) {
+	public function updateAction(\CIC\Cicevents\Domain\Model\Category $category) {
 		$this->categoryRepository->update($category);
 		$this->flashMessageContainer->add('Your Category was updated.');
 		$this->redirect('list');
@@ -104,7 +106,7 @@ class Tx_Cicevents_Controller_CategoryController extends Tx_Extbase_MVC_Controll
 	 * @param $category
 	 * @return void
 	 */
-	public function deleteAction(Tx_Cicevents_Domain_Model_Category $category) {
+	public function deleteAction(\CIC\Cicevents\Domain\Model\Category $category) {
 		$this->categoryRepository->remove($category);
 		$this->flashMessageContainer->add('Your Category was removed.');
 		$this->redirect('list');

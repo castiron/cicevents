@@ -1,5 +1,7 @@
 <?php
 
+namespace CIC\Cicevents\Controller;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -31,7 +33,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Cicevents_Controller_TypeController extends Tx_Extbase_MVC_Controller_ActionController {
+class TypeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
 	 * action list
@@ -49,7 +51,7 @@ class Tx_Cicevents_Controller_TypeController extends Tx_Extbase_MVC_Controller_A
 	 * @param $type
 	 * @return void
 	 */
-	public function showAction(Tx_Cicevents_Domain_Model_Type $type) {
+	public function showAction(\CIC\Cicevents\Domain\Model\Type $type) {
 		$this->view->assign('type', $type);
 	}
 
@@ -60,7 +62,7 @@ class Tx_Cicevents_Controller_TypeController extends Tx_Extbase_MVC_Controller_A
 	 * @dontvalidate $newType
 	 * @return void
 	 */
-	public function newAction(Tx_Cicevents_Domain_Model_Type $newType = NULL) {
+	public function newAction(\CIC\Cicevents\Domain\Model\Type $newType = NULL) {
 		$this->view->assign('newType', $newType);
 	}
 
@@ -70,7 +72,7 @@ class Tx_Cicevents_Controller_TypeController extends Tx_Extbase_MVC_Controller_A
 	 * @param $newType
 	 * @return void
 	 */
-	public function createAction(Tx_Cicevents_Domain_Model_Type $newType) {
+	public function createAction(\CIC\Cicevents\Domain\Model\Type $newType) {
 		$this->typeRepository->add($newType);
 		$this->flashMessageContainer->add('Your new Type was created.');
 		$this->redirect('list');
@@ -82,7 +84,7 @@ class Tx_Cicevents_Controller_TypeController extends Tx_Extbase_MVC_Controller_A
 	 * @param $type
 	 * @return void
 	 */
-	public function editAction(Tx_Cicevents_Domain_Model_Type $type) {
+	public function editAction(\CIC\Cicevents\Domain\Model\Type $type) {
 		$this->view->assign('type', $type);
 	}
 
@@ -92,7 +94,7 @@ class Tx_Cicevents_Controller_TypeController extends Tx_Extbase_MVC_Controller_A
 	 * @param $type
 	 * @return void
 	 */
-	public function updateAction(Tx_Cicevents_Domain_Model_Type $type) {
+	public function updateAction(\CIC\Cicevents\Domain\Model\Type $type) {
 		$this->typeRepository->update($type);
 		$this->flashMessageContainer->add('Your Type was updated.');
 		$this->redirect('list');
@@ -104,7 +106,7 @@ class Tx_Cicevents_Controller_TypeController extends Tx_Extbase_MVC_Controller_A
 	 * @param $type
 	 * @return void
 	 */
-	public function deleteAction(Tx_Cicevents_Domain_Model_Type $type) {
+	public function deleteAction(\CIC\Cicevents\Domain\Model\Type $type) {
 		$this->typeRepository->remove($type);
 		$this->flashMessageContainer->add('Your Type was removed.');
 		$this->redirect('list');
