@@ -1,6 +1,7 @@
 <?php
+namespace CIC\Cicevents\Domain\Repository;
 
-class Tx_Cicevents_Domain_Repository_OccurrenceRepository extends Tx_Cicbase_Persistence_Repository {
+class OccurrenceRepository extends \CIC\Cicbase\Persistence\Repository {
 
 }
 ?>

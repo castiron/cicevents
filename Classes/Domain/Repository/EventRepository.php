@@ -1,6 +1,7 @@
 <?php
+namespace CIC\Cicevents\Domain\Repository;
 
-class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persistence_Repository {
+class EventRepository extends \CIC\Cicbase\Persistence\Repository {
 
 	const RANGE_CURRENT = 0;
 	const RANGE_THIS_MONTH = 1;
@@ -9,7 +10,7 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 	const RANGE_PAST = 4;
 
 	/**
-	 * @var Tx_Extbase_Persistence_Query
+	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\Query
 	 */
 	protected $tempQuery;
 
@@ -20,17 +21,17 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 	protected $sortBy;
 
 	/**
-	 * @var Tx_Cicevents_Domain_Repository_OccurrenceRepository
+	 * @var \CIC\Cicevents\Domain\Repository\OccurrenceRepository
 	 */
 	protected $occurrenceRepository;
 
 	/**
 	 * inject the occurrenceRepository
 	 *
-	 * @param Tx_Cicevents_Domain_Repository_OccurrenceRepository $occurrenceRepository
+	 * @param \CIC\Cicevents\Domain\Repository\OccurrenceRepository $occurrenceRepository
 	 * @return void
 	 */
-	public function injectOccurrenceRepository(Tx_Cicevents_Domain_Repository_OccurrenceRepository $occurrenceRepository) {
+	public function injectOccurrenceRepository(\CIC\Cicevents\Domain\Repository\OccurrenceRepository $occurrenceRepository) {
 		$this->occurrenceRepository = $occurrenceRepository;
 	}
 
@@ -74,7 +75,7 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 
 		switch(strtolower($this->sortBy)) {
 			case 'soonest':
-				$sorter = function(Tx_Cicevents_Domain_Model_Event $a, Tx_Cicevents_Domain_Model_Event $b) {
+				$sorter = function(\CIC\Cicevents\Domain\Model\Event $a, \CIC\Cicevents\Domain\Model\Event $b) {
 					$aOcc = $a->getSoonestOccurrence();
 					$bOcc = $b->getSoonestOccurrence();
 					if($aOcc && $bOcc) {
@@ -89,7 +90,7 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 			case 'mostrecent':
 			case 'most-recent':
 			case 'most_recent':
-				$sorter = function(Tx_Cicevents_Domain_Model_Event $a, Tx_Cicevents_Domain_Model_Event $b) {
+				$sorter = function(\CIC\Cicevents\Domain\Model\Event $a, \CIC\Cicevents\Domain\Model\Event $b) {
 					$aOcc = $a->getMostRecentOccurrence();
 					$bOcc = $b->getMostRecentOccurrence();
 					if($aOcc && $bOcc) {
@@ -103,13 +104,13 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 				break;
 			}
 
-		if($events instanceof Tx_Extbase_Persistence_QueryResultInterface || $events instanceof Tx_Extbase_Persistence_ObjectStorage) {
+		if($events instanceof \TYPO3\CMS\Extbase\Persistence\QueryResultInterface || $events instanceof \TYPO3\CMS\Extbase\Persistence\ObjectStorage) {
 
 			$array = $events->toArray();
 			usort($array, $sorter);
 
 			// Return it as an iterator
-			$storage = new Tx_Extbase_Persistence_ObjectStorage();
+			$storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 			foreach($array as $item) {
 				$storage->attach($item);
 			}
@@ -129,7 +130,7 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 	 *
 	 * Acceptable Parameters:
 	 * 'location' => string (a search value for address OR venue)
-	 * 'date' => DateTime (shows all events on this day)
+	 * 'date' => \DateTime (shows all events on this day)
 	 * 'range' => One of the RANGE_* constants
 	 * 'category' => integer
 	 * 'type' => integer
@@ -169,16 +170,16 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 						$occurrenceFilters[] = $occurrenceQuery->logicalAnd($A, $B);
 					break;
 				case 'range':
-					$today = new DateTime();
+					$today = new \DateTime();
 					switch($value) {
 						case self::RANGE_CURRENT:
-							$start = new DateTime();
+							$start = new \DateTime();
 							$start->setTime(0,0,0);
 							$occurrenceFilters[] = $occurrenceQuery->greaterThanOrEqual('finishTime', $start);
 							break;
 						case self::RANGE_NEXT_MONTH:
-							$start = new DateTime();
-							$end = new DateTime();
+							$start = new \DateTime();
+							$end = new \DateTime();
 							$start->setTime(0, 0, 0);
 							$end->setTime(23, 59, 59);
 							$start->setDate($today->format('Y'), $today->format('n') + 1, 1);
@@ -188,8 +189,8 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 							$occurrenceFilters[] = $occurrenceQuery->logicalAnd($A, $B);
 							break;
 						case self::RANGE_THIS_MONTH:
-							$start = new DateTime();
-							$end = new DateTime();
+							$start = new \DateTime();
+							$end = new \DateTime();
 							$start->setTime(0, 0, 0);
 							$end->setTime(23, 59, 59);
 							$end->setDate($today->format('Y'), $today->format('n') + 1, 0);
@@ -198,8 +199,8 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 							$occurrenceFilters[] = $occurrenceQuery->logicalAnd($A, $B);
 							break;
 						case self::RANGE_THREE_MONTHS:
-							$start = new DateTime();
-							$end = new DateTime();
+							$start = new \DateTime();
+							$end = new \DateTime();
 							$start->setTime(0, 0, 0);
 							$end->setTime(23, 59, 59);
 							$start->setDate($today->format('Y'), $today->format('n') + 1, 1);
@@ -254,7 +255,7 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 	/**
 	 * Returns a Query object.
 	 *
-	 * @return null|Tx_Extbase_Persistence_Query
+	 * @return null|\TYPO3\CMS\Extbase\Persistence\Generic\Query
 	 */
 	private function getQuery() {
 		if($this->tempQuery) {

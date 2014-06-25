@@ -1,4 +1,5 @@
 <?php
+namespace CIC\Cicevents\Domain\Repository;
 
 /***************************************************************
  *  Copyright notice
@@ -28,7 +29,7 @@
  ***************************************************************/
 
 
-class Tx_Cicevents_Domain_Repository_LocalityRepository extends Tx_Cicbase_Persistence_Repository {
+class LocalityRepository extends \CIC\Cicbase\Persistence\Repository {
 
 }
 

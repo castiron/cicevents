@@ -1,5 +1,7 @@
 <?php
 
+namespace CIC\Cicevents\Test;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -25,7 +27,7 @@
  ***************************************************************/
 
 /**
- * Test case for class Tx_Cicevents_Domain_Model_Category.
+ * Test case for class \CIC\Cicevents\Domain\Model\Category.
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
@@ -36,14 +38,14 @@
  *
  * @author Peter Soots <peter@castironcoding.com>
  */
-class Tx_Cicevents_Domain_Model_CategoryTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class CategoryTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
-	 * @var Tx_Cicevents_Domain_Model_Category
+	 * @var \CIC\Cicevents\Domain\Model\Category
 	 */
 	protected $fixture;
 
 	public function setUp() {
-		$this->fixture = new Tx_Cicevents_Domain_Model_Category();
+		$this->fixture = new \CIC\Cicevents\Domain\Model\Category();
 	}
 
 	public function tearDown() {

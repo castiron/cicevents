@@ -1,5 +1,7 @@
 <?php
 
+namespace CIC\Cicevents\Controller;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -31,113 +33,113 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_ActionController {
+class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	const DATE_FORMAT = 'm/d/Y h:i a';
 	const DATE_FORMAT_FILTERS = 'm/d/Y';
 
 	/**
-	 * @var Tx_Cicevents_Domain_Repository_EventRepository
+	 * @var \CIC\Cicevents\Domain\Repository\EventRepository
 	 */
 	private $eventRepository = null;
 
 	/**
-	 * @var Tx_Cicevents_Domain_Repository_CategoryRepository
+	 * @var \CIC\Cicevents\Domain\Repository\CategoryRepository
 	 */
 	private $categoryRepository = null;
 
 	/**
-	 * @var Tx_Cicevents_Domain_Repository_LocalityRepository
+	 * @var \CIC\Cicevents\Domain\Repository\LocalityRepository
 	 */
 	private $localityRepository = null;
 
 	/**
-	 * @var Tx_Cicevents_Domain_Repository_TypeRepository
+	 * @var \CIC\Cicevents\Domain\Repository\TypeRepository
 	 */
 	private $typeRepository = null;
 
 	/**
-	 * @var Tx_Cicbase_Domain_Repository_FileRepository
+	 * @var \CIC\Cicbase\Domain\Repository\FileRepository
 	 */
 	protected $fileRepository;
 
 	/**
-	 * @var Tx_Cicbase_Service_EmailService
+	 * @var \CIC\Cicbase\Service\EmailService
 	 */
 	protected $emailService;
 
 	/**
-	 * @var Tx_Cicevents_Domain_Repository_OccurrenceRepository
+	 * @var \CIC\Cicevents\Domain\Repository\OccurrenceRepository
 	 */
 	protected $occurrenceRepository;
 
 	/**
 	 * inject the occurrenceRepository
 	 *
-	 * @param Tx_Cicevents_Domain_Repository_OccurrenceRepository occurrenceRepository
+	 * @param \CIC\Cicevents\Domain\Repository\OccurrenceRepository occurrenceRepository
 	 * @return void
 	 */
-	public function injectOccurrenceRepository(Tx_Cicevents_Domain_Repository_OccurrenceRepository $occurrenceRepository) {
+	public function injectOccurrenceRepository(\CIC\Cicevents\Domain\Repository\OccurrenceRepository $occurrenceRepository) {
 		$this->occurrenceRepository = $occurrenceRepository;
 	}
 
 	/**
 	 * Dependency injection of the Event Repository
 	 *
-	 * @param Tx_Cicevents_Domain_Repository_EventRepository $eventRepository
+	 * @param \CIC\Cicevents\Domain\Repository\EventRepository $eventRepository
 	 * @return void
 	 */
-	public function injectEventRepository(Tx_Cicevents_Domain_Repository_EventRepository $eventRepository) {
+	public function injectEventRepository(\CIC\Cicevents\Domain\Repository\EventRepository $eventRepository) {
 		$this->eventRepository = $eventRepository;
 	}
 
 	/**
 	 * Dependency injection of the Category Repository
 	 *
-	 * @param Tx_Cicevents_Domain_Repository_CategoryRepository $categoryRepository
+	 * @param \CIC\Cicevents\Domain\Repository\CategoryRepository $categoryRepository
 	 * @return void
 	 */
-	public function injectCategoryRepository(Tx_Cicevents_Domain_Repository_CategoryRepository $categoryRepository) {
+	public function injectCategoryRepository(\CIC\Cicevents\Domain\Repository\CategoryRepository $categoryRepository) {
 		$this->categoryRepository = $categoryRepository;
 	}
 
 	/**
 	 * Dependency injection of the Locality Repository
 	 *
-	 * @param Tx_Cicevents_Domain_Repository_LocalityRepository $localityRepository
+	 * @param \CIC\Cicevents\Domain\Repository\LocalityRepository $localityRepository
 	 * @return void
 	 */
-	public function injectLocalityRepository(Tx_Cicevents_Domain_Repository_LocalityRepository $localityRepository) {
+	public function injectLocalityRepository(\CIC\Cicevents\Domain\Repository\LocalityRepository $localityRepository) {
 		$this->localityRepository = $localityRepository;
 	}
 
 	/**
 	 * Dependency injection of the Type Repository
 	 *
-	 * @param Tx_Cicevents_Domain_Repository_TypeRepository $typeRepository
+	 * @param \CIC\Cicevents\Domain\Repository\TypeRepository $typeRepository
 	 * @return void
 	 */
-	public function injectTypeRepository(Tx_Cicevents_Domain_Repository_TypeRepository $typeRepository) {
+	public function injectTypeRepository(\CIC\Cicevents\Domain\Repository\TypeRepository $typeRepository) {
 		$this->typeRepository = $typeRepository;
 	}
 
 	/**
 	 * inject the fileRepository
 	 *
-	 * @param Tx_Cicbase_Domain_Repository_FileRepository fileRepository
+	 * @param \CIC\Cicbase\Domain\Repository\FileRepository fileRepository
 	 * @return void
 	 */
-	public function injectFileRepository(Tx_Cicbase_Domain_Repository_FileRepository $fileRepository) {
+	public function injectFileRepository(\CIC\Cicbase\Domain\Repository\FileRepository $fileRepository) {
 		$this->fileRepository = $fileRepository;
 	}
 
 	/**
 	 * inject the emailService
 	 *
-	 * @param Tx_Cicbase_Service_EmailService emailService
+	 * @param \CIC\Cicbase\Service\EmailService emailService
 	 * @return void
 	 */
-	public function injectEmailService(Tx_Cicbase_Service_EmailService $emailService) {
+	public function injectEmailService(\CIC\Cicbase\Service\EmailService $emailService) {
 		$this->emailService = $emailService;
 	}
 
@@ -161,29 +163,29 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 				->getPropertyMappingConfiguration()
 				->forProperty("occurrences.$i.beginTime")
 				->setTypeConverterOption(
-					'Tx_Extbase_Property_TypeConverter_DateTimeConverter',
-					Tx_Extbase_Property_TypeConverter_DateTimeConverter::CONFIGURATION_DATE_FORMAT,
+					'TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter',
+					\TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT,
 					self::DATE_FORMAT
 				);
 			$this->arguments['event']
 				->getPropertyMappingConfiguration()
 				->forProperty("occurrences.$i.finishTime")
 				->setTypeConverterOption(
-					'Tx_Extbase_Property_TypeConverter_DateTimeConverter',
-					Tx_Extbase_Property_TypeConverter_DateTimeConverter::CONFIGURATION_DATE_FORMAT,
+					'TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter',
+					\TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT,
 					self::DATE_FORMAT
 				);
 		}
 
 		$this->arguments['image1']
 			->getPropertyMappingConfiguration()
-			->setTypeConverterOption('Tx_Cicbase_Property_TypeConverter_File', 'propertyPath', 'image1');
+			->setTypeConverterOption('CIC\Cicbase\Property\TypeConverter\File', 'propertyPath', 'image1');
 		$this->arguments['image2']
 			->getPropertyMappingConfiguration()
-			->setTypeConverterOption('Tx_Cicbase_Property_TypeConverter_File', 'propertyPath', 'image2');
+			->setTypeConverterOption('CIC\Cicbase\Property\TypeConverter\File', 'propertyPath', 'image2');
 		$this->arguments['image3']
 			->getPropertyMappingConfiguration()
-			->setTypeConverterOption('Tx_Cicbase_Property_TypeConverter_File', 'propertyPath', 'image3');
+			->setTypeConverterOption('CIC\Cicbase\Property\TypeConverter\File', 'propertyPath', 'image3');
 
 	}
 
@@ -230,9 +232,9 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 
 		$occurrences = $this->occurrenceRepository->findAll();
 
-		/** @var Tx_Cicevents_Domain_Model_Occurrence $occurrence */
+		/** @var \CIC\Cicevents\Domain\Model\Occurrence $occurrence */
 		foreach($occurrences as $occurrence) {
-			/** @var Tx_Cicevents_Domain_Model_Event $event */
+			/** @var \CIC\Cicevents\Domain\Model\Event $event */
 			$event = $occurrence->getEvent();
 			if(!$event || $event->getTbd() || $event->getOngoing()) {
 				continue;
@@ -254,10 +256,10 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 
 			$begin = $occurrence->getBeginTime();
 			$finish = $occurrence->getFinishTime();
-			if($begin instanceof DateTime) {
+			if($begin instanceof \DateTime) {
 				$eventDetails['start'] = $begin->format($dateFormat);
 			}
-			if($finish instanceof DateTime) {
+			if($finish instanceof \DateTime) {
 				$eventDetails['end'] = $finish->format($dateFormat);
 			}
 			$eventsArray[] = $eventDetails;
@@ -286,14 +288,14 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	 * Displays all current events by default.
 	 *
 	 * @param string $location
-	 * @param null|Tx_Cicevents_Domain_Model_Category $category
-	 * @param null|Tx_Cicevents_Domain_Model_Type $type
-	 * @param null|Tx_Cicevents_Domain_Model_Locality $locality
+	 * @param null|\CIC\Cicevents\Domain\Model\Category $category
+	 * @param null|\CIC\Cicevents\Domain\Model\Type $type
+	 * @param null|\CIC\Cicevents\Domain\Model\Locality $locality
 	 * @param int $range
 	 * @param int $currentPage
 	 * @param bool $minimal
 	 */
-	public function listAction($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, Tx_Cicevents_Domain_Model_Locality $locality = null, $range = null, $currentPage = 1, $minimal = false) {
+	public function listAction($location = null, \CIC\Cicevents\Domain\Model\Category $category = null, \CIC\Cicevents\Domain\Model\Type $type = null, \CIC\Cicevents\Domain\Model\Locality $locality = null, $range = null, $currentPage = 1, $minimal = false) {
 		if($minimal){
 			$this->view->assign('minimal', true);
 		}
@@ -306,13 +308,13 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	 * Displays all current events by default.
 	 *
 	 * @param string $location
-	 * @param null|Tx_Cicevents_Domain_Model_Category $category
-	 * @param null|Tx_Cicevents_Domain_Model_Type $type
-	 * @param null|Tx_Cicevents_Domain_Model_Locality $locality
+	 * @param null|\CIC\Cicevents\Domain\Model\Category $category
+	 * @param null|\CIC\Cicevents\Domain\Model\Type $type
+	 * @param null|\CIC\Cicevents\Domain\Model\Locality $locality
 	 * @param int $range
 	 * @param int $currentPage
 	 */
-	public function listMinimalAction($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, Tx_Cicevents_Domain_Model_Locality $locality = null, $range = null, $currentPage = 1) {
+	public function listMinimalAction($location = null, \CIC\Cicevents\Domain\Model\Category $category = null, \CIC\Cicevents\Domain\Model\Type $type = null, \CIC\Cicevents\Domain\Model\Locality $locality = null, $range = null, $currentPage = 1) {
 		$args = array(
 			'location' => $location,
 			'category' => $category,
@@ -330,19 +332,19 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	 * Displays all current events by default.
 	 *
 	 * @param string $location
-	 * @param null|Tx_Cicevents_Domain_Model_Category $category
-	 * @param null|Tx_Cicevents_Domain_Model_Type $type
-	 * @param null|Tx_Cicevents_Domain_Model_Locality $locality
+	 * @param null|\CIC\Cicevents\Domain\Model\Category $category
+	 * @param null|\CIC\Cicevents\Domain\Model\Type $type
+	 * @param null|\CIC\Cicevents\Domain\Model\Locality $locality
 	 * @param int $range
 	 * @param int $currentPage
 	 */
-	public function pastAction($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, Tx_Cicevents_Domain_Model_Locality $locality = null, $range = null, $currentPage = 1) {
+	public function pastAction($location = null, \CIC\Cicevents\Domain\Model\Category $category = null, \CIC\Cicevents\Domain\Model\Type $type = null, \CIC\Cicevents\Domain\Model\Locality $locality = null, $range = null, $currentPage = 1) {
 		$args = array(
 			'location' => $location,
 			'category' => $category,
 			'type' => $type,
 			'locality' => $locality,
-			'range' => ($range === null ? Tx_Cicevents_Domain_Repository_EventRepository::RANGE_PAST.'' : $range),
+			'range' => ($range === null ? \CIC\Cicevents\Domain\Repository\EventRepository::RANGE_PAST.'' : $range),
 			'currentPage' => $currentPage);
 		$this->forward('list', null, null, $args);
 	}
@@ -353,19 +355,19 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	 * Displays all current events by default.
 	 *
 	 * @param string $location
-	 * @param null|Tx_Cicevents_Domain_Model_Category $category
-	 * @param null|Tx_Cicevents_Domain_Model_Type $type
-	 * @param null|Tx_Cicevents_Domain_Model_Locality $locality
+	 * @param null|\CIC\Cicevents\Domain\Model\Category $category
+	 * @param null|\CIC\Cicevents\Domain\Model\Type $type
+	 * @param null|\CIC\Cicevents\Domain\Model\Locality $locality
 	 * @param int $range
 	 * @param int $currentPage
 	 */
-	public function pastMinimalAction($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, Tx_Cicevents_Domain_Model_Locality $locality = null, $range = null, $currentPage = 1) {
+	public function pastMinimalAction($location = null, \CIC\Cicevents\Domain\Model\Category $category = null, \CIC\Cicevents\Domain\Model\Type $type = null, \CIC\Cicevents\Domain\Model\Locality $locality = null, $range = null, $currentPage = 1) {
 		$args = array(
 			'location' => $location,
 			'category' => $category,
 			'locality' => $locality,
 			'type' => $type,
-			'range' => ($range === null ? Tx_Cicevents_Domain_Repository_EventRepository::RANGE_PAST.'' : $range),
+			'range' => ($range === null ? \CIC\Cicevents\Domain\Repository\EventRepository::RANGE_PAST.'' : $range),
 			'currentPage' => $currentPage,
 			'minimal' => true);
 		$this->forward('listMinimal', null, null, $args);
@@ -377,38 +379,38 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	 * Displays all current events by default.
 	 *
 	 * @param string $location
-	 * @param null|Tx_Cicevents_Domain_Model_Category $category
-	 * @param null|Tx_Cicevents_Domain_Model_Type $type
-	 * @param null|Tx_Cicevents_Domain_Model_Locality $locality
+	 * @param null|\CIC\Cicevents\Domain\Model\Category $category
+	 * @param null|\CIC\Cicevents\Domain\Model\Type $type
+	 * @param null|\CIC\Cicevents\Domain\Model\Locality $locality
 	 * @param int $range
 	 * @param int $currentPage
 	 */
-	public function monthAction($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, Tx_Cicevents_Domain_Model_Locality $locality = null, $range = null, $currentPage = 1) {
+	public function monthAction($location = null, \CIC\Cicevents\Domain\Model\Category $category = null, \CIC\Cicevents\Domain\Model\Type $type = null, \CIC\Cicevents\Domain\Model\Locality $locality = null, $range = null, $currentPage = 1) {
 		$args = array(
 			'location' => $location,
 			'category' => $category,
 			'type' => $type,
 			'locality' => $locality,
-			'range' => ($range === null ? Tx_Cicevents_Domain_Repository_EventRepository::RANGE_THIS_MONTH.'' : $range),
+			'range' => ($range === null ? \CIC\Cicevents\Domain\Repository\EventRepository::RANGE_THIS_MONTH.'' : $range),
 			'currentPage' => $currentPage);
 		$this->forward('list', null, null, $args);
 	}
 
 	/**
 	 * @param string $location
-	 * @param null|Tx_Cicevents_Domain_Model_Category $category
-	 * @param null|Tx_Cicevents_Domain_Model_Type $type
-	 * @param null|Tx_Cicevents_Domain_Model_Locality $locality
+	 * @param null|\CIC\Cicevents\Domain\Model\Category $category
+	 * @param null|\CIC\Cicevents\Domain\Model\Type $type
+	 * @param null|\CIC\Cicevents\Domain\Model\Locality $locality
 	 * @param int $range
 	 * @param int $currentPage
 	 */
-	public function monthMinimalAction($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, Tx_Cicevents_Domain_Model_Locality $locality = null, $range = null, $currentPage = 1) {
+	public function monthMinimalAction($location = null, \CIC\Cicevents\Domain\Model\Category $category = null, \CIC\Cicevents\Domain\Model\Type $type = null, \CIC\Cicevents\Domain\Model\Locality $locality = null, $range = null, $currentPage = 1) {
 		$args = array(
 			'location' => $location,
 			'category' => $category,
 			'type' => $type,
 			'locality' => $locality,
-			'range' => ($range === null ? Tx_Cicevents_Domain_Repository_EventRepository::RANGE_THIS_MONTH.'' : $range),
+			'range' => ($range === null ? \CIC\Cicevents\Domain\Repository\EventRepository::RANGE_THIS_MONTH.'' : $range),
 			'currentPage' => $currentPage,
 			'minimal' => true);
 		$this->forward('listMinimal', null, null, $args);
@@ -421,8 +423,8 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	 * @param $event
 	 * @return void
 	 */
-	public function detailAction(Tx_Cicevents_Domain_Model_Event $event) {
-		$cObj = t3lib_div::makeInstance('tslib_cObj');
+	public function detailAction(\CIC\Cicevents\Domain\Model\Event $event) {
+		$cObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tslib_cObj');
 		$register = array();
 		$register['eventTitle'] = $event->getTitle();
 		$cObj->LOAD_REGISTER($register, '');
@@ -520,16 +522,16 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 
 
 	/**
-	 * @param Tx_Cicevents_Domain_Model_Event $event
-	 * @param Tx_Cicbase_Domain_Model_File $image1
-	 * @param Tx_Cicbase_Domain_Model_File $image2
-	 * @param Tx_Cicbase_Domain_Model_File $image3
+	 * @param \CIC\Cicevents\Domain\Model\Event $event
+	 * @param \CIC\Cicbase\Domain\Model\File $image1
+	 * @param \CIC\Cicbase\Domain\Model\File $image2
+	 * @param \CIC\Cicbase\Domain\Model\File $image3
 	 */
-	public function createAction(Tx_Cicevents_Domain_Model_Event $event,
-									Tx_Cicbase_Domain_Model_File $image1 = null,
-									Tx_Cicbase_Domain_Model_File $image2 = null,
-									Tx_Cicbase_Domain_Model_File $image3 = null ) {
-		$post = array_values(t3lib_div::_POST());
+	public function createAction(\CIC\Cicevents\Domain\Model\Event $event,
+									\CIC\Cicbase\Domain\Model\File $image1 = null,
+									\CIC\Cicbase\Domain\Model\File $image2 = null,
+									\CIC\Cicbase\Domain\Model\File $image3 = null ) {
+		$post = array_values(\TYPO3\CMS\Core\Utility\GeneralUtility::_POST());
 		$post = $post[0];
 		foreach($post as $key => $val) {
 			if(strpos($key, 'categories') !== false) {
@@ -572,13 +574,13 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 
 	/**
 	 * @param string $location
-	 * @param Tx_Cicevents_Domain_Model_Category $category
-	 * @param Tx_Cicevents_Domain_Model_Type $type
-	 * @param Tx_Cicevents_Domain_Model_Locality $locality
+	 * @param \CIC\Cicevents\Domain\Model\Category $category
+	 * @param \CIC\Cicevents\Domain\Model\Type $type
+	 * @param \CIC\Cicevents\Domain\Model\Locality $locality
 	 * @param int $range
 	 * @param int $currentPage
 	 */
-	protected function listEvents($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, Tx_Cicevents_Domain_Model_Locality $locality = null, $range = null, $currentPage = 1) {
+	protected function listEvents($location = null, \CIC\Cicevents\Domain\Model\Category $category = null, \CIC\Cicevents\Domain\Model\Type $type = null, \CIC\Cicevents\Domain\Model\Locality $locality = null, $range = null, $currentPage = 1) {
 		// Get form data
 		$params = array(
 			'location' => $location,
@@ -587,7 +589,6 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 			'type' => $type,
 			'range' => intval($range)
 		);
-
 		$conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cicevents']);
 
 		$limit = $this->findLimit();
@@ -702,19 +703,19 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 		foreach($rangeSettings as $setting){
 			switch($setting){
 				case 'current':
-					$ranges[Tx_Cicevents_Domain_Repository_EventRepository::RANGE_CURRENT] = 'Upcoming Events';
+					$ranges[\CIC\Cicevents\Domain\Repository\EventRepository::RANGE_CURRENT] = 'Upcoming Events';
 					break;
 				case 'thisMonth':
-					$ranges[Tx_Cicevents_Domain_Repository_EventRepository::RANGE_THIS_MONTH] = 'This Month';
+					$ranges[\CIC\Cicevents\Domain\Repository\EventRepository::RANGE_THIS_MONTH] = 'This Month';
 					break;
 				case 'nextMonth':
-					$ranges[Tx_Cicevents_Domain_Repository_EventRepository::RANGE_NEXT_MONTH] = 'Next Month';
+					$ranges[\CIC\Cicevents\Domain\Repository\EventRepository::RANGE_NEXT_MONTH] = 'Next Month';
 					break;
 				case 'nextThreeMonths':
-					$ranges[Tx_Cicevents_Domain_Repository_EventRepository::RANGE_THREE_MONTHS] = 'Next Three Months';
+					$ranges[\CIC\Cicevents\Domain\Repository\EventRepository::RANGE_THREE_MONTHS] = 'Next Three Months';
 					break;
 				case 'past':
-					$ranges[Tx_Cicevents_Domain_Repository_EventRepository::RANGE_PAST] = 'Past Events';
+					$ranges[\CIC\Cicevents\Domain\Repository\EventRepository::RANGE_PAST] = 'Past Events';
 					break;
 				default:
 					continue;

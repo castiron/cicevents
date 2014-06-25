@@ -1,4 +1,5 @@
 <?php
+namespace CIC\Cicevents\Domain\Model;
 
 /***************************************************************
  *  Copyright notice
@@ -31,16 +32,16 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Cicevents_Domain_Model_Occurrence extends Tx_Extbase_DomainObject_AbstractEntity {
+class Occurrence extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
-	 * @var DateTime
+	 * @var \DateTime
 	 */
 	protected $beginTime;
 
 
 	/**
-	 * @var DateTime
+	 * @var \DateTime
 	 */
 	protected $finishTime;
 
@@ -63,7 +64,7 @@ class Tx_Cicevents_Domain_Model_Occurrence extends Tx_Extbase_DomainObject_Abstr
 	protected $directions;
 
 	/**
-	 * @var Tx_Cicevents_Domain_Model_Event
+	 * @var \CIC\Cicevents\Domain\Model\Event
 	 */
 	protected $event;
 
@@ -146,7 +147,7 @@ class Tx_Cicevents_Domain_Model_Occurrence extends Tx_Extbase_DomainObject_Abstr
 	 * @param $parent
 	 */
 	public function getTCALabel(array &$params, $parent) {
-		$occ = t3lib_BEfunc::getRecord($params['table'], $params['row']['uid']);
+		$occ = \TYPO3\CMS\Backend\Utility\BackendUtility::getRecord($params['table'], $params['row']['uid']);
 		if(!$occ) return;
 		$format = "M j @ g:i a";
 		$venue = $occ['venue'];
@@ -156,14 +157,14 @@ class Tx_Cicevents_Domain_Model_Occurrence extends Tx_Extbase_DomainObject_Abstr
 	}
 
 	/**
-	 * @param \Tx_Cicevents_Domain_Model_Event $event
+	 * @param \CIC\Cicevents\Domain\Model\Event $event
 	 */
 	public function setEvent($event) {
 		$this->event = $event;
 	}
 
 	/**
-	 * @return \Tx_Cicevents_Domain_Model_Event
+	 * @return \CIC\Cicevents\Domain\Model\Event
 	 */
 	public function getEvent() {
 		return $this->event;
@@ -174,7 +175,7 @@ class Tx_Cicevents_Domain_Model_Occurrence extends Tx_Extbase_DomainObject_Abstr
 	 * @return bool
 	 */
 	public function spansMultipleDays() {
-		if($this->beginTime instanceof DateTime && $this->finishTime instanceof DateTime) {
+		if($this->beginTime instanceof \DateTime && $this->finishTime instanceof \DateTime) {
 			return $this->beginTime->format('Y m d') == $this->finishTime->format('Y m d');
 		}
 		return FALSE;
@@ -184,8 +185,8 @@ class Tx_Cicevents_Domain_Model_Occurrence extends Tx_Extbase_DomainObject_Abstr
 	 * @return bool
 	 */
 	public function alreadyHappened() {
-		if($this->finishTime instanceof DateTime) {
-			return $this->finishTime < new DateTime();
+		if($this->finishTime instanceof \DateTime) {
+			return $this->finishTime < new \DateTime();
 		}
 		return FALSE;
 	}
@@ -194,8 +195,8 @@ class Tx_Cicevents_Domain_Model_Occurrence extends Tx_Extbase_DomainObject_Abstr
 	 * @return bool
 	 */
 	public function currentlyHappening() {
-		if($this->beginTime instanceof DateTime && $this->finishTime instanceof DateTime) {
-			$now = new DateTime();
+		if($this->beginTime instanceof \DateTime && $this->finishTime instanceof \DateTime) {
+			$now = new \DateTime();
 			return $this->beginTime < $now && $this->finishTime > $now;
 		}
 		return FALSE;
