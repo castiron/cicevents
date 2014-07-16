@@ -15,9 +15,8 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 
 	protected $filters;
 
-	protected $filterOrderings;
-
-	protected $sortBy;
+	/** @var array Used when sorting by occurrence */
+	protected $sortedUIDs = array();
 
 	/**
 	 * @var Tx_Cicevents_Domain_Repository_OccurrenceRepository
@@ -68,59 +67,33 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 	 */
 	public function sortEvents($events) {
 
-		if(!$this->sortBy) {
-			$this->sortBy = 'soonest';
-		}
-
-		switch(strtolower($this->sortBy)) {
-			case 'soonest':
-				$sorter = function(Tx_Cicevents_Domain_Model_Event $a, Tx_Cicevents_Domain_Model_Event $b) {
-					$aOcc = $a->getSoonestOccurrence();
-					$bOcc = $b->getSoonestOccurrence();
-					if($aOcc && $bOcc) {
-						$aOccBegin = $aOcc->getBeginTime();
-						$bOccBegin = $bOcc->getBeginTime();
-						if($aOccBegin && $bOccBegin) {
-							return $aOccBegin < $bOccBegin ? -1 : 1;
-						}
-					}
-				};
-				break;
-			case 'mostrecent':
-			case 'most-recent':
-			case 'most_recent':
-				$sorter = function(Tx_Cicevents_Domain_Model_Event $a, Tx_Cicevents_Domain_Model_Event $b) {
-					$aOcc = $a->getMostRecentOccurrence();
-					$bOcc = $b->getMostRecentOccurrence();
-					if($aOcc && $bOcc) {
-						$aOccBegin = $aOcc->getBeginTime();
-						$bOccBegin = $bOcc->getBeginTime();
-						if($aOccBegin && $bOccBegin) {
-							return $aOccBegin > $bOccBegin ? -1 : 1;
-						}
-					}
-				};
-				break;
-			}
+		$isStorage = FALSE;
 
 		if($events instanceof Tx_Extbase_Persistence_QueryResultInterface || $events instanceof Tx_Extbase_Persistence_ObjectStorage) {
-
-			$array = $events->toArray();
-			usort($array, $sorter);
-
-			// Return it as an iterator
-			$storage = new Tx_Extbase_Persistence_ObjectStorage();
-			foreach($array as $item) {
-				$storage->attach($item);
-			}
-
-			return $storage;
-
-		} elseif(is_array($events)) {
-			usort($events, $sorter);
+			$isStorage = TRUE;
+			$events = $events->toArray();
 		}
 
-		return $events;
+		if (count($this->sortedUIDs)) {
+			$sorted = array_fill_keys($this->sortedUIDs, 0);
+			foreach ($events as $event) {
+				$sorted[$event->getUid()] = $event;
+			}
+		} else {
+			$sorter = function ($a, $b) {return strcmp($a->getTitle(), $b->getTitle()); };
+			usort($events, $sorter);
+			$sorted = $events;
+		}
+
+		if ($isStorage) {
+			$storage = new Tx_Extbase_Persistence_ObjectStorage();
+			foreach($sorted as $item) {
+				$storage->attach($item);
+			}
+			return $storage;
+		}
+
+		return $sorted;
 	}
 
 
@@ -146,7 +119,11 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 		$query = $this->createQuery();
 		$this->filters = array();
 
+		// We may need the occurrence repository if we're sorting by UIDs
 		$occurrenceQuery = $this->occurrenceRepository->createQuery();
+		// If the occurrence query is used, then we should have a default sort order. We'll save the
+		// event UIDs based on these occurrences and use those for sorting the events later.
+		$occurrenceQuery->setOrderings(array('beginTime' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING));
 		$occurrenceFilters = array();
 
 		foreach($params as $key => $value) {
@@ -211,8 +188,8 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 						case self::RANGE_PAST:
 							$start = $today;
 							$start->setTime(0,0,0);
+							$occurrenceQuery->setOrderings(array('beginTime' => Tx_Extbase_Persistence_QueryInterface::ORDER_DESCENDING));
 							$occurrenceFilters[] = $occurrenceQuery->lessThanOrEqual('finishTime', $start);
-							$this->sortBy = 'mostRecent';
 							break;
 					}
 					break;
@@ -231,13 +208,21 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 			}
 		}
 
-		$occurrences = $occurrenceQuery->matching($occurrenceQuery->logicalAnd($occurrenceFilters))->execute();
-		foreach($occurrences as $occurrence) {
-			$occurrenceConstraints[] = $query->contains('occurrences', $occurrence);
+		if (count($occurrenceFilters)) {
+			$occurrences = $occurrenceQuery->matching($occurrenceQuery->logicalAnd($occurrenceFilters))->execute();
+			$this->sortedUIDs = array();
+			foreach($occurrences as $occurrence) {
+				$event = $occurrence->getEvent();
+				if (!$event) {
+					continue;
+				}
+				$this->sortedUIDs[] = $event->getUid();
+			}
+			if(count($this->sortedUIDs)) {
+				$this->filters[] = $query->in('uid', $this->sortedUIDs);
+			}
 		}
-		if(count($occurrenceConstraints)) {
-			$this->filters[] = $query->logicalOr($occurrenceConstraints);
-		}
+
 
 		$this->tempQuery = $query;
 	}
