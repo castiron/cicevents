@@ -176,7 +176,7 @@ class Occurrence extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function spansMultipleDays() {
 		if($this->beginTime instanceof \DateTime && $this->finishTime instanceof \DateTime) {
-			return $this->beginTime->format('Y m d') == $this->finishTime->format('Y m d');
+			return $this->beginTime->format('Y m d') != $this->finishTime->format('Y m d');
 		}
 		return FALSE;
 	}
