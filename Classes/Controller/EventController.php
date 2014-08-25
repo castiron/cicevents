@@ -41,22 +41,22 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	/**
 	 * @var \CIC\Cicevents\Domain\Repository\EventRepository
 	 */
-	private $eventRepository = null;
+	protected $eventRepository = null;
 
 	/**
 	 * @var \CIC\Cicevents\Domain\Repository\CategoryRepository
 	 */
-	private $categoryRepository = null;
+	protected $categoryRepository = null;
 
 	/**
 	 * @var \CIC\Cicevents\Domain\Repository\LocalityRepository
 	 */
-	private $localityRepository = null;
+	protected $localityRepository = null;
 
 	/**
 	 * @var \CIC\Cicevents\Domain\Repository\TypeRepository
 	 */
-	private $typeRepository = null;
+	protected $typeRepository = null;
 
 	/**
 	 * @var \CIC\Cicbase\Domain\Repository\FileRepository
