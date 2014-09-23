@@ -111,6 +111,23 @@
 						</TCEforms>
 					</settings.returnPid>
 
+					<settings.type>
+						<TCEforms>
+							<label>Restrict to type:</label>
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">(No restriction)</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+								</items>
+								<foreign_table>tx_cicevents_domain_model_type</foreign_table>
+								<maxitems>1</maxitems>
+							</config>
+						</TCEforms>
+					</settings.type>
+
 				</el>
 			</ROOT>
 		</Settings>

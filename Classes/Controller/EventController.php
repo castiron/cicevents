@@ -294,6 +294,9 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	 * @param bool $minimal
 	 */
 	public function listAction($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, Tx_Cicevents_Domain_Model_Locality $locality = null, $range = null, $currentPage = 1, $minimal = false) {
+		if ($this->settings['type']) {
+			$type = $this->typeRepository->findByUid(intval($this->settings['type']));
+		}
 		if($minimal){
 			$this->view->assign('minimal', true);
 		}
