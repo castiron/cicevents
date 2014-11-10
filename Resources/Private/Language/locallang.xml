@@ -29,6 +29,8 @@
 			<label index="tx_cicevents_domain_model_type.nullOption">All Types</label>
 
 			<label index="form-fieldError-title-1221560718">Please enter an event name.</label>
+			<label index="form-fieldError-occurrence-venue-1221560718">Please enter a venue.</label>
+			<label index="form-fieldError-occurrence-address-1221560718">Please enter an address.</label>
 			<label index="form-fieldError-venue-1221560718">Please enter a venue.</label>
 			<label index="form-fieldError-address-1221560718">Please enter an address.</label>
 		</languageKey>

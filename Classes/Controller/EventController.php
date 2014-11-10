@@ -25,6 +25,8 @@ namespace CIC\Cicevents\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use CIC\Cicevents\Domain\Model\Event;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  *
@@ -40,108 +42,45 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
 	/**
 	 * @var \CIC\Cicevents\Domain\Repository\EventRepository
+	 * @inject
 	 */
 	protected $eventRepository = null;
 
 	/**
 	 * @var \CIC\Cicevents\Domain\Repository\CategoryRepository
+	 * @inject
 	 */
 	protected $categoryRepository = null;
 
 	/**
 	 * @var \CIC\Cicevents\Domain\Repository\LocalityRepository
+	 * @inject
 	 */
 	protected $localityRepository = null;
 
 	/**
 	 * @var \CIC\Cicevents\Domain\Repository\TypeRepository
+	 * @inject
 	 */
 	protected $typeRepository = null;
 
 	/**
 	 * @var \CIC\Cicbase\Domain\Repository\FileRepository
+	 * @inject
 	 */
 	protected $fileRepository;
 
 	/**
 	 * @var \CIC\Cicbase\Service\EmailService
+	 * @inject
 	 */
 	protected $emailService;
 
 	/**
 	 * @var \CIC\Cicevents\Domain\Repository\OccurrenceRepository
+	 * @inject
 	 */
 	protected $occurrenceRepository;
-
-	/**
-	 * inject the occurrenceRepository
-	 *
-	 * @param \CIC\Cicevents\Domain\Repository\OccurrenceRepository occurrenceRepository
-	 * @return void
-	 */
-	public function injectOccurrenceRepository(\CIC\Cicevents\Domain\Repository\OccurrenceRepository $occurrenceRepository) {
-		$this->occurrenceRepository = $occurrenceRepository;
-	}
-
-	/**
-	 * Dependency injection of the Event Repository
-	 *
-	 * @param \CIC\Cicevents\Domain\Repository\EventRepository $eventRepository
-	 * @return void
-	 */
-	public function injectEventRepository(\CIC\Cicevents\Domain\Repository\EventRepository $eventRepository) {
-		$this->eventRepository = $eventRepository;
-	}
-
-	/**
-	 * Dependency injection of the Category Repository
-	 *
-	 * @param \CIC\Cicevents\Domain\Repository\CategoryRepository $categoryRepository
-	 * @return void
-	 */
-	public function injectCategoryRepository(\CIC\Cicevents\Domain\Repository\CategoryRepository $categoryRepository) {
-		$this->categoryRepository = $categoryRepository;
-	}
-
-	/**
-	 * Dependency injection of the Locality Repository
-	 *
-	 * @param \CIC\Cicevents\Domain\Repository\LocalityRepository $localityRepository
-	 * @return void
-	 */
-	public function injectLocalityRepository(\CIC\Cicevents\Domain\Repository\LocalityRepository $localityRepository) {
-		$this->localityRepository = $localityRepository;
-	}
-
-	/**
-	 * Dependency injection of the Type Repository
-	 *
-	 * @param \CIC\Cicevents\Domain\Repository\TypeRepository $typeRepository
-	 * @return void
-	 */
-	public function injectTypeRepository(\CIC\Cicevents\Domain\Repository\TypeRepository $typeRepository) {
-		$this->typeRepository = $typeRepository;
-	}
-
-	/**
-	 * inject the fileRepository
-	 *
-	 * @param \CIC\Cicbase\Domain\Repository\FileRepository fileRepository
-	 * @return void
-	 */
-	public function injectFileRepository(\CIC\Cicbase\Domain\Repository\FileRepository $fileRepository) {
-		$this->fileRepository = $fileRepository;
-	}
-
-	/**
-	 * inject the emailService
-	 *
-	 * @param \CIC\Cicbase\Service\EmailService emailService
-	 * @return void
-	 */
-	public function injectEmailService(\CIC\Cicbase\Service\EmailService $emailService) {
-		$this->emailService = $emailService;
-	}
 
 	/**
 	 * Initialize the create action
@@ -150,26 +89,39 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	 */
 	public function initializeCreateAction() {
 
+		$eventArg = $this->arguments['event'];
+		$base = $this->validatorResolver->getBaseValidatorConjunction('CIC\Cicevents\Domain\Model\Occurrence');
+
+		$notEmptyValidator = $this->objectManager->get('TYPO3\CMS\Extbase\Validation\Validator\NotEmptyValidator');
+		/** @var \TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator $objectValidator */
+		$objectValidator = $this->objectManager->get('TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator');
+		foreach (['beginTime','finishTime', 'venue', 'address'] as $prop) {
+			$objectValidator->addPropertyValidator($prop, $notEmptyValidator);
+		}
+		$base->addValidator($objectValidator);
+
+
+		$eventConf = $eventArg->getPropertyMappingConfiguration();
+		$eventConf->allowCreationForSubProperty("occurrences");
+		$eventConf->forProperty("occurrences")
+			->allowProperties(0,1,2,3,4,5,6,7,8,9);
+
 		// Allow 10 occurrences to be created when mapping form elements to the Event object
 		for($i = 0; $i < 10; ++$i) {
 
-			$this->arguments['event']
-				->getPropertyMappingConfiguration()
-				->allowCreationForSubProperty("occurrences.$i");
-
 			// And use the DateTime converter for the start/end fields of the Occurrence
 
-			$this->arguments['event']
-				->getPropertyMappingConfiguration()
-				->forProperty("occurrences.$i.beginTime")
+			$eventConf->allowCreationForSubProperty("occurrences.$i");
+			$eventConf->forProperty("occurrences.$i")
+				->allowProperties('beginTime','finishTime','venue','address');
+
+			$eventConf->forProperty("occurrences.$i.beginTime")
 				->setTypeConverterOption(
 					'TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter',
 					\TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT,
 					self::DATE_FORMAT
 				);
-			$this->arguments['event']
-				->getPropertyMappingConfiguration()
-				->forProperty("occurrences.$i.finishTime")
+			$eventConf->forProperty("occurrences.$i.finishTime")
 				->setTypeConverterOption(
 					'TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter',
 					\TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter::CONFIGURATION_DATE_FORMAT,
@@ -187,32 +139,6 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 			->getPropertyMappingConfiguration()
 			->setTypeConverterOption('CIC\Cicbase\Property\TypeConverter\File', 'propertyPath', 'image3');
 
-	}
-
-	/**
-	 * initializeAction
-	 */
-	public function initializeAction() {
-		// handle null arguments... a temporary work-around until I can address it more permanently -ZD
-		foreach($this->arguments as $argument) {
-			$n = $argument->getName();
-			if($this->request->hasArgument($n)) {
-				$v = $this->request->getArgument($n);
-				if ($argument->getDefaultValue() == NULL
-					&& (
-						($v == '')
-						|| (
-							is_array($v)
-							&& array_key_exists('__identity', $v)
-							&& $v['__identity'] == ''
-
-						)
-					)
-				) {
-					$this->request->setArgument($argument->getName(), null);
-				}
-			}
-		}
 	}
 
 
@@ -446,40 +372,52 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	/**
 	 * action new
 	 *
+	 * @param Event $event
 	 * @return void
 	 */
-	public function newAction() {
+	public function newAction(Event $event = NULL) {
+		if (!$event) {
+			$event = $this->objectManager->get('CIC\Cicevents\Domain\Model\Event');
+		}
+
 		$originalRequest = $this->request->getOriginalRequest();
+
 		$today = date('m/d/Y', time());
 		$startTime = $endTime = $today;
-		$startTimeSelectedHour = 8;
-		$startTimeSelectedMinute = 0;
-		$startTimeSelectedDaypart = 'am';
-		$endTimeSelectedHour = 9;
-		$endTimeSelectedMinute = 0;
-		$endTimeSelectedDaypart = 'am';
 
 		if($originalRequest) {
 			$submittedArgs = $originalRequest->getArguments();
-			if($submittedArgs['event']) {
-				$startTimeUnformatted = $submittedArgs['event']['startTime'];
-				list($startTime, $startTimeSelectedHour, $startTimeSelectedMinute, $startTimeSelectedDaypart) = sscanf($startTimeUnformatted, "%s %d:%d %s");
-				$endTimeUnformatted = $submittedArgs['event']['endTime'];
-				list($endTime, $endTimeSelectedHour, $endTimeSelectedMinute, $endTimeSelectedDaypart) = sscanf($endTimeUnformatted, "%s %d:%d %s");
+			$originalResults = $this->request->getOriginalRequestMappingResults();
 
+			$results = array();
+			foreach ($submittedArgs['event']['occurrences'] as $key => $args) {
+				$results[$key] = array('data' => $args);
 			}
+
+			$occurrenceErrors = $originalResults->forProperty('event.occurrences')->getSubResults();
+
+			$i = 0; # Hope to god this maps correctly!!
+			foreach($occurrenceErrors as $singleOccurrenceErrors) {
+				$results[$i]['errors'] = array();
+				foreach ($singleOccurrenceErrors->getFlattenedErrors() as $prop => $propErrors) {
+					$results[$i]['errors'][$prop] = array();
+					foreach ($propErrors as $error) {
+						$message = $error->getMessage();
+						$code = $error->getCode();
+						$localized = LocalizationUtility::translate("form-fieldError-occurrence-$prop-$code", 'cicevents');
+						$errorMessage = $localized ? $localized : "$message - $code";
+						$results[$i]['errors'][$prop][] = $errorMessage;
+					}
+				}
+				++$i;
+			}
+
+			$this->view->assign('bootstrapData', json_encode($results));
 		}
 
 		$this->view->assign('startTime', $startTime);
 		$this->view->assign('endTime', $endTime);
 
-		$this->view->assign('startTimeSelectedHour', $startTimeSelectedHour);
-		$this->view->assign('startTimeSelectedMinute', $startTimeSelectedMinute);
-		$this->view->assign('startTimeSelectedDaypart', $startTimeSelectedDaypart);
-
-		$this->view->assign('endTimeSelectedHour', $endTimeSelectedHour);
-		$this->view->assign('endTimeSelectedMinute', $endTimeSelectedMinute);
-		$this->view->assign('endTimeSelectedDaypart', $endTimeSelectedDaypart);
 
 		$hours = array();
 		for($i = 1; $i <= 12; ++$i)
@@ -517,6 +455,7 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 		$types = $this->typeRepository->findAll();
 		$this->view->assign('categories', $cats);
 		$this->view->assign('types', $types);
+		$this->view->assign('event', $event);
 
 	}
 

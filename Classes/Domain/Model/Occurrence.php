@@ -65,6 +65,7 @@ class Occurrence extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
 	 * @var \CIC\Cicevents\Domain\Model\Event
+	 * @ignorevalidation
 	 */
 	protected $event;
 
