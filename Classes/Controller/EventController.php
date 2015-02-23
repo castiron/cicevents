@@ -142,6 +142,33 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	}
 
 
+	/**
+	 * initializeAction
+	 */
+	public function initializeAction() {
+		// handle null arguments... a temporary work-around until I can address it more permanently -ZD
+		foreach($this->arguments as $argument) {
+			$n = $argument->getName();
+			if($this->request->hasArgument($n)) {
+				$v = $this->request->getArgument($n);
+				if ($argument->getDefaultValue() == NULL
+					&& (
+						($v == '')
+						|| (
+							is_array($v)
+							&& array_key_exists('__identity', $v)
+							&& $v['__identity'] == ''
+
+						)
+					)
+				) {
+					$this->request->setArgument($argument->getName(), null);
+				}
+			}
+		}
+	}
+
+
 	/******************************************
 	Events Calendar Actions
 
