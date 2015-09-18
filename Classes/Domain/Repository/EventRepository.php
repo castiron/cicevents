@@ -93,7 +93,7 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 			return $storage;
 		}
 
-		return $sorted;
+		return array_filter($sorted);
 	}
 
 
