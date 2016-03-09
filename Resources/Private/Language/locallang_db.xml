@@ -24,6 +24,8 @@
 			<label index="tx_cicevents_domain_model_event.image3">Image 3</label>
 			<label index="tx_cicevents_domain_model_event.ongoing">Ongoing</label>
 			<label index="tx_cicevents_domain_model_event.tbd">Time and places to be determined?</label>
+			<label index="tx_cicevents_domain_model_event.submitter_feuser">The User That Submitted This Event Via the Front End (if applicable)</label>
+			<label index="tx_cicevents_domain_model_event.image3">Contact Information For Submitter (if applicable)</label>
 
 			<label index="tx_cicevents_domain_model_category">Category</label>
 			<label index="tx_cicevents_domain_model_locality">Locality</label>
