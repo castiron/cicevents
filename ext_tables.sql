@@ -26,6 +26,8 @@ CREATE TABLE tx_cicevents_domain_model_event (
 	link_to_url_target tinyint(4) unsigned DEFAULT '0' NOT NULL,
   ongoing tinyint(4) unsigned DEFAULT '0' NOT NULL,
   tbd tinyint(4) unsigned DEFAULT '0' NOT NULL,
+  submitter_feuser int(11) unsigned DEFAULT '0',
+  submitter_feuser_email varchar(255) DEFAULT '' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

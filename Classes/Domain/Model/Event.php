@@ -151,6 +151,18 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $firstOccurrence;
 
 	/**
+	 * Generic int so we can use this with multiple fe_user types
+	 * @var integer
+	 */
+	protected $submitterFeuser;
+
+	/**
+	 * A string, formatted like "Lucas Thurston <lucas@thurson.name>"
+	 * @var string
+	 */
+	protected $submitterFeuserEmail;
+
+	/**
 	 * inject the objectManager
 	 *
 	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface objectManager
@@ -818,13 +830,50 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		return $this->tbd;
 	}
 
-
 	public function _setProperty($propName, $propVal) {
 		if ($propName == 'occurrences') {
 			$this->setOccurrences($propVal);
 			return;
 		}
 		parent::_setProperty($propName, $propVal);
+	}
+
+	/**
+	 * Returns the submitter feuser email
+	 *
+	 * @return string $submitterFeuserEmail
+	 */
+	public function getSubmitterFeuserEmail() {
+		return $this->submitterFeuserEmail;
+	}
+
+	/**
+	 * Sets the submitter feuser email
+	 *
+	 * @param string $submitterFeuserEmail
+	 * @return void
+	 */
+	public function setSubmitterFeuserEmail($submitterFeuserEmail) {
+		$this->submitterFeuserEmail = $submitterFeuserEmail;
+	}
+
+	/**
+	 * Returns the submitter feuser id
+	 *
+	 * @return integer $submitterFeuser
+	 */
+	public function getSubmitterFeuser() {
+		return $this->submitterFeuser;
+	}
+
+	/**
+	 * Sets the submitter feuser
+	 *
+	 * @param string $submitterFeuser
+	 * @return void
+	 */
+	public function setSubmitterFeuser($submitterFeuser) {
+		$this->submitterFeuser = $submitterFeuser;
 	}
 }
 ?>
