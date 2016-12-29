@@ -234,7 +234,7 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		if($this->firstOccurrence) {
 			$this->firstOccurrence->setBeginTime($startTime);
 		} else {
-			$firstOccurrence = $this->objectManager->create('CIC\Cicevents\Domain\Model\Occurrence');
+			$firstOccurrence = $this->objectManager->get('CIC\Cicevents\Domain\Model\Occurrence');
 			$firstOccurrence->setBeginTime($startTime);
 			$this->addOccurrence($firstOccurrence);
 		}
@@ -264,7 +264,7 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		if($this->firstOccurrence) {
 			$this->firstOccurrence->setFinishTime($endTime);
 		} else {
-			$firstOccurrence = $this->objectManager->create('CIC\Cicevents\Domain\Model\Occurrence');
+			$firstOccurrence = $this->objectManager->get('CIC\Cicevents\Domain\Model\Occurrence');
 			$firstOccurrence->setFinishTime($endTime);
 			$this->addOccurrence($firstOccurrence);
 		}
@@ -332,7 +332,7 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		if($this->firstOccurrence) {
 			$this->firstOccurrence->setVenue($venue);
 		} else {
-			$firstOccurrence = $this->objectManager->create('CIC\Cicevents\Domain\Model\Occurrence');
+			$firstOccurrence = $this->objectManager->get('CIC\Cicevents\Domain\Model\Occurrence');
 			$firstOccurrence->setVenue($venue);
 			$this->addOccurrence($firstOccurrence);
 		}
@@ -362,7 +362,7 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		if($this->firstOccurrence) {
 			$this->firstOccurrence->setAddress($address);
 		} else {
-			$firstOccurrence = $this->objectManager->create('CIC\Cicevents\Domain\Model\Occurrence');
+			$firstOccurrence = $this->objectManager->get('CIC\Cicevents\Domain\Model\Occurrence');
 			$firstOccurrence->setAddress($address);
 			$this->addOccurrence($firstOccurrence);
 		}
