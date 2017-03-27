@@ -228,7 +228,7 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 						'title' => 'Create new',
 						'icon' => 'add.gif',
 						'params' => array(
-							'table' => 'fe_users',
+							'table' => 'tx_cicevents_domain_model_category',
 							'pid' => '###CURRENT_PID###',
 							'setValue' => 'prepend'
 						),
