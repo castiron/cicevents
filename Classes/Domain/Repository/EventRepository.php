@@ -96,7 +96,6 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 		return array_filter($sorted);
 	}
 
-
 	/**
 	 * This returns a QueryResult according to a given set of parameters
 	 *
@@ -106,6 +105,7 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 	 * 'range' => One of the RANGE_* constants
 	 * 'category' => integer
 	 * 'type' => integer
+	 * 'preFilter' = integer
 	 *
 	 * NOTE: If beginDate and endDate are both specified, then the range of events
 	 * within those dates (and including) are returned.
@@ -119,6 +119,8 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 		$query = $this->createQuery();
 		$this->filters = array();
 
+		// Add preFilter
+
 		// We may need the occurrence repository if we're sorting by UIDs
 		$occurrenceQuery = $this->occurrenceRepository->createQuery();
 		// If the occurrence query is used, then we should have a default sort order. We'll save the
@@ -130,7 +132,10 @@ class Tx_Cicevents_Domain_Repository_EventRepository extends Tx_Cicbase_Persiste
 			if($value !== 0 && $value == null)
 				continue;
 			switch($key) {
-				case 'location':
+				case 'preFilter':
+                    $this->filters[] = $query->contains('categories', $value);
+					break;
+                case 'location':
 						$occurrenceFilters[] = $query->logicalOr(
 							$query->like('address', '%'.$value.'%'),
 							$query->like('venue', '%'.$value.'%')

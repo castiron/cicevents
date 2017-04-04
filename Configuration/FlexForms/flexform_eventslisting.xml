@@ -257,6 +257,32 @@
 				</el>
 			</ROOT>
 		</Filters>
+		<Prefilter>
+			<ROOT>
+				<el>
+					<settings.preFilterOn>
+						<TCEforms>
+							<label>Prefilter List by Category (Front end filters will be hidden)</label>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</settings.preFilterOn>
+
+					<settings.preFilterCategory>
+						<TCEforms>
+							<label>Prefilter Category</label>
+							<config>
+								<type>select</type>
+								<foreign_table>tx_cicevents_domain_model_category</foreign_table>
+								<minitems>0</minitems>
+								<maxitems>1</maxitems>
+							</config>
+						</TCEforms>
+					</settings.preFilterCategory>
+				</el>
+			</ROOT>
+		</Prefilter>
 	</sheets>
 
 </T3DataStructure>

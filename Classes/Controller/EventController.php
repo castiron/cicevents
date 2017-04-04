@@ -580,22 +580,28 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 	 * @param Tx_Cicevents_Domain_Model_Locality $locality
 	 * @param int $range
 	 * @param int $currentPage
-	 */
-	protected function listEvents($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, Tx_Cicevents_Domain_Model_Locality $locality = null, $range = null, $currentPage = 1) {
-		// Get form data
+     * @param Tx_Cicevents_Domain_Model_Category $preFilter
+     */
+    protected function listEvents($location = null, Tx_Cicevents_Domain_Model_Category $category = null, Tx_Cicevents_Domain_Model_Type $type = null, Tx_Cicevents_Domain_Model_Locality $locality = null, $range = null, $currentPage = 1, Tx_Cicevents_Domain_Model_Category $preFilter = null) {
+
+        if($this->settings['preFilterOn']) {
+            $preFilter = $this->settings['preFilterCategory'];
+        }
+
+	    // Get form data
 		$params = array(
 			'location' => $location,
 			'category' => $category,
 			'locality' => $locality,
 			'type' => $type,
-			'range' => intval($range)
+			'range' => intval($range),
+            'preFilter' => $preFilter
 		);
 
-		$conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cicevents']);
+        $conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cicevents']);
 
 		$limit = $this->findLimit();
 		$offset = $this->findOffset($limit, $currentPage);
-
 		$this->eventRepository->addFilters($params);
 		$events = $this->eventRepository->findAll($limit, $offset);
 		$allFilteredEvents = $this->eventRepository->findAll();
@@ -605,8 +611,8 @@ class Tx_Cicevents_Controller_EventController extends Tx_Extbase_MVC_Controller_
 		$this->setupPagination($currentPage, $numberOfPages);
 
 		// View variables
-		$this->view->assign('events', $events);
-		$this->view->assign('userImagesEnabled', (boolean) $conf['eventUserImages']);
+        $this->view->assign('events', $events);
+        $this->view->assign('userImagesEnabled', (boolean) $conf['eventUserImages']);
 		$this->view->assign('adminImagesEnabled', (boolean) $conf['eventAdminImages']);
 
 		// Maintain form state
