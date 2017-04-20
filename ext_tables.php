@@ -66,7 +66,7 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 			'endtime' => 'endtime',
 		),
 		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Event.php',
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_cicevents_domain_model_event.gif'
+		'iconfile' => 'EXT:cicevents/Resources/Public/Icons/tx_cicevents_domain_model_event.gif'
 	),
 );
 
@@ -93,7 +93,7 @@ $TCA['tx_cicevents_domain_model_category'] = array(
 			'endtime' => 'endtime',
 		),
 		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Category.php',
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_cicevents_domain_model_category.gif'
+		'iconfile' => 'EXT:cicevents/Resources/Public/Icons/tx_cicevents_domain_model_category.gif'
 	),
 );
 
@@ -120,7 +120,7 @@ $TCA['tx_cicevents_domain_model_locality'] = array(
 			'endtime' => 'endtime',
 		),
 		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Locality.php',
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_cicevents_domain_model_locality.gif'
+		'iconfile' => 'EXT:cicevents/Resources/Public/Icons/tx_cicevents_domain_model_locality.gif'
 	),
 );
 
@@ -148,7 +148,7 @@ $TCA['tx_cicevents_domain_model_type'] = array(
 			'endtime' => 'endtime',
 		),
 		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Type.php',
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_cicevents_domain_model_type.gif'
+		'iconfile' => 'EXT:cicevents/Resources/Public/Icons/tx_cicevents_domain_model_type.gif'
 	),
 );
 
@@ -177,7 +177,7 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 			'endtime' => 'endtime',
 		),
 		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Occurrence.php',
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_cicevents_domain_model_occurrence.gif'
+		'iconfile' => 'EXT:cicevents/Resources/Public/Icons/tx_cicevents_domain_model_occurrence.gif'
 	),
 );
 
