@@ -377,7 +377,7 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	 * @return void
 	 */
 	public function detailAction(\CIC\Cicevents\Domain\Model\Event $event) {
-		$cObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tslib_cObj');
+		$cObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer');
 		$register = array();
 		$register['eventTitle'] = $event->getTitle();
 		$cObj->LOAD_REGISTER($register, '');
