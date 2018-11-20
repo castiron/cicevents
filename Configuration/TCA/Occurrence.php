@@ -20,6 +20,7 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.language',
 			'config' => array(
 				'type' => 'select',
+				'renderType' => 'selectSingle',
 				'foreign_table' => 'sys_language',
 				'foreign_table_where' => 'ORDER BY sys_language.title',
 				'items' => array(
@@ -34,6 +35,7 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.l18n_parent',
 			'config' => array(
 				'type' => 'select',
+				'renderType' => 'selectSingle',
 				'items' => array(
 					array('', 0),
 				),
@@ -151,6 +153,7 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 			'label' => 'Event',
 			'config' => array(
 				'type' => 'select',
+				'renderType' => 'selectSingle',
 				#	'foreign_table_where' => 'AND tx_cicevents_domain_model_event.pid = ###CURRENT_PID###',
 				'foreign_table' => 'tx_cicevents_domain_model_event',
 				'maxitems' => 1,

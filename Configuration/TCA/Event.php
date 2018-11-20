@@ -9,7 +9,7 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type,title, url, link_to_url, link_to_url_target, localities, teaser, description, categories, occurrences, ongoing, tbd',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'type, title, url, link_to_url, link_to_url_target, ongoing, localities, tbd, occurrences, teaser, description,--div--;Categories, categories, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, starttime, endtime'),
+		'1' => array('showitem' => 'type, title, url, link_to_url, link_to_url_target, ongoing, localities, tbd, occurrences, teaser, description,--div--;Categories, categories, --div--;Access, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -20,6 +20,7 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.language',
 			'config' => array(
 				'type' => 'select',
+				'renderType' => 'selectSingle',
 				'foreign_table' => 'sys_language',
 				'foreign_table_where' => 'ORDER BY sys_language.title',
 				'items' => array(
@@ -34,6 +35,7 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.l18n_parent',
 			'config' => array(
 				'type' => 'select',
+				'renderType' => 'selectSingle',
 				'items' => array(
 					array('', 0),
 				),
@@ -89,6 +91,7 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event.locality',
 			'config' => array(
 				'type' => 'select',
+				'renderType' => 'selectMultipleSideBySide',
 				'foreign_table' => 'tx_cicevents_domain_model_locality',
 				'MM' => 'tx_cicevents_domain_model_event_locality_mm',
 				'size' => 3,
@@ -101,7 +104,9 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 					'edit' => array(
 						'type' => 'popup',
 						'title' => 'Edit',
-						'script' => 'wizard_edit.php',
+						'module' => array(
+							'name' => 'wizard_edit'
+						),
 						'icon' => 'edit2.gif',
 						'popup_onlyOpenIfSelected' => 1,
 						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
@@ -115,7 +120,9 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 							'pid' => '###CURRENT_PID###',
 							'setValue' => 'prepend'
 						),
-						'script' => 'wizard_add.php',
+						'module' => array(
+							'wizard_add'
+						),
 					),
 				),
 			),
@@ -161,7 +168,9 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 						'icon' => 'wizard_rte2.gif',
 						'notNewRecords'=> 1,
 						'RTEonly' => 1,
-						'script' => 'wizard_rte.php',
+						'module' => array(
+							'wizard_rte'
+						),
 						'title' => 'LLL:EXT:cms/locallang_ttc.xml:bodytext.W.RTE',
 						'type' => 'script'
 					)
@@ -206,6 +215,7 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event.category',
 			'config' => array(
 				'type' => 'select',
+				'renderType' => 'selectMultipleSideBySide',
 				'foreign_table' => 'tx_cicevents_domain_model_category',
 				'MM' => 'tx_cicevents_domain_model_event_category_mm',
 				'size' => 5,
@@ -218,7 +228,9 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 					'edit' => array(
 						'type' => 'popup',
 						'title' => 'Edit',
-						'script' => 'wizard_edit.php',
+						'module' => array(
+							'wizard_edit'
+						),
 						'icon' => 'edit2.gif',
 						'popup_onlyOpenIfSelected' => 1,
 						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
@@ -232,7 +244,9 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 							'pid' => '###CURRENT_PID###',
 							'setValue' => 'prepend'
 						),
-						'script' => 'wizard_add.php',
+						'module' => array(
+							'wizard_add'
+						),
 					),
 				),
 			),
@@ -242,6 +256,7 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event.type',
 			'config' => array(
 				'type' => 'select',
+				'renderType' => 'selectSingle',
 				'foreign_table' => 'tx_cicevents_domain_model_type',
 				'minitems' => 0,
 				'maxitems' => 1,
@@ -283,7 +298,13 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 						'type' => 'popup',
 						'title' => 'Link',
 						'icon' => 'link_popup.gif',
-						'script' => 'browse_links.php?mode=wizard',
+						'module' => array(
+							'name' => 'wizard_element_browser',
+							'urlParameters' => array(
+								'mode' => 'wizard',
+								'act' => 'file'
+							),
+						),
 						'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
 					)
 				)
@@ -382,7 +403,9 @@ if($confVars['teaserRTE']) {
 				'icon' => 'wizard_rte2.gif',
 				'notNewRecords'=> 1,
 				'RTEonly' => 1,
-				'script' => 'wizard_rte.php',
+				'module' => array(
+					'wizard_rte'
+				),
 				'title' => 'LLL:EXT:cms/locallang_ttc.xml:bodytext.W.RTE',
 				'type' => 'script'
 			)

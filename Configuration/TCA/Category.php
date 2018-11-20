@@ -20,6 +20,7 @@ $TCA['tx_cicevents_domain_model_category'] = array(
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.language',
 			'config' => array(
 				'type' => 'select',
+				'renderType' => 'selectSingle',
 				'foreign_table' => 'sys_language',
 				'foreign_table_where' => 'ORDER BY sys_language.title',
 				'items' => array(
@@ -34,6 +35,7 @@ $TCA['tx_cicevents_domain_model_category'] = array(
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.l18n_parent',
 			'config' => array(
 				'type' => 'select',
+				'renderType' => 'selectSingle',
 				'items' => array(
 					array('', 0),
 				),
@@ -118,7 +120,9 @@ $TCA['tx_cicevents_domain_model_category'] = array(
 					'colorpick' => array(
 						'type' => 'colorbox',
 						'title' => 'Color picker',
-						'script' => 'wizard_colorpicker.php',
+						'module' => array(
+							'wizard_colorpicker'
+						),
 						'dim' => '20x20',
 						'tableStyle' => 'border: solid 0; margin-top: 2px;',
 						'JSopenParams' => 'height=660,width=365,status=0,menubar=0,scrollbars=0',
