@@ -21,36 +21,34 @@
 				</f:if>
 			</div>
 
-			<div class="event-teaser"><f:format.html>{event.teaser}</f:format.html></div>
-
 			<f:for each="{event.occurrences}" as="occurrence">
 				<div class="occurrence">
 					<f:if condition="{occurrence.spansMultipleDays}">
 						<f:then>
-							<p class="small date-string flush event-particulars">
+							<div class="small date-string flush event-particulars">
 								<f:format.date format="F d, Y - g:i a">{occurrence.beginTime}</f:format.date>
 								to
 								<f:format.date format="F d, Y - g:i a">{occurrence.finishTime}</f:format.date>
-							</p>
+							</div>
 						</f:then>
 						<f:else>
-							<p class="small date-string flush event-particulars">
+							<div class="small date-string flush event-particulars">
 								<f:format.date format="F d, Y - g:i a">{occurrence.beginTime}</f:format.date>
 								to
 								<f:format.date format="g:i a">{occurrence.finishTime}</f:format.date>
-							</p>
+							</div>
 						</f:else>
 					</f:if>
 
 					<f:if condition="{occurrence.venue} == {occurrence.address}">
 						<f:then>
 							<f:if condition="{occurrence.venue}">
-								<p class="small event-venue event-particulars">{occurrence.venue}</p>
+								<div class="small event-venue event-particulars">{occurrence.venue}</div>
 							</f:if>
 						</f:then>
 						<f:else>
 							<f:if condition="{occurrence.venue}">
-								<p class="small event-venue event-particulars">{occurrence.venue}</p>
+								<div class="small event-venue event-particulars">{occurrence.venue}</div>
 							</f:if>
 
 							<f:if condition="{occurrence.address}">
@@ -61,6 +59,10 @@
 				</div>
 			</f:for>
 		</div>
+
+		<f:if condition="{event.url}">
+			<div class="event-url"><a href="{event.url}">Register and Learn More</a></div>
+		</f:if>
 
 		<div class="event-description"><f:format.html>{event.description}</f:format.html></div>
 
@@ -97,7 +99,7 @@
 				<f:link.page pageUid="{settings.returnPid}" class="btn">&larr; Return to List of Events</f:link.page>
 			</f:then>
 			<f:else>
-				<f:link.page class="btn">&larr; Return to List of Events</f:link.page>
+				<f:link.page class="btn event-button">&larr; Return to List of Events</f:link.page>
 			</f:else>
 		</f:if>
 	</p>

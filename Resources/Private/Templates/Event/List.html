@@ -28,7 +28,7 @@
 	</f:if>
 
 	<f:if condition="{settings.filtersOn}">
-		<div id="filters" class="callout">
+		<div id="filters" class="callout filter-section">
 			<f:form class="FiltersForm" enctype="multipart/form-data" controller="Event" method="post">
 				<h3>Filter Events by:</h3>
 
@@ -37,7 +37,9 @@
 						<div class="span5">
 							<div class="input">
 								<label for="locality">Location</label>
-								<cic:form.select id="locality" class="span5 chzn-select" name="locality" value="{locality}" options="{localities}" optionLabelField="name" nullOption="All Locations"/>
+								<div class="dropdown">
+									<cic:form.select id="locality" class="span5 chzn-select event-select" name="locality" value="{locality}" options="{localities}" optionLabelField="name" nullOption="All Locations"/>
+								</div>
 							</div>
 						</div>
 					</f:if>
@@ -46,7 +48,9 @@
 						<div class="span5">
 							<div class="input">
 								<label for="range">Range</label>
-								<f:form.select class="span5 chzn-select" name="range" options="{ranges}" value="{range}" optionValueField="id" optionLabelField=""/>
+								<div class="dropdown">
+									<f:form.select class="span5 chzn-select event-select" name="range" options="{ranges}" value="{range}" optionValueField="id" optionLabelField=""/>
+								</div>
 							</div>
 						</div>
 					</f:if>
@@ -56,7 +60,9 @@
 						<div class="span5">
 							<div class="input">
 								<label for="category">Category</label>
-								<cic:form.select class="span5 chzn-select" name="category" value="{category}" options="{categories}" optionLabelField="title" nullOption="All Categories"/>
+								<div class="dropdown">
+									<cic:form.select class="span5 chzn-select event-select" name="category" value="{category}" options="{categories}" optionLabelField="title" nullOption="All Categories"/>
+								</div>
 							</div>
 						</div>
 					</f:if>
@@ -64,14 +70,16 @@
 						<div class="span5">
 							<div class="input">
 								<label for="type">Type</label>
-								<cic:form.select class="span5 chzn-select" name="type" value="{type}" options="{types}"
-												 optionLabelField="title" nullOption="All Types"/>
+								<div class="dropdown">
+									<cic:form.select class="span5 chzn-select event-select" name="type" value="{type}" options="{types}"
+													 optionLabelField="title" nullOption="All Types"/>
+								</div>
 							</div>
 						</div>
 					</f:if>
 
 				</div>
-				<div class="row row-flush">
+				<div class="row-flush submit-filter">
 					<div class="span5">
 						<div class="input">
 							<f:form.submit value="Go" class="btn"/>

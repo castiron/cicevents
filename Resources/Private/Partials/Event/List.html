@@ -51,30 +51,30 @@
 			<div class="occurrence">
 				<f:if condition="{occurrence.spansMultipleDays}">
 					<f:then>
-						<p class="small date-string flush event-particulars">
+						<div class="small date-string flush event-particulars">
 							<f:format.date format="F d, Y - g:i a">{occurrence.beginTime}</f:format.date>
 							to
 							<f:format.date format="F d, Y - g:i a">{occurrence.finishTime}</f:format.date>
-						</p>
+						</div>
 					</f:then>
 					<f:else>
-						<p class="small date-string flush event-particulars">
+						<div class="small date-string flush event-particulars">
 							<f:format.date format="F d, Y - g:i a">{occurrence.beginTime}</f:format.date>
 							to
 							<f:format.date format="g:i a">{occurrence.finishTime}</f:format.date>
-						</p>
+						</div>
 					</f:else>
 				</f:if>
 
 				<f:if condition="{occurrence.venue} == {occurrence.address}">
 					<f:then>
 						<f:if condition="{occurrence.venue}">
-							<p class="small venue flush event-particulars">{occurrence.venue}</p>
+							<div class="small venue flush event-particulars">{occurrence.venue}</div>
 						</f:if>
 					</f:then>
 					<f:else>
 						<f:if condition="{event.venue}">
-							<p class="small venue flush event-particulars">{occurrence.venue}</p>
+							<div class="small venue flush event-particulars">{occurrence.venue}</div>
 						</f:if>
 
 						<f:if condition="{event.address}">
@@ -85,11 +85,20 @@
 			</div>
 		</f:for>
 
-		<p><strong>{event.teaser}</strong></p>
+		<f:if condition="{event.url}">
+			<div class="event-url"><a href="{event.url}">Register and Learn More</a></div>
+		</f:if>
 
-		<div class="description">
-			<f:format.html>{event.description}</f:format.html>
-		</div>
+		<f:if condition="{event.teaser}">
+			<f:then>
+			<div class="description teaser"><f:format.html>{event.teaser}</f:format.html></div>
+			</f:then>
+			<f:else>
+				<div class="description bodytext">
+					<f:format.html><f:format.crop maxCharacters="250">{event.description}</f:format.crop></f:format.html>
+				</div>
+		</f:else>
+		</f:if>
 
 		<f:if condition="{event.type.title}">
 			<strong>Event Type:</strong>
