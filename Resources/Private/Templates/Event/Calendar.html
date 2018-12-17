@@ -23,9 +23,9 @@
 	</script>
 
 	<div class="callout large">
-		<div id="calendar" >
-			<div id="controls"></div>
-			<table border="1">
+		<div id="calendar" class="calendar-container" >
+			<div id="controls" class="controls"></div>
+			<table border="1" class="calendar-table">
 				<tr>
 					<th><h2 class="block-heading">Sun</h2></th>
 					<th><h2 class="block-heading">Mon</h2></th>
@@ -82,7 +82,7 @@
 				</tr>
 			</table>
 		</div>
-		<h3>Calendar Legend</h3>
+		<h3 class="legend">Calendar Legend</h3>
 		<ul class="calendar-legend">
 		<f:for each="{legendCategories}" as="category">
 			<li style="{category.colorStyleDeclaration}"><span class="label legend-swatch" style="background: {category.color};"></span>{category.title}</li>
