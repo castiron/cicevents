@@ -19,6 +19,7 @@
 		<a class="prevMonth btn-flat">&larr; <%= prevMonthString %></a>
 		<span class="btn-flat disabled"><span class="curMonth"><%= monthString %></span><span class="year"> <%= year %></span></span>
 		<a class="nextMonth btn-flat"><%= nextMonthString %> &rarr;</a>
+		<a class="today btn-flat">Today</a>
 	</script>
 
 	<div class="callout large">
@@ -81,11 +82,13 @@
 				</tr>
 			</table>
 		</div>
-			<h3 class="legend">Calendar Legend</h3>
+		<f:if condition="{legendCategories}">
+			<h3>Calendar Legend</h3>
 			<ul class="calendar-legend">
-			<f:for each="{legendCategories}" as="category">
-				<li style="{category.colorStyleDeclaration}" class="category-item"><span class="label legend-swatch" style="background: {category.color};"></span>{category.title}</li>
-			</f:for>
+				<f:for each="{legendCategories}" as="category">
+					<li style="{category.colorStyleDeclaration}"><span class="label legend-swatch" style="background: {category.color};"></span>{category.title}</li>
+				</f:for>
 			</ul>
+		</f:if>
 	</div>
 </f:section>
