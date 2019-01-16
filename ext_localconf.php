@@ -40,5 +40,3 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['CIC\Cicevents\T
 	                  archived based on its type or categories. See the class comments for more information on the
 	                  typoscript.',
 );
-
-?>

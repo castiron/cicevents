@@ -3,8 +3,31 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-$TCA['tx_cicevents_domain_model_locality'] = array(
-	'ctrl' => $TCA['tx_cicevents_domain_model_locality']['ctrl'],
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToInsertRecords('tx_cicevents_domain_model_locality');
+
+return array(
+
+	'ctrl' => array(
+		'title'	=> 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_locality',
+		'label' => 'name',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
+		'versioningWS' => 2,
+		'versioning_followPages' => TRUE,
+		'origUid' => 't3_origuid',
+		'languageField' => 'sys_language_uid',
+		'transOrigPointerField' => 'l10n_parent',
+		'transOrigDiffSourceField' => 'l10n_diffsource',
+		'delete' => 'deleted',
+		'enablecolumns' => array(
+			'disabled' => 'hidden',
+			'starttime' => 'starttime',
+			'endtime' => 'endtime',
+		),
+		'iconfile' => 'EXT:cicevents/Resources/Public/Icons/tx_cicevents_domain_model_locality.gif'
+	),
 	'interface' => array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name',
 	),
@@ -112,4 +135,3 @@ $TCA['tx_cicevents_domain_model_locality'] = array(
 	),
 );
 
-?>

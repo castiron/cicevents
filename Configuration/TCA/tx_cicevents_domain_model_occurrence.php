@@ -3,8 +3,31 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-$TCA['tx_cicevents_domain_model_occurrence'] = array(
-	'ctrl' => $TCA['tx_cicevents_domain_model_occurrence']['ctrl'],
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToInsertRecords('tx_cicevents_domain_model_occurrence');
+
+$tx_cicevents_domain_model_occurrence = array(
+	'ctrl' => array(
+		'title'	=> 'Occurrence',
+		'label' => 'venue',
+		'label_userFunc' => 'CIC\Cicevents\Domain\Model\Occurrence->getTCALabel',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
+		'versioningWS' => 2,
+		'versioning_followPages' => TRUE,
+		'origUid' => 't3_origuid',
+		'languageField' => 'sys_language_uid',
+		'transOrigPointerField' => 'l10n_parent',
+		'transOrigDiffSourceField' => 'l10n_diffsource',
+		'delete' => 'deleted',
+		'enablecolumns' => array(
+			'disabled' => 'hidden',
+			'starttime' => 'starttime',
+			'endtime' => 'endtime',
+		),
+		'iconfile' => 'EXT:cicevents/Resources/Public/Icons/tx_cicevents_domain_model_occurrence.gif'
+	),
 	'interface' => array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, begin_time, finish_time, venue, address, directions',
 	),
@@ -163,4 +186,4 @@ $TCA['tx_cicevents_domain_model_occurrence'] = array(
 	),
 );
 
-?>
+return $tx_cicevents_domain_model_occurrence;

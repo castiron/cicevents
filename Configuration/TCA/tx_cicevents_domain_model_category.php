@@ -3,13 +3,35 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-$TCA['tx_cicevents_domain_model_type'] = array(
-	'ctrl' => $TCA['tx_cicevents_domain_model_type']['ctrl'],
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToInsertRecords('tx_cicevents_domain_model_category');
+
+return array(
+	'ctrl' => array(
+		'title'	=> 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_category',
+		'label' => 'title',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
+		'versioningWS' => 2,
+		'versioning_followPages' => TRUE,
+		'origUid' => 't3_origuid',
+		'languageField' => 'sys_language_uid',
+		'transOrigPointerField' => 'l10n_parent',
+		'transOrigDiffSourceField' => 'l10n_diffsource',
+		'delete' => 'deleted',
+		'enablecolumns' => array(
+			'disabled' => 'hidden',
+			'starttime' => 'starttime',
+			'endtime' => 'endtime',
+		),
+		'iconfile' => 'EXT:cicevents/Resources/Public/Icons/tx_cicevents_domain_model_category.gif'
+	),
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, color',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, hide_times,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, color,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -39,8 +61,8 @@ $TCA['tx_cicevents_domain_model_type'] = array(
 				'items' => array(
 					array('', 0),
 				),
-				'foreign_table' => 'tx_cicevents_domain_model_type',
-				'foreign_table_where' => 'AND tx_cicevents_domain_model_type.pid=###CURRENT_PID### AND tx_cicevents_domain_model_type.sys_language_uid IN (-1,0)',
+				'foreign_table' => 'tx_cicevents_domain_model_category',
+				'foreign_table_where' => 'AND tx_cicevents_domain_model_category.pid=###CURRENT_PID### AND tx_cicevents_domain_model_category.sys_language_uid IN (-1,0)',
 			),
 		),
 		'l10n_diffsource' => array(
@@ -97,22 +119,40 @@ $TCA['tx_cicevents_domain_model_type'] = array(
 		),
 		'title' => array(
 			'exclude' => 0,
-			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_type.title',
+			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_category.title',
 			'config' => array(
 				'type' => 'input',
 				'size' => 30,
 				'eval' => 'trim,required'
 			),
 		),
-		'hide_times' => array(
-			'exclude' => 0,
-			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_type.hide_times',
+		'event' => array(
 			'config' => array(
-				'type' => 'check',
-				'default' => 0
+				'type' => 'passthrough',
+			),
+		),
+		'color' => array(
+			'exclude' => 0,
+			'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_category.color',
+			'config' => array(
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'trim',
+				'wizards' => array(
+					'colorpick' => array(
+						'type' => 'colorbox',
+						'title' => 'Color picker',
+						'module' => array(
+							'wizard_colorpicker'
+						),
+						'dim' => '20x20',
+						'tableStyle' => 'border: solid 0; margin-top: 2px;',
+						'JSopenParams' => 'height=660,width=365,status=0,menubar=0,scrollbars=0',
+						'exampleImg' => 'EXT:cicevents/Resources/Public/Images/color-picker.png',
+					),
+				),
 			),
 		),
 	),
 );
 
-?>
