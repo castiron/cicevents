@@ -266,6 +266,7 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	 * @param null|\CIC\Cicevents\Domain\Model\Locality $locality
 	 * @param int $range
 	 * @param int $currentPage
+	 * @throws
 	 */
 	public function listMinimalAction($location = null, \CIC\Cicevents\Domain\Model\Category $category = null, \CIC\Cicevents\Domain\Model\Type $type = null, \CIC\Cicevents\Domain\Model\Locality $locality = null, $range = null, $currentPage = 1) {
 		$args = array(
@@ -290,6 +291,7 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	 * @param null|\CIC\Cicevents\Domain\Model\Locality $locality
 	 * @param int $range
 	 * @param int $currentPage
+	 * @throws
 	 */
 	public function pastAction($location = null, \CIC\Cicevents\Domain\Model\Category $category = null, \CIC\Cicevents\Domain\Model\Type $type = null, \CIC\Cicevents\Domain\Model\Locality $locality = null, $range = null, $currentPage = 1) {
 		$args = array(
@@ -313,6 +315,7 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	 * @param null|\CIC\Cicevents\Domain\Model\Locality $locality
 	 * @param int $range
 	 * @param int $currentPage
+	 * @throws
 	 */
 	public function pastMinimalAction($location = null, \CIC\Cicevents\Domain\Model\Category $category = null, \CIC\Cicevents\Domain\Model\Type $type = null, \CIC\Cicevents\Domain\Model\Locality $locality = null, $range = null, $currentPage = 1) {
 		$args = array(
@@ -337,6 +340,7 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	 * @param null|\CIC\Cicevents\Domain\Model\Locality $locality
 	 * @param int $range
 	 * @param int $currentPage
+	 * @throws
 	 */
 	public function monthAction($location = null, \CIC\Cicevents\Domain\Model\Category $category = null, \CIC\Cicevents\Domain\Model\Type $type = null, \CIC\Cicevents\Domain\Model\Locality $locality = null, $range = null, $currentPage = 1) {
 		$args = array(
@@ -356,6 +360,7 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	 * @param null|\CIC\Cicevents\Domain\Model\Locality $locality
 	 * @param int $range
 	 * @param int $currentPage
+	 * @throws
 	 */
 	public function monthMinimalAction($location = null, \CIC\Cicevents\Domain\Model\Category $category = null, \CIC\Cicevents\Domain\Model\Type $type = null, \CIC\Cicevents\Domain\Model\Locality $locality = null, $range = null, $currentPage = 1) {
 		$args = array(
@@ -378,9 +383,7 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	 */
 	public function detailAction(\CIC\Cicevents\Domain\Model\Event $event) {
 		$cObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer');
-		$register = array();
-		$register['eventTitle'] = $event->getTitle();
-		$cObj->LOAD_REGISTER($register, '');
+		$cObj->cObjGetSingle('LOAD_REGISTER',['eventTitle' => $event->getTitle()]);
 		$conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cicevents']);
 		$this->view->assign('userImagesEnabled', (boolean) $conf['eventUserImages']);
 		$this->view->assign('adminImagesEnabled', (boolean) $conf['eventAdminImages']);
@@ -492,6 +495,7 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	 * @param \CIC\Cicbase\Domain\Model\File $image1
 	 * @param \CIC\Cicbase\Domain\Model\File $image2
 	 * @param \CIC\Cicbase\Domain\Model\File $image3
+	 * @throws
 	 */
 	public function createAction(\CIC\Cicevents\Domain\Model\Event $event,
 									\CIC\Cicbase\Domain\Model\File $image1 = null,
@@ -708,4 +712,3 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 		}
 	}
 }
-?>
