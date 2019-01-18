@@ -2,9 +2,9 @@
 
 <f:section name="main">
 	{namespace cic=CIC\Cicbase\ViewHelpers}
-	<cic:includeJavascriptString name="calendarData">
-		window.calendarData = <cic:jsonBootstrap data="{eventData}" />;
-	</cic:includeJavascriptString>
+	<f:format.raw>
+		<script type="text/javascript">window.calendarData = <cic:jsonBootstrap data="{eventData}" />;</script>
+	</f:format.raw>
 
 	<script type="text/html" id="template-eventListing">
 		<div><a class="title" style="<%= colorStyle %>" href="<%= url %>"><%= title %></a></div>
