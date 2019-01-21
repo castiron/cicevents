@@ -6,27 +6,25 @@ defined('TYPO3_MODE') or die();
 
 $tx_cicevents_domain_model_event = array(
 	'ctrl' => array(
-		'ctrl' => array(
-			'title'	=> 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event',
-			'label' => 'title',
-			'tstamp' => 'tstamp',
-			'crdate' => 'crdate',
-			'cruser_id' => 'cruser_id',
-			'dividers2tabs' => TRUE,
-			'versioningWS' => 2,
-			'versioning_followPages' => TRUE,
-			'origUid' => 't3_origuid',
-			'languageField' => 'sys_language_uid',
-			'transOrigPointerField' => 'l10n_parent',
-			'transOrigDiffSourceField' => 'l10n_diffsource',
-			'delete' => 'deleted',
-			'enablecolumns' => array(
-				'disabled' => 'hidden',
-				'starttime' => 'starttime',
-				'endtime' => 'endtime',
-			),
-			'iconfile' => 'EXT:cicevents/Resources/Public/Icons/tx_cicevents_domain_model_event.gif'
+		'title'	=> 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event',
+		'label' => 'title',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
+		'versioningWS' => 2,
+		'versioning_followPages' => TRUE,
+		'origUid' => 't3_origuid',
+		'languageField' => 'sys_language_uid',
+		'transOrigPointerField' => 'l10n_parent',
+		'transOrigDiffSourceField' => 'l10n_diffsource',
+		'delete' => 'deleted',
+		'enablecolumns' => array(
+			'disabled' => 'hidden',
+			'starttime' => 'starttime',
+			'endtime' => 'endtime',
 		),
+		'iconfile' => 'EXT:cicevents/Resources/Public/Icons/tx_cicevents_domain_model_event.gif'
 	),
 	'interface' => array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type,title, url, link_to_url, link_to_url_target, localities, teaser, description, categories, occurrences, ongoing, tbd',
@@ -413,7 +411,7 @@ $tx_cicevents_domain_model_event = array(
 );
 $confVars = @unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cicevents']);
 if($confVars['teaserRTE']) {
-	$TCA['tx_cicevents_domain_model_event']['columns']['teaser'] = array(
+	$tx_cicevents_domain_model_event['columns']['teaser'] = array(
 	'exclude' => 0,
 	'label' => 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_event.teaser',
 	'config' => array(

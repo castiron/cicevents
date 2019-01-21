@@ -5,7 +5,7 @@ if (!defined ('TYPO3_MODE')) {
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToInsertRecords('tx_cicevents_domain_model_occurrence');
 
-$tx_cicevents_domain_model_occurrence = array(
+return array(
 	'ctrl' => array(
 		'title'	=> 'Occurrence',
 		'label' => 'venue',
@@ -185,5 +185,3 @@ $tx_cicevents_domain_model_occurrence = array(
 		),
 	),
 );
-
-return $tx_cicevents_domain_model_occurrence;

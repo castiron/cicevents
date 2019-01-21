@@ -57,8 +57,3 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignat
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_cicevents_domain_model_occurrence', 'EXT:cicevents/Resources/Private/Language/locallang_csh_tx_cicevents_domain_model_occurrence.xml');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_cicevents_domain_model_occurrence');
-$TCA['tx_cicevents_domain_model_occurrence'] = array(
-
-);
-
-?>
