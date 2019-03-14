@@ -1,9 +1,18 @@
 plugin.tx_cicevents {
 	vendorName = CIC
 	view {
-		templateRootPath = {$plugin.tx_cicevents.view.templateRootPath}
-		partialRootPath = {$plugin.tx_cicevents.view.partialRootPath}
-		layoutRootPath = {$plugin.tx_cicevents.view.layoutRootPath}
+		templateRootPaths {
+			0 = EXT:cicevents/Resources/Private/Templates
+			1 = {$plugin.tx_cicevents.view.templateRootPath}
+		}
+		partialRootPaths {
+			0 = EXT:cicevents/Resources/Private/Partials
+			1 = {$plugin.tx_cicevents.view.partialRootPath}
+		}
+		layoutRootPaths {
+			0 = EXT:cicevents/Resources/Private/Layouts
+			1 = {$plugin.tx_cicevents.view.layoutRootPath}
+		}
 	}
 	persistence {
 		storagePid = {$plugin.tx_cicevents.persistence.storagePid}
