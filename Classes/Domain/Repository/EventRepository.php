@@ -233,11 +233,15 @@ class EventRepository extends \CIC\Cicbase\Persistence\Repository {
 		}
 
 		$occurrences = $occurrenceQuery->matching($occurrenceQuery->logicalAnd($occurrenceFilters))->execute();
-		foreach($occurrences as $occurrence) {
-			$occurrenceConstraints[] = $query->contains('occurrences', $occurrence);
-		}
-		if(count($occurrenceConstraints)) {
-			$this->filters[] = $query->logicalOr($occurrenceConstraints);
+		if(!is_null($params['range']) && $occurrences->count() < 1) {
+			$query->statement(null);
+		} else {
+			foreach($occurrences as $occurrence) {
+				$occurrenceConstraints[] = $query->contains('occurrences', $occurrence);
+			}
+			if(count($occurrenceConstraints)) {
+				$this->filters[] = $query->logicalOr($occurrenceConstraints);
+			}
 		}
 
 		$this->tempQuery = $query;
