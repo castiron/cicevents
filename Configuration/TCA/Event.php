@@ -162,21 +162,9 @@ $TCA['tx_cicevents_domain_model_event'] = array(
 				'type' => 'text',
 				'cols' => 40,
 				'rows' => 15,
-				'eval' => 'trim',
-				'wizards' => array(
-					'RTE' => array(
-						'icon' => 'wizard_rte2.gif',
-						'notNewRecords'=> 1,
-						'RTEonly' => 1,
-						'module' => array(
-							'wizard_rte'
-						),
-						'title' => 'LLL:EXT:cms/locallang_ttc.xml:bodytext.W.RTE',
-						'type' => 'script'
-					)
-				)
+				'eval' => 'trim'
 			),
-			'defaultExtras' => 'richtext[]',
+			'defaultExtras' => 'richtext[]:rte_transform[mode=ts_links]',
 		),
 		'starttime' => array(
 			'exclude' => 1,
