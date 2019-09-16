@@ -9,6 +9,7 @@ return array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:cicevents/Resources/Private/Language/locallang_db.xml:tx_cicevents_domain_model_category',
 		'label' => 'title',
+		'sortby' => 'sorting',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
