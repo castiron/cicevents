@@ -151,6 +151,12 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $firstOccurrence;
 
 	/**
+	 * Simple memoization to speed up event filtering
+	 * @var array
+	 */
+	protected $memoized = [];
+
+	/**
 	 * inject the objectManager
 	 *
 	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface objectManager
@@ -719,6 +725,8 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * will be the next occurrence to happen.
 	 */
 	public function getSoonestOccurrence() {
+		if(array_key_exists(__FUNCTION__, $this->memoized)) return $this->memoized[__FUNCTION__];
+
 		if(!$this->occurrences->count()) {
 			return NULL;
 		}
@@ -739,15 +747,27 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 				$soonest = $occ;
 			}
 		}
+
+		$this->memoize(__FUNCTION__, $soonest);
+
 		return $soonest;
 	}
 
+	/**
+	 * @param $functionName
+	 * @param $value
+	 */
+	protected function memoize($functionName, $value) {
+		$this->memoized[$functionName] = $value;
+	}
 
 	/**
 	 * Grabs the occurrence that has happened and was
 	 * the last occurrence to happen.
 	 */
 	public function getMostRecentOccurrence() {
+		if(array_key_exists(__FUNCTION__, $this->memoized)) return $this->memoized[__FUNCTION__];
+
 		if(!$this->occurrences->count()) {
 			return NULL;
 		}
@@ -768,6 +788,9 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 				$recent = $occ;
 			}
 		}
+
+		$this->memoize(__FUNCTION__, $recent);
+
 		return $recent;
 	}
 

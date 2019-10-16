@@ -73,57 +73,73 @@ class EventRepository extends \CIC\Cicbase\Persistence\Repository {
 			$this->sortBy = 'soonest';
 		}
 
+		$occurrenceGetterFunctionName = null;
+		$chronological = true;
 		switch(strtolower($this->sortBy)) {
 			case 'soonest':
-				$sorter = function(\CIC\Cicevents\Domain\Model\Event $a, \CIC\Cicevents\Domain\Model\Event $b) {
-					$aOcc = $a->getSoonestOccurrence();
-					$bOcc = $b->getSoonestOccurrence();
-					if($aOcc && $bOcc) {
-						$aOccBegin = $aOcc->getBeginTime();
-						$bOccBegin = $bOcc->getBeginTime();
-						if($aOccBegin && $bOccBegin) {
-							return $aOccBegin < $bOccBegin ? -1 : 1;
-						}
-					}
-				};
+				$occurrenceGetterFunctionName = 'getSoonestOccurrence';
 				break;
 			case 'mostrecent':
 			case 'most-recent':
 			case 'most_recent':
-				$sorter = function(\CIC\Cicevents\Domain\Model\Event $a, \CIC\Cicevents\Domain\Model\Event $b) {
-					$aOcc = $a->getMostRecentOccurrence();
-					$bOcc = $b->getMostRecentOccurrence();
-					if($aOcc && $bOcc) {
-						$aOccBegin = $aOcc->getBeginTime();
-						$bOccBegin = $bOcc->getBeginTime();
-						if($aOccBegin && $bOccBegin) {
-							return $aOccBegin > $bOccBegin ? -1 : 1;
-						}
-					}
-				};
+				$occurrenceGetterFunctionName = 'getMostRecentOccurrence';
+				$chronological = false;
 				break;
 			}
 
-		if($events instanceof \TYPO3\CMS\Extbase\Persistence\QueryResultInterface || $events instanceof \TYPO3\CMS\Extbase\Persistence\ObjectStorage) {
+		if($occurrenceGetterFunctionName) {
+			$sorter = $this->getSorterFunction($occurrenceGetterFunctionName, $chronological);
 
-			$array = $events->toArray();
-			usort($array, $sorter);
+			if ($events instanceof \TYPO3\CMS\Extbase\Persistence\QueryResultInterface || $events instanceof \TYPO3\CMS\Extbase\Persistence\ObjectStorage) {
 
-			// Return it as an iterator
-			$storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-			foreach($array as $item) {
-				$storage->attach($item);
+				$array = $events->toArray();
+				$array = array_filter($array, $this->getFilterFunction($occurrenceGetterFunctionName)());
+				usort($array, $sorter);
+
+				// Return it as an iterator
+				$storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+				foreach ($array as $item) {
+					$storage->attach($item);
+				}
+
+				return $storage;
+
+			} elseif (is_array($events)) {
+				$events = array_filter($events, $this->getFilterFunction($occurrenceGetterFunctionName));
+				usort($events, $sorter);
 			}
-
-			return $storage;
-
-		} elseif(is_array($events)) {
-			usort($events, $sorter);
 		}
 
 		return $events;
 	}
 
+	/**
+	 * @param $occurrenceGetterFunctionName
+	 * @return \Closure
+	 */
+	protected function getSorterFunction($occurrenceGetterFunctionName, $chronological = true) {
+		return function(\CIC\Cicevents\Domain\Model\Event $a, \CIC\Cicevents\Domain\Model\Event $b) use ($occurrenceGetterFunctionName, $chronological) {
+			$aOcc = $a->$occurrenceGetterFunctionName();
+			$bOcc = $b->$occurrenceGetterFunctionName();
+			if($aOcc && $bOcc) {
+				$aOccBegin = $aOcc->getBeginTime();
+				$bOccBegin = $bOcc->getBeginTime();
+				if($aOccBegin && $bOccBegin) {
+					return ($chronological ? $aOccBegin < $bOccBegin : $aOccBegin > $bOccBegin) ? -1 : 1;
+				}
+			}
+		};
+	}
+
+	/**
+	 * @param $occurrenceGetterFunctionName
+	 * @return \Closure
+	 */
+	protected function getFilterFunction($occurrenceGetterFunctionName) {
+		return function($event) use ($occurrenceGetterFunctionName) {
+			return $event->$occurrenceGetterFunctionName() !== null;
+		};
+	}
 
 	/**
 	 * This returns a QueryResult according to a given set of parameters
@@ -267,4 +283,4 @@ class EventRepository extends \CIC\Cicbase\Persistence\Repository {
 		}
 	}
 }
-?>
+
