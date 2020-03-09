@@ -249,7 +249,7 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	 * @param bool $minimal
 	 */
 	public function listAction($location = null, \CIC\Cicevents\Domain\Model\Category $category = null, \CIC\Cicevents\Domain\Model\Type $type = null, \CIC\Cicevents\Domain\Model\Locality $locality = null, $range = null, $currentPage = 1, $minimal = false) {
-		if($minimal){
+	    if($minimal){
 			$this->view->assign('minimal', true);
 		}
 		$this->listEvents($location, $category, $type, $locality, $range, $currentPage);
@@ -551,7 +551,12 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	 * @param int $currentPage
 	 */
 	protected function listEvents($location = null, \CIC\Cicevents\Domain\Model\Category $category = null, \CIC\Cicevents\Domain\Model\Type $type = null, \CIC\Cicevents\Domain\Model\Locality $locality = null, $range = null, $currentPage = 1) {
-		// Get form data
+		if($this->settings['categoryPrefilter']) {
+		    // override category with backend selection
+		    $category = $this->categoryRepository->findByUid($this->settings['categoryPrefilter']);
+        }
+
+	    // Get form data
 		$params = array(
 			'location' => $location,
 			'category' => $category,

@@ -174,6 +174,22 @@
 			<ROOT>
 				<type>array</type>
 				<el>
+					<settings.categoryPrefilter>
+						<TCEforms>
+							<label>Limit to Category (note: will override any other category selection)</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<foreign_table>tx_cicevents_domain_model_category</foreign_table>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">None</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
+					</settings.categoryPrefilter>
 
 					<settings.filtersOn>
 						<TCEforms>
