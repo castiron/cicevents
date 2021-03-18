@@ -31,7 +31,17 @@ $tx_cicevents_domain_model_type = array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, hide_times,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
+		'1' => array('showitem' =>
+			'sys_language_uid;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language, 
+			l10n_parent, 
+			l10n_diffsource, 
+			hidden;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden;1, 
+			title, 
+			hide_times,
+			--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+			starttime;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime,
+			endtime;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime'
+		),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
