@@ -692,8 +692,6 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 				case 'past':
 					$ranges[\CIC\Cicevents\Domain\Repository\EventRepository::RANGE_PAST] = 'Past Events';
 					break;
-				default:
-					continue;
 			}
 		}
 		return $ranges;

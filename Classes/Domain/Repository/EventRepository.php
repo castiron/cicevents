@@ -167,8 +167,7 @@ class EventRepository extends \CIC\Cicbase\Persistence\Repository {
 		$occurrenceFilters = array();
 
 		foreach($params as $key => $value) {
-			if($value !== 0 && $value == null)
-				continue;
+			if($value !== 0 && $value == null) continue;
 			switch($key) {
 				case 'location':
 						$occurrenceFilters[] = $query->logicalOr(
@@ -242,9 +241,6 @@ class EventRepository extends \CIC\Cicbase\Persistence\Repository {
 				case 'type':
 					$this->filters[] = $query->equals('type', $value);
 					break;
-				default:
-					// skip unknown parameters
-					continue;
 			}
 		}
 
