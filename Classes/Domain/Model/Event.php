@@ -731,7 +731,7 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 			return NULL;
 		}
 		$soonest = NULL;
-		$now = new \DateTime();
+		$now = new \DateTime('today');
 
 		// Loop through all occurrences saving the soonest
 		// occurrence that is valid and in the future
